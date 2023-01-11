@@ -1,0 +1,23 @@
+﻿@page
+@using BasiaProjektRazorPages.Helpers
+@using System.Data
+@using BasiaProjektRazorPages.Models.DBModels
+@using Dapper
+@model IndexModel
+@{
+    //using BasiaProjektRazorPages.Helpers;
+    //using System.Data;
+
+
+    ViewData["Title"] = "Home page";
+    HttpContext.Session.SetString("testString1", "Centurion mk. XII");
+    IDbConnection conn = DbHelper.GetDbConnection();
+    var adresy = conn.Query<Adres>("SELECT * FROM Adres");
+    conn.Dispose();
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    @HttpContext.Session.GetString("testString1")
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
