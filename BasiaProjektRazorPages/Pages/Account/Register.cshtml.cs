@@ -55,7 +55,7 @@ namespace BasiaProjektRazorPages.Pages.Account
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
-                    var result = conn.Query($"INSERT INTO Konto VALUES(NULL, NULL, NULL")
+                    //var result = conn.Query($"INSERT INTO Konto VALUES(NULL, NULL, NULL")
                 }
             }
             return Page();
