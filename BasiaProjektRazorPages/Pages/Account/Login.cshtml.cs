@@ -4,6 +4,7 @@ using System.Data;
 using Dapper;
 using BasiaProjektRazorPages.DBModels;
 using BasiaProjektRazorPages.Helpers;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace BasiaProjektRazorPages.Pages.Account
 {
@@ -14,8 +15,12 @@ namespace BasiaProjektRazorPages.Pages.Account
         [BindProperty]
         public string password { get; set; }
 
+        public string alertClass { get; set; } = "alert-warning";
+        public string alertValue { get; set; }
+
         public void OnGet()
         {
+           
         }
 
         public IActionResult OnPost()
