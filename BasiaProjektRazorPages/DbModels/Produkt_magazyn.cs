@@ -1,4 +1,4 @@
-﻿namespace BasiaProjektRazorPages.Models.DBModels
+﻿namespace BasiaProjektRazorPages.DBModels
 {
     public class Produkt_magazyn
     {
