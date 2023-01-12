@@ -10,48 +10,31 @@
     <link rel="stylesheet" href="~/font-awesome/css/all.min.css" />
 </head>
 <body>
+    <div class="container" style="display:flex;margin-left:auto;margin-right:auto;">
+        <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="/Images/logo-ok.png" style="width:4rem;"></a>
+        <div class="container-searching-bar">
+            @*Dodac strone do po kliknieciu szukaj*@
+            <a class="fa-solid fa-magnifying-glass search-glass" asp-area="" asp-page="/Pages/Products"></a>
+            <input id="searching-bar" class="searching-bar d-inline-block" list="datalistOptions" placeholder="Wyszukaj produkt...">
+            <button class="fa-solid fa-x clear-button" onclick="document.getElementById('searching-bar').value = ''"></button>
+        </div> 
+        <div class="account-panel" style="margin-right:1.5rem;transform:scale(1.5);">
+            @*Koszyk bez logowania - opacity 0*@
+            <a class=" fa-sharp fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Login" style="color:#aab0b0;padding-right:1rem;opacity:0"></a>
+            <a class="fa-solid fa-user" asp-area="" asp-page="/Account/Login" style="color:#aab0b0"></a>
+        </div>
+    </div>
 
-   
-    <header>
-    
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MediaNoobers</a>@ViewContext.HttpContext.Session.GetString("loggedInAccountId");
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex">
-                    <ul class="navbar-nav d-flex">
-                        <li class="nav-item">
-                            @*Dorobic funkcje na powiekszajacy sie search bar*@
-                            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." onhover="">
-                        </li>
-                        @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>*@
-                        @*<li class="nav-item justify-content-end">
-                            <button class="fa-solid fa-user" style="margin-top:1.1vh"></button>
-                        </li>*@
-                    </ul>
-                </div>                
-            </div>
-            <div class="navbar-collapse collapse d-flex justify-content-md-end" style="margin-right:6rem">
-                @*Dodac funkcje do otwierania logowania/rejestracji*@
-                <button class="fa-solid fa-user justify-content-end" style="" onclick=""></button>
-            </div>
-        </nav>
-    </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="line-height:45px">
         <div class="container d-inline-block">
             &copy; 2023 - Kacper Oleksiak,Wiktor Poprawski - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+        </div>  
     </footer>
     <div class="brands-container d-inline-block footer" style="padding-left:90%">
         <i class="fa-brands fa-youtube"></i>
