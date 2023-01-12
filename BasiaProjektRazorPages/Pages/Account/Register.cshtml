@@ -13,28 +13,35 @@
         <input type="text" class="form-control" id="userMailOrName" aria-describedby="emailHelp" asp-for="userName">
     </div>
     <div class="mb-3">
-        <label class="form-label">Hasło</label>
-        <input type="password" class="form-control" asp-for="eMail">
+        <label class="form-label">E-mail</label>
+        <input type="text" class="form-control" asp-for="email">
     </div>
-        <div class="mb-3">
+    <div class="mb-3">
         <label class="form-label">Hasło</label>
         <input type="password" class="form-control" asp-for="password">
     </div>
-        <div class="mb-3">
+    <div class="mb-3">
         <label class="form-label">Powtórz Hasło</label>
         <input type="password" class="form-control" asp-for="repeatedPassword">
     </div>
     <div class="row">
         <div class="col-2">
-            <button type="submit" class=" btn btn-primary">Zaloguj się</button>
+            <button type="submit" class=" btn btn-primary">Zarejestruj się</button>
         </div>
         <div class="col-10">
             @if (string.IsNullOrEmpty(Model.alertValue) == false)
             {
-            <div class="alert @Model.alertClass" role="alert">
-                @Model.alertValue
-            </div>
-            }            
+                <div class="alert @Model.alertClass" role="alert">
+                    @Html.Raw(@Model.alertValue.Replace("\n", "</br>"))
+                    @if (@Model.accountCreated)
+                    {
+                        <br>
+                        <a asp-page="/Account/Login">
+                            Zaloguj się
+                        </a>
+                    }
+                </div>
+            }
         </div>
     </div>
 

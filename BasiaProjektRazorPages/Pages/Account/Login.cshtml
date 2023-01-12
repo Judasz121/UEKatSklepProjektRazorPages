@@ -23,9 +23,18 @@
         <div class="col-10">
             @if (string.IsNullOrEmpty(Model.alertValue) == false)
             {
-            <div class="alert alert-primary" role="alert">
-                A simple primary alert—check it out!
-            </div>
+                <div class="alert @Model.alertClass" role="alert">
+                    @Model.alertValue
+
+                    @if (Model.loggedIn)
+                    {                        
+                        <a asp-page="/Index">Ić stont</a>
+                    }
+                    @if (Model.alertValue.StartsWith("Już jesteś"))
+                    {
+                        <a asp-page="/Account/Logout/">Wyloguj się</a>
+                    }
+                </div>
             }
         </div>
     </div>
