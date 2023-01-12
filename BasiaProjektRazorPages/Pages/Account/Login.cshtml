@@ -8,25 +8,31 @@
 }
 
 <form method="post">
-    <div class="mb-3">
-        <label for="userMailOrName" class="form-label">Nazwa użytkownika lub E-mail</label>
-        <input type="text" class="form-control" id="userMailOrName" aria-describedby="emailHelp" asp-for="userNameOrMail">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Hasło</label>
-        <input type="password" class="form-control" asp-for="password">
-    </div>
-    <div class="row">
-        <div class="col-2">
-            <button type="submit" class=" btn btn-primary">Zaloguj się</button>
+    <div class="login-container bg-white" style="margin: 25vh 25vw;box-shadow:1px 1px 1px 1px black;">
+        <div class="mb-3 form-container input-container" >
+            <label for="userMailOrName" class="form-label fst-normal">Nazwa użytkownika lub E-mail</label>
+            <input type="text" class="form-control" id="userMailOrName" required="required aria-describedby="emailHelp" asp-for="userNameOrMail">
         </div>
-        <div class="col-10">
-            @if (string.IsNullOrEmpty(Model.alertValue) == false)
-            {
-            <div class="alert alert-primary" role="alert">
-                A simple primary alert—check it out!
+        <div class="mb-3 form-container input-container">
+            <label class="form-label ">Hasło</label>
+            <input type="password" class="form-control" asp-for="password" required="required">
+        </div>
+        <div class="row button-container">
+            <div class="col-2 d-flex justify-content-center mx-auto" style="text-align:center">
+                <button type="submit" class=" btn btn-primary button-animation">
+                    Zaloguj się
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </button>
             </div>
-            }
+            <div class="col-10">
+                @if (string.IsNullOrEmpty(Model.alertValue) == false)
+                {
+                    <div class="alert alert-primary" role="alert">
+                        A simple primary alert—check it out!
+                    </div>
+                }
+            </div>
         </div>
     </div>
 
