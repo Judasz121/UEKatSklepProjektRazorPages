@@ -93,6 +93,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                             alertClass = "alert-success";
                             alertValue = "Zalogowanyś";
                             loggedIn = true;
+                            return RedirectToPage("/Index");
                         }
                     }
                 }

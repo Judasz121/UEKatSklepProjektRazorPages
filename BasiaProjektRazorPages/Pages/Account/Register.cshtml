@@ -8,43 +8,40 @@
 }
 
 <form method="post">
-    <div class="mb-3">
-        <label for="userMailOrName" class="form-label">Nazwa użytkownika lub E-mail</label>
-        <input type="text" class="form-control" id="userMailOrName" aria-describedby="emailHelp" asp-for="userName">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">E-mail</label>
-        <input type="text" class="form-control" asp-for="email">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Hasło</label>
-        <input type="password" class="form-control" asp-for="password">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Powtórz Hasło</label>
-        <input type="password" class="form-control" asp-for="repeatedPassword">
-    </div>
-    <div class="row">
-        <div class="col-2">
-            <button type="submit" class=" btn btn-primary">Zarejestruj się</button>
+    <div class="reg-container bg-white">
+        <i class="fa-solid fa-users" style="transform:scale(2);padding-bottom:1.5rem;padding-top:1.5rem"></i>
+        <div class="input-container" >
+            <label for="userMailOrName" class="fst-normal">Nazwa użytkownika</label>
+            <input type="text" class="form-control login-input" id="userMailOrName" asp-for="userName">
         </div>
-        <div class="col-10">
-            @if (string.IsNullOrEmpty(Model.alertValue) == false)
-            {
-                <div class="alert @Model.alertClass" role="alert">
-                    @Html.Raw(@Model.alertValue.Replace("\n", "</br>"))
-                    @if (@Model.accountCreated)
-                    {
-                        <br>
-                        <a asp-page="/Account/Login">
-                            Zaloguj się
-                        </a>
-                    }
+        <div class="input-container">
+            <label class="fst-normal">Email</label>
+            <input type="email" class="form-control login-input" asp-for="email">
+        </div>
+        <div class="input-container">
+            <label class="fst-normal">Hasło</label>
+            <input type="password" class="form-control login-input" asp-for="password">
+        </div>
+        <div class="input-container">
+            <label class="fst-normal">Potwórz Hasło</label>
+            <input type="password" class="form-control login-input" asp-for="repeatedPassword">
+        </div>
+        <div class="button-container">
+            <button type="submit" class="reg-button-animation">
+                Zarejestruj się
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+            </button>
+        </div>
+    </div>
+    <div class="errors" style="padding-top:0.5rem;font: bold 1rem sans-serif;">
+        @if (string.IsNullOrEmpty(Model.alertValue) == false)
+        {
+                <div class="alert @Model.alertClass" style="width:25vw;margin:auto" role="alert">
+                @Html.Raw(@Model.alertValue.Replace("\n", "</br>"))
                 </div>
-            }
-        </div>
+        }
     </div>
-
 
 
 </form>

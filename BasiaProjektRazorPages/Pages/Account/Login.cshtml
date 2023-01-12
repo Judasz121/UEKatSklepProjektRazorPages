@@ -25,17 +25,15 @@
                 <div class="btn_vertical"></div>
             </button>
             <br />
-            <button type="submit" class="reg-button-animation" asp-page="/Account/Register">
+            <a class="reg-button-animation" asp-page="/Account/Register">
                 Zarejestruj się
                 <div class="btn_horizontal"></div>
                 <div class="btn_vertical"></div>
-            </button>
+            </a>
             <div class="errors">
                 @if (string.IsNullOrEmpty(Model.alertValue) == false)
                 {
-                    <div class="alert alert-primary" role="alert">
-                        A simple primary alert—check it out!
-                    </div>
+                    <div class="alert @Model.alertClass" role="alert">@Model.alertValue</div>
                 }
             </div>
         </div>

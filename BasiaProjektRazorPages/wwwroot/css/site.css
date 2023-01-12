@@ -11,7 +11,7 @@ body {
 }
 }
 @media (max-width:1280px){
-    .login-container{
+    .login-container,.reg-container{
         min-width:22%;
     }
 }
@@ -66,19 +66,20 @@ body {
 }.container .account-panel{
     flex-grow:1;
 }*/
-.navbar img, a, .container-searching-bar {
+.navbar-container img, .navbar-container a, .container-searching-bar {
     animation: nav-load var(--nav-load-time) ease-in;
 }
-.navbar a {
+.navbar-container a {
     animation: nav-img-load var(--nav-load-time) ease-in;
-    animation-fill-mode:forwards;
+    animation-fill-mode: forwards;
 }
 @media (max-width:1500px){
     .searching-bar{
         transition: none !important;
         width:25vw;
     }
-    .searching-bar:hover, .searching-bar:focus {
+    
+    .searching-bar:focus {
         transition: none !important;
         max-width: 25vw;
         width: 25vw;
@@ -215,7 +216,7 @@ footer{
     height:100%;
     margin:auto;
 }
-.searching-bar:hover, .searching-bar:focus {
+.searching-bar:focus {
 
     width: 35vw;
     transition: width 1.2s;
@@ -235,6 +236,24 @@ footer{
     min-width:20%;
     max-width:20%;
     height:50vh;
+    text-align:center;
+}
+.reg-container {
+    border: 0.5rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 8px;
+    font: bold 1rem sans-serif;
+    margin: 2rem;
+    padding: 1rem;
+    outline-offset: 0.5rem;
+    margin: auto;
+    box-shadow: 1px 1px 1px 1px black;
+    min-width: 20%;
+    max-width: 20%;
+    height: 60vh;
+    text-align: center;
+}
+.alert{
     text-align:center;
 }
 .login-input {
