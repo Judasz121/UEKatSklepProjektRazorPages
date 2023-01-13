@@ -33,9 +33,7 @@
             <div class="errors">
                 @if (string.IsNullOrEmpty(Model.alertValue) == false)
                 {
-                    <div class="alert alert-primary" role="alert">
-                        A simple primary alert—check it out!
-                    </div>
+                    <div class="alert @Model.alertClass" role="alert">@Model.alertValue</div>
                 }
             </div>
         </div>

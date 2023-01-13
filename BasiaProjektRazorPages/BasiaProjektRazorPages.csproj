@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\google-fonts\" />
   </ItemGroup>
 
 </Project>

@@ -67,7 +67,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                 alertClass = "alert-danger";
                 if (string.IsNullOrEmpty(alertValue) == false)
                     alertValue += "\n";
-                alertValue += "Żeś chujowo te hasło powtórzył(a)";
+                alertValue += "Żeś chujowo te hasło powtórzył(a).";
             }
             // e-mail
             if(string.IsNullOrWhiteSpace(email) || mailRegex.IsMatch(email) == false) 
@@ -75,7 +75,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                 ok = false;
                 if (string.IsNullOrEmpty(alertValue) == false)
                     alertValue += "\n";
-                alertValue += "E-mail jest nieprawidłowy 😡";
+                alertValue += "E-mail jest nieprawidłowy. 😡";
             }
             if (ok)
             {
@@ -85,7 +85,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                     int clientId = this.createEmptyClientDbEntry(); // <- not finished
                     var result = conn.Query($"INSERT INTO Konto (ID_Klienta, LoginUzytkownika, Email, HashHasla) VALUES({clientId}, '{userName}', '{email}', '{passwordHash}')");
                     alertClass = "alert-success";
-                    alertValue = "Pomyślnie utworozono";
+                    alertValue = "Pomyślnie utworzono!\nNa podany email został posłany link aktywacyjny.";
                     accountCreated = true;
                 }
             }

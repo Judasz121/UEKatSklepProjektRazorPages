@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BasiaProjektRazorPages.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container" style="display:flex;margin-left:auto;margin-right:auto;">
+    <div class="container navbar-container" style="display:flex;margin-left:auto;margin-right:auto;">
         <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="/Images/logo-ok.png" style="width:4rem;"></a>
         <div class="container-searching-bar">
             @*Dodac strone do po kliknieciu szukaj*@
@@ -20,8 +23,34 @@
         </div> 
         <div class="account-panel" style="margin-right:1.5rem;transform:scale(1.5);">
             @*Koszyk bez logowania - opacity 0*@
-            <a class=" fa-sharp fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Login" style="color:#aab0b0;padding-right:1rem;opacity:0"></a>
-            <a class="fa-solid fa-user" asp-area="" asp-page="/Account/Login" style="color:#aab0b0"></a>
+            @{
+                string opacity = "0";
+                string pointer_events= "none";
+                if (AccountHelper.loggedInVerified)
+                {
+                    opacity = "1";
+                    pointer_events = "all";
+                }
+            }
+            @{
+                string loggedpath = "/Account/Login";
+                void RenderDropMenu()
+                {
+                    <ul class="DropMenu">
+                        <li class="DropMenuItem">Konto</li>
+                        <li class="DropMenuItem">Zamówienia</li>
+                        <li class="DropMenuItem Logoutitem">Wyloguj</li>
+                    </ul>
+                }
+                if (AccountHelper.loggedInVerified)
+                {
+                    loggedpath = "/Account/Account";
+                    
+                }
+            }
+            @*Unlogged - /login, Logged - /AccountInformation + Drop menu*@
+            <a class=" fa-sharp fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Account" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events"></a>
+            <a class="fa-solid fa-user" asp-area="" asp-page="@loggedpath" style="color:#aab0b0"></a>
         </div>
     </div>
 
@@ -31,17 +60,16 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="line-height:45px">
+    <footer class="footer text-muted" style="line-height:45px">
         <div class="container d-inline-block">
             &copy; 2023 - Kacper Oleksiak,Wiktor Poprawski - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>  
+            <div class="brands-container">
+                <i class="fa-brands fa-youtube"></i>
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-instagram"></i>
+            </div>
+        </div>
     </footer>
-    <div class="brands-container d-inline-block footer" style="padding-left:90%">
-        <i class="fa-brands fa-youtube"></i>
-        <i class="fa-brands fa-facebook"></i>
-        <i class="fa-brands fa-instagram"></i>
-    </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
