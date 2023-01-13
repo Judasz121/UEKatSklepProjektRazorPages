@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
 using Dapper;
-using BasiaProjektRazorPages.DBModels;
+using BasiaProjektRazorPages.DbModels;
 using BasiaProjektRazorPages.Helpers;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using BasiaProjektRazorPages.DbModels;

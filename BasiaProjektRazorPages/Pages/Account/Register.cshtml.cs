@@ -1,5 +1,5 @@
 ﻿using BasiaProjektRazorPages.Helpers;
-using BasiaProjektRazorPages.DBModels;
+using BasiaProjektRazorPages.DbModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
