@@ -14,7 +14,7 @@ namespace BasiaProjektRazorPages.Helpers
         public static bool loggedInVerified = false;
         public static Konto loggedInAccount = null;
 
-        #region passwordHashing
+        #region password
         private static int keySize = 64;
         private static int iterations = 350000;
         public static string hashPassword(string password, string salt)
@@ -36,7 +36,7 @@ namespace BasiaProjektRazorPages.Helpers
             string pwdHash = hashPassword(password, salt);
             return pwdHash.SequenceEqual(hash);
         }
-        #endregion passwordHashing
+        #endregion password
 
         public static Tuple<bool, string> checkForLoggedInSession(HttpContext context, bool updateAccountHelperLoggedInAccountFields = true)
         {

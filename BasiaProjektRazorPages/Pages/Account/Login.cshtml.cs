@@ -29,7 +29,7 @@ namespace BasiaProjektRazorPages.Pages.Account
             if(AccountHelper.checkForLoggedInSession(HttpContext).Item1)
             {
                 alertClass = "alert-info";
-                alertValue = "Już jesteś zalogowana (sorry for misgender bro)";
+                alertValue = "Już jesteś zalogowany";
             }
         }
 
@@ -93,6 +93,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                             alertClass = "alert-success";
                             alertValue = "Zalogowanyś";
                             loggedIn = true;
+                            return RedirectToPage("/Index");
                         }
                     }
                 }
