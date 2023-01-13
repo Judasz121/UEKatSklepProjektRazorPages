@@ -1,4 +1,8 @@
 ﻿@{
     Layout = "_Layout";
     AccountHelper.checkForLoggedInSession(ViewContext.HttpContext);
+
+    // login for debbugging purposes
+    ViewContext.HttpContext.Session.SetString("loggedInAccountId", "3");
+    ViewContext.HttpContext.Session.SetString("loggedInAccountPasswordHash", "6BE4B9D2AB9CB593A575A78619342CE9F881A77489102134556807C8CA525760E90AA680016357D0B9B3193C5B136A46552C7900DADC3CCAA599B735DDD312E8");
 }

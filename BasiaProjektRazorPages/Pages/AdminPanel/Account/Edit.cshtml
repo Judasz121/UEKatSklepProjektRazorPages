@@ -1,0 +1,63 @@
+﻿@page
+@using BasiaProjektRazorPages.Helpers;
+@model BasiaProjektRazorPages.Pages.AdminPanel.Account.EditModel
+@{
+}
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="center">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="true">Konto</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="client-tab" data-bs-toggle="tab" data-bs-target="#client" type="button" role="tab" aria-controls="client" aria-selected="false">Klient</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="supplier-tab" data-bs-toggle="tab" data-bs-target="#supplier" type="button" role="tab" aria-controls="supplier" aria-selected="false">Dostawca</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            
+            <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+                @*Konto*@
+                <form method="post">
+                    <input type="hidden" value="@Model.account.ID_Konta" asp-for="editedAccount.ID_Konta" />
+                    <div class="mb-3">
+                       <label class="form-label">@Html.DisplayNameFor(model => model.account.LoginUzytkownika)</label>
+                       <input class="form-control" value="@Model.account.LoginUzytkownika" asp-for="editedAccount.LoginUzytkownika" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.account.Email)</label>
+                        <input class="form-control" value="@Model.account.Email" asp-for="editedAccount.Email" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nowe hasło</label>
+                        <input class="form-control" value="" asp-for="editedAccount.HashHasla" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.account.JestAdminem)</label>
+                        <input class="form-check-input" value="" asp-for="editedAccount.JestAdminem" type="checkbox"/>
+                    </div>
+                    <button class="btn btn-success">Zapisz Dane Konta</button>
+                </form>
+            </div>
+            
+            <div class="tab-pane fade" id="client" role="tabpanel" aria-labelledby="client-tab">
+                @*Klient*@
+            </div>
+            
+            <div class="tab-pane fade" id="supplier" role="tabpanel" aria-labelledby="supplier-tab">
+                @*Dostawca*@
+            </div>
+        </div>
+    </div>
+
+
+}
