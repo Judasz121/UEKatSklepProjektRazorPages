@@ -1,4 +1,4 @@
-﻿namespace BasiaProjektRazorPages.DBModels
+﻿namespace BasiaProjektRazorPages.DbModels
 {
     public class Klient
     {
