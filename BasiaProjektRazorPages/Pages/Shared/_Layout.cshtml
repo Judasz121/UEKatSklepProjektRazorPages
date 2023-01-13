@@ -32,9 +32,25 @@
                     pointer_events = "all";
                 }
             }
+            @{
+                string loggedpath = "/Account/Login";
+                void RenderDropMenu()
+                {
+                    <ul class="DropMenu">
+                        <li class="DropMenuItem">Konto</li>
+                        <li class="DropMenuItem">Zamówienia</li>
+                        <li class="DropMenuItem Logoutitem">Wyloguj</li>
+                    </ul>
+                }
+                if (AccountHelper.loggedInVerified)
+                {
+                    loggedpath = "/Account/Account";
+                    
+                }
+            }
             @*Unlogged - /login, Logged - /AccountInformation + Drop menu*@
-            <a class=" fa-sharp fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Login" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events"></a>
-            <a class="fa-solid fa-user" asp-area="" asp-page="/Account/Login" style="color:#aab0b0"></a>
+            <a class=" fa-sharp fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Account" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events"></a>
+            <a class="fa-solid fa-user" asp-area="" asp-page="@loggedpath" style="color:#aab0b0"></a>
         </div>
     </div>
 
@@ -44,17 +60,16 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="line-height:45px">
+    <footer class="footer text-muted" style="line-height:45px">
         <div class="container d-inline-block">
             &copy; 2023 - Kacper Oleksiak,Wiktor Poprawski - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>  
+            <div class="brands-container">
+                <i class="fa-brands fa-youtube"></i>
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-instagram"></i>
+            </div>
+        </div>
     </footer>
-    <div class="brands-container d-inline-block footer" style="padding-left:90%">
-        <i class="fa-brands fa-youtube"></i>
-        <i class="fa-brands fa-facebook"></i>
-        <i class="fa-brands fa-instagram"></i>
-    </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

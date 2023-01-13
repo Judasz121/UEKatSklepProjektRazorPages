@@ -17,11 +17,6 @@ body {
         min-width:22%;
     }
 }
-/*@media (max-width:1700px){
-    .reg-button-animation {
-        padding: 1.5rem 2rem !important;
-    }
-}*/
 @media (max-width:1700px){
     .reg-button-animation {
         padding: 1.5rem 2rem !important;
@@ -284,7 +279,10 @@ footer{
     border: 1px solid rgba(255,255,255,0,25);
 }
 .brands-container i {
-    padding:10px
+    padding:10px;
+}
+.brands-container {
+    float: right;
 }
 .form-container {
     text-align: center;
