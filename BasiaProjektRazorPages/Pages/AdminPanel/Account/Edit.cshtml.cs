@@ -64,11 +64,11 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Account
                 {
                     if(editedAccount.HashHasla != null)
                     {
-                        editedAccount.HashHasla = AccountHelper.hashPassword(editedAccount.HashHasla, );
+                        //editedAccount.HashHasla = AccountHelper.hashPassword(editedAccount.HashHasla, );
                     }
                     using (IDbConnection conn = DbHelper.GetDbConnection())
                     {
-                        conn.Execute("UPDATE Konto SET ")
+                        //conn.Execute("UPDATE Konto SET ")
                     }
                     accountAlertClass = "alert-success";
                     accountAlertValue = "Zaktualizowano";

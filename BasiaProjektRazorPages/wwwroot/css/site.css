@@ -268,12 +268,12 @@ footer{
     margin:auto;
     padding:0.5rem 0 0.5rem 0;
 }
-    .input-container label {
-        display: block;
-        text-align: center;
-        padding-bottom: 0.2rem;
-        font-family: 'Poppins', sans-serif;
-    }
+.input-container label {
+    display: block;
+    text-align: center;
+    padding-bottom: 0.2rem;
+    font-family: 'Poppins', sans-serif;
+}
 .input-container input{
     padding:10px;
     border: 1px solid rgba(255,255,255,0,25);
@@ -313,4 +313,91 @@ footer{
 .search-glass:hover {
     color: black;
     transition: color 0.25s ease-in;
+}
+/*.dropMenu {
+    position: absolute;
+    transform: translateX(-75%);
+    top: 1.09rem;
+    list-style-type: none;
+    text-align: right;
+    display: none;
+    height: 13vh;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border: 0.2rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px 1px black;
+}*/
+/*.dropMenu-Item a{
+    transition:none;
+}
+.dropMenu-container {
+    position: absolute;
+    transform: translateX(-75%);
+    top: 1.09rem;
+    list-style-type: none;
+    text-align: right;
+    display: none;
+    height: 13vh;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border: 0.2rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px 1px black;
+}
+.dropMenu-container *{
+    display:none;
+}
+.drophover {
+    cursor: pointer;
+}
+.drophover:hover dropMenu-container{
+    display:block;
+}
+.dropMenu-container:hover > .dropMenu {
+    background-color: white;
+}*/
+.Logoutitem:hover{
+    color:red;
+    transition:0.2s ease-in;
+}/*
+#popupMenu{
+    pointer-events:auto;
+    position:relative;
+}*/
+
+.dropdown{
+    position:relative;
+    display:inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 1rem;
+    border: 0.2rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px 1px black;
+    transform: translateX(-75%);
+    text-decoration: none;
+    list-style-type: none;
+    text-align: right;
+}
+.dropMenu-Item {
+    padding: 12px 16px;
+    /* padding-top: 0.8rem;*/
+    font-family: var(--bs-font-sans-serif);
+    font-weight: 500;
+    color: rgba(24, 74, 126, 1);
+    transition: 0.2s ease-in;
+}
+.drop-a{
+    border:none;
+    cursor:pointer;
+}
+.dropdown:hover .dropdown-content{
+    display:block;
 }

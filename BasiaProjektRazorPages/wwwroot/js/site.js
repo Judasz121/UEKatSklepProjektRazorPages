@@ -5,5 +5,23 @@
 function userWindow() {
     let div = document.createElement("div");
     div.id = 'userpanel';
-   // div.innerHTML = 
+    div.innerHTML = 
+}
+
+function Dropdown() {
+    document.getElementById("PopupMenu").classList.toggle("show");
+}
+
+window.onclick = function (event) {
+    if (!event.target.matches('.drophover')) {
+
+        var dropdowns = document.getElementsByClassName("dropMenu-container");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
 }

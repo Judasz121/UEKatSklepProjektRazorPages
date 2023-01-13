@@ -5,7 +5,6 @@ using Dapper;
 using BasiaProjektRazorPages.DbModels;
 using BasiaProjektRazorPages.Helpers;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using BasiaProjektRazorPages.DbModels;
 
 namespace BasiaProjektRazorPages.Pages.Account
 {

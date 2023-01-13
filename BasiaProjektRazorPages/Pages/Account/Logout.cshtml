@@ -9,25 +9,21 @@
     }
 }
 
-<div class="row">
+<div class="container">
     @if (loggedOut)
     {
-        <h2>Pomyślnie wylogowano</h2>
+        <h2 style="text-align:center">Pomyślnie wylogowano</h2>
     }
     else
     {
-        <h2>Nie byłeś zalogowany polaku</h2>
+        <h2 style="text-align:center">Nie byłeś zalogowany polaku</h2>
     }
 </div>
-<div class="row">
-    <div class="col">
+<div class="container " style="display:flex;flex-direction:column;justify-content:center;">
         <a asp-page="Index">
             Strona główna
         </a>
-    </div>
-    <div class="col">
         <a asp-page="Login">
             Zaloguj
         </a>
-    </div>
 </div>
