@@ -1,6 +1,8 @@
 html {
   font-size: 14px;
+
 }
+
 body {
     --nav-load-time: 700ms;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='1080' preserveAspectRatio='none' viewBox='0 0 1920 1080'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1095%26quot%3b)' fill='none'%3e%3crect width='1920' height='1080' x='0' y='0' fill='url(%23SvgjsLinearGradient1096)'%3e%3c/rect%3e%3cpath d='M 0%2c222 C 76.8%2c262.8 230.4%2c425.6 384%2c426 C 537.6%2c426.4 614.4%2c245.8 768%2c224 C 921.6%2c202.2 998.4%2c345.8 1152%2c317 C 1305.6%2c288.2 1382.4%2c86.2 1536%2c80 C 1689.6%2c73.8 1843.2%2c244.8 1920%2c286L1920 1080L0 1080z' fill='%23184a7e'%3e%3c/path%3e%3cpath d='M 0%2c1043 C 55%2c950.2 165%2c614.2 275%2c579 C 385%2c543.8 440%2c839.6 550%2c867 C 660%2c894.4 715%2c722.8 825%2c716 C 935%2c709.2 990%2c824.4 1100%2c833 C 1210%2c841.6 1265%2c750.6 1375%2c759 C 1485%2c767.4 1541%2c893.2 1650%2c875 C 1759%2c856.8 1866%2c709.4 1920%2c668L1920 1080L0 1080z' fill='%232264ab'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1095'%3e%3crect width='1920' height='1080' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='10.94%25' y1='-19.44%25' x2='89.06%25' y2='119.44%25' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1096'%3e%3cstop stop-color='%230e2a47' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(2%2c 80%2c 181%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
@@ -27,7 +29,7 @@ body {
 }
 @media (max-width:1750px){
     .reg-button-animation{
-        padding: 1.5rem 2.5rem !important:
+        padding: 1.5rem 2.5rem !important;
     }
 }
 @keyframes nav-load{
@@ -50,28 +52,24 @@ body {
         transform : scale(1);
     }
 }
-.container{
-    align-content:center;
-    align-items:center;
-    padding-top:0.5rem;
-    padding-bottom:0.5rem;
-    flex-wrap:nowrap;
-    max-width:1920px;
+.container {
+    align-content: center;
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    flex-wrap: nowrap;
+    max-width: 1920px;
+    font-family: 'Poppins', sans-serif;
 }
-/*.container .navbar-brand{
-    flex-grow:1;
-}
-.container .container-searching-bar{
-    flex-grow:3;
-}.container .account-panel{
-    flex-grow:1;
-}*/
 .navbar-container img, .navbar-container a, .container-searching-bar {
     animation: nav-load var(--nav-load-time) ease-in;
 }
 .navbar-container a {
     animation: nav-img-load var(--nav-load-time) ease-in;
     animation-fill-mode: forwards;
+}
+.navbar-container {
+    font-family: 'Poppins', sans-serif;
 }
 @media (max-width:1500px){
     .searching-bar{
@@ -122,6 +120,7 @@ footer{
     background: transparent;
     color: rgba(2, 80, 181, 1);
     text-transform: uppercase;
+    text-decoration:none;
     letter-spacing: .25em;
     outline: none;
     cursor: pointer;
@@ -227,22 +226,7 @@ footer{
     border: 0.5rem outset;
     border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
     border-radius: 8px;
-    font: bold 1rem sans-serif;
-    margin: 2rem;
-    padding: 1rem;
-    outline-offset: 0.5rem;
-    margin: auto;
-    box-shadow: 1px 1px 1px 1px black;
-    min-width:20%;
-    max-width:20%;
-    height:50vh;
-    text-align:center;
-}
-.reg-container {
-    border: 0.5rem outset;
-    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
-    border-radius: 8px;
-    font: bold 1rem sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 2rem;
     padding: 1rem;
     outline-offset: 0.5rem;
@@ -250,7 +234,22 @@ footer{
     box-shadow: 1px 1px 1px 1px black;
     min-width: 20%;
     max-width: 20%;
-    height: 60vh;
+    height: 53vh;
+    text-align: center;
+}
+.reg-container {
+    border: 0.5rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    margin: 2rem;
+    padding: 1rem;
+    outline-offset: 0.5rem;
+    margin: auto;
+    box-shadow: 1px 1px 1px 1px black;
+    min-width: 20%;
+    max-width: 20%;
+    height: 63vh;
     text-align: center;
 }
 .alert{
@@ -278,7 +277,7 @@ footer{
         display: block;
         text-align: center;
         padding-bottom: 0.2rem;
-        font-family: var(--bs-font-sans-serif);
+        font-family: 'Poppins', sans-serif;
     }
 .input-container input{
     padding:10px;
