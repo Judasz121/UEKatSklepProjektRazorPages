@@ -21,7 +21,7 @@
             <input id="searching-bar" class="searching-bar d-inline-block" list="datalistOptions" placeholder="Wyszukaj produkt...">
             <button class="fa-solid fa-x clear-button" onclick="document.getElementById('searching-bar').value = ''"></button>
         </div> 
-        <div class="account-panel" style="margin-right:1.5rem;transform:scale(1.5);">
+        <div class="account-panel" style="margin-right:1.5rem;display:flex;flex-direction:row;transform:scale(1.5)">
             @*Koszyk bez logowania - opacity 0*@
             @{
                 string opacity = "0";
@@ -34,14 +34,6 @@
             }
             @{
                 string loggedpath = "/Account/Login";
-                void RenderDropMenu()
-                {
-                    <ul class="DropMenu">
-                        <li class="DropMenuItem">Konto</li>
-                        <li class="DropMenuItem">Zamówienia</li>
-                        <li class="DropMenuItem Logoutitem">Wyloguj</li>
-                    </ul>
-                }
                 if (AccountHelper.loggedInVerified)
                 {
                     loggedpath = "/Account/Account";
@@ -49,8 +41,21 @@
                 }
             }
             @*Unlogged - /login, Logged - /AccountInformation + Drop menu*@
-            <a class=" fa-sharp fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Account" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events"></a>
-            <a class="fa-solid fa-user" asp-area="" asp-page="@loggedpath" style="color:#aab0b0"></a>
+            <a class="fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Account" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events;line-height:1;padding-top:0.2rem"></a>
+            <div class="dropdown">
+                @*Ogarnac zeby div mogl miec pointer events*@
+                <a class="fa-solid fa-user drop-a" asp-page="@loggedpath" style="color:#aab0b0"></a>
+                @{
+                if (AccountHelper.loggedInVerified)
+                { @*Dorobic ladny panel do dropmenu*@
+                    <div class="dropdown-content">
+                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="">Konto</a>
+                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="">Zamówienia</a>
+                        <a class="dropdown-Item Logoutitem" style="text-decoration:none;" asp-page="/Account/Logout">Wyloguj</a>
+                    </div>
+                }
+                }
+            </div>
         </div>
     </div>
 
