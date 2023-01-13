@@ -377,7 +377,10 @@ footer{
     position: absolute;
     background-color: white;
     min-width: 1rem;
-    box-shadow: 0px 8px 16px 0px black;
+    border: 0.2rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px 1px black;
     transform: translateX(-75%);
     text-decoration: none;
     list-style-type: none;
