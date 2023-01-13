@@ -5,5 +5,5 @@
 function userWindow() {
     let div = document.createElement("div");
     div.id = 'userpanel';
-    div.innerHTML = 
+   // div.innerHTML = 
 }
