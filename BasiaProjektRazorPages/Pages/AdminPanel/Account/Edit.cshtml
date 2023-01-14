@@ -11,35 +11,35 @@
 }
 else
 {
-    <div class="center">
+    <div class="center accounts-container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="true">Konto</button>
+            <li class="nav-item bg-grey" role="presentation">
+                <button class="nav-link active" id="account-tab" style="color:black" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="true">Konto</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="client-tab" data-bs-toggle="tab" data-bs-target="#client" type="button" role="tab" aria-controls="client" aria-selected="false">Klient</button>
+            <li class="nav-item bg-grey"  role="presentation">
+                <button class="nav-link" id="client-tab" style="color:black" data-bs-toggle="tab" data-bs-target="#client" type="button" role="tab" aria-controls="client" aria-selected="false">Klient</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="supplier-tab" data-bs-toggle="tab" data-bs-target="#supplier" type="button" role="tab" aria-controls="supplier" aria-selected="false">Dostawca</button>
+            <li class="nav-item bg-grey" role="presentation">
+                <button class="nav-link" id="supplier-tab" style="color:black" data-bs-toggle="tab" data-bs-target="#supplier" type="button" role="tab" aria-controls="supplier" aria-selected="false">Dostawca</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             
-            <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+            <div class="tab-pane bg-white fade show active" id="account" role="tabpanel" aria-labelledby="account-tab" style="color:black">
                 @*Konto*@
                 <form method="post">
                     <input type="hidden" value="@Model.account.ID_Konta" asp-for="editedAccount.ID_Konta" />
                     <div class="mb-3">
-                       <label class="form-label">@Html.DisplayNameFor(model => model.account.LoginUzytkownika)</label>
-                       <input class="form-control" value="@Model.account.LoginUzytkownika" asp-for="editedAccount.LoginUzytkownika" />
+                       <label class="form-label" >@Html.DisplayNameFor(model => model.account.LoginUzytkownika)</label>
+                        <input class="form-control" style="border:1.5px solid black" value="@Model.account.LoginUzytkownika" asp-for="editedAccount.LoginUzytkownika" />
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">@Html.DisplayNameFor(model => model.account.Email)</label>
-                        <input class="form-control" value="@Model.account.Email" asp-for="editedAccount.Email" />
+                        <label class="form-label" >@Html.DisplayNameFor(model => model.account.Email)</label>
+                        <input class="form-control" style="border:1.5px solid black" value="@Model.account.Email" asp-for="editedAccount.Email" />
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Nowe hasło</label>
-                        <input class="form-control" value="" asp-for="editedAccount.HashHasla" />
+                        <label class="form-label" >Nowe hasło</label>
+                        <input class="form-control" style="border:1.5px solid black" value="" asp-for="editedAccount.HashHasla" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">@Html.DisplayNameFor(model => model.account.JestAdminem)</label>

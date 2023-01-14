@@ -386,6 +386,12 @@ footer{
     list-style-type: none;
     text-align: right;
 }
+.accounts-container {
+    border: 0.5rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 8px;
+    box-shadow: 1px 1px 1px 1px black;
+}
 .dropMenu-Item {
     padding: 12px 16px;
     /* padding-top: 0.8rem;*/
