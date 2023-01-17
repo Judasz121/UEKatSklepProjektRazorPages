@@ -67,12 +67,13 @@
     </div>
 
     <footer class="footer text-muted" style="line-height:45px">
-        <div class="container d-inline-block">
-            &copy; 2023 - Kacper Oleksiak,Wiktor Poprawski - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        <div class="container d-inline-block footer-container">
+            @*On click znaku małpa wchodzi do admin panelu*@
+            <a asp-page="/AdminPanel/Account/List" class="text-muted" style="text-decoration:none !important;cursor:default">&copy;</a><p style="display:inline">2023 - Kacper Oleksiak,Wiktor Poprawski - </p><a asp-area="" asp-page="/Privacy">Privacy</a>
             <div class="brands-container">
-                <i class="fa-brands fa-youtube"></i>
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-brands fa-instagram"></i>
+                <a class="fa-brands fa-youtube" href="../www.youtube.com"></a>
+                <a class="fa-brands fa-facebook" href="../www.facebook.com"></a>
+                <a class="fa-brands fa-instagram" href="../www.instagram.com"></a>
             </div>
         </div>
     </footer>
