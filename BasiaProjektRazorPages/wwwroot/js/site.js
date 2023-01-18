@@ -2,11 +2,6 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-function userWindow() {
-    let div = document.createElement("div");
-    div.id = 'userpanel';
-    div.innerHTML = 
-}
 
 function Dropdown() {
     document.getElementById("PopupMenu").classList.toggle("show");
@@ -24,4 +19,34 @@ window.onclick = function (event) {
             }
         }
     }
+}
+function GenerateDataTables(tableEl) {
+    document.addEventListener('DOMContentLoaded', e => {
+        $tableEl = $tableEl instanceof jQuery ? $tableEl : $($tableEl);
+        let $tableEl = $("#accounts-table");
+        let dataTableOptions = {
+            dom: "ltipr",
+            searching: true,
+            initComplete: function (settings) {
+                console.log("initComplete");
+                this.api()
+                    .columns()
+                    .every(function () {
+                        $("selector").click(false);
+                        var that = this;
+                        let $input = $("input", this.header());
+
+                        $input.click(false); // prevent sorting when clicked
+                        $input.on("keyup change clear", function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
+                    });
+
+            },
+        }
+        $tableEl.DataTable(dataTableOptions);
+    })
+
 }

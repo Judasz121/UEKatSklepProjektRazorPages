@@ -37,21 +37,21 @@
                 string loggedpath = "/Account/Login";
                 if (AccountHelper.loggedInVerified)
                 {
-                    loggedpath = "/Account/Account";
+                    loggedpath = "/Account/AccountIndex";
                     
                 }
             }
             @*Unlogged - /login, Logged - /AccountInformation + Drop menu*@
             <a class="fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Account" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events;line-height:1;padding-top:0.2rem"></a>
             <div class="dropdown">
-                @*Ogarnac zeby div mogl miec pointer events*@
                 <a class="fa-solid fa-user drop-a" asp-page="@loggedpath" style="color:#aab0b0"></a>
                 @{
                 if (AccountHelper.loggedInVerified)
-                { @*Dorobic ladny panel do dropmenu*@
+                {
                     <div class="dropdown-content">
-                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="">Konto</a>
-                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="">Zamówienia</a>
+                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">Konto</a>
+                        @*Dodac hiperlink do podkategorii zamowienia*@
+                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">Zamówienia</a>
                         <a class="dropdown-Item Logoutitem" style="text-decoration:none;" asp-page="/Account/Logout">Wyloguj</a>
                     </div>
                 }
