@@ -61,6 +61,12 @@ body {
     .login-container, .reg-container {
         max-width: 25rem;
     }
+    .accounts-container, .accounts-settings-container, .admin-accounts-container {
+        width: min(50rem) !important;
+    }
+    .edit-account-container{
+        width: min(30rem) !important;
+    }
 }
 
 @media (min-width:1280px){
@@ -325,11 +331,47 @@ footer{
     list-style-type: none;
     text-align: right;
 }
-.accounts-container {
+.accounts-container{
     border: 0.5rem outset;
     border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
     border-radius: 8px;
     box-shadow: 1px 1px 1px 1px black;
+    width: min(20rem);
+}
+.admin-accounts-container, .edit-account-container {
+    border: 0.5rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 8px;
+    box-shadow: 1px 1px 1px 1px black;
+    width: min(24rem);
+}
+.account-name-container, .accounts-settings-container{
+    border: 0.5rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 8px;
+    box-shadow: 1px 1px 1px 1px black;
+}
+.accounts-settings-container {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    gap: .2rem;
+    justify-content: space-between;
+    max-width: 100%;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    filter: drop-shadow()
+}
+.tab-content{
+    margin-top:1.5rem;
+}
+.account-information-content{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
 }
 .dropMenu-Item {
     padding: 12px 16px;

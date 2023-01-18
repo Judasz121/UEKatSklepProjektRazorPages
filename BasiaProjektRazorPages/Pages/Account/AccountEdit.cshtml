@@ -1,0 +1,64 @@
+﻿@page
+@using BasiaProjektRazorPages.DbModels;
+@model BasiaProjektRazorPages.Pages.Account.AccountEditModel
+@{
+}
+@if(!AccountHelper.loggedInVerified || Model.accountNotFound)
+{
+        <div class="text-container">
+            <h3>Nie masz uprawnień do tej strony.</h3>
+        </div>
+}
+else{
+    <form method="post">
+        <input type="hidden" value="@Model.account.ID_Konta" asp-for="account.ID_Konta" />
+        <div class="container edit-account-container bg-white">
+            <div>
+                <h3 style="text-align:center">Ustawienia ogólne:</h3>
+                <div class="account-information-content">
+                    <span style="width:11rem">Login użytkownika: </span>
+                    <input id="input-settings" class="input-settings"  asp-for="account.LoginUzytkownika">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Adres E-mail:</span>
+                    <input id="input-settings" class="input-settings" asp-for="account.Email">
+                </div>
+            </div>
+            <div>
+                <h3 style="text-align:center">Ustawienia adresu:</h3>
+                <div class="account-information-content">
+                    <span style="width:11rem">Kraj: </span>
+                    <input id="input-settings" class="input-settings"  asp-for="address.Kraj">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Miasto:</span>
+                    <input id="input-settings" class="input-settings"  asp-for="address.Miasto">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Ulica:</span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Ulica">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Kod Pocztowy:</span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Kod_pocztowy">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Numer Budynku:</span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Numer_budynku">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Numer Mieszkania:</span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Numer_mieszkania">
+                </div>
+                <div style="display:flex;justify-content:center;margin-top:0.5rem">
+                    <button class="reg-button-animation" id="button-account-settings">
+                        Zmień dane
+                        <div class="btn_horizontal"></div>
+                        <div class="btn_vertical"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+}

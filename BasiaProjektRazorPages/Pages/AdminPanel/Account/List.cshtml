@@ -11,7 +11,8 @@
 }
 else
 {
-    <div class="center accounts-container" style="background-color:white;color:black;">
+    <div class="center admin-accounts-container" style="background-color:white;color:black;">
+
         <table id="accounts-table">
             <thead>
                 <tr>
@@ -71,32 +72,6 @@ else
         </table>
     </div>
     <script>
-            document.addEventListener('DOMContentLoaded', e => {
-                $table = instanceof jQuery ? $table : $($table);
-                let $tableEl = $("#accounts-table");
-                let dataTableOptions = {
-                    dom: "ltipr",
-                    searching: true,
-                    initComplete: function(settings) {
-                        this.api()
-                            .columns()
-                            .every(function() {
-                                $("selector").click(false);
-                                var that = this;
-                                let $input = $("input", this.header());
-
-                                $input.click(false); // prevent sorting when clicked
-                                $input.on("keyup change clear", function() {
-                                    if (that.search() !== this.value) {
-                                        that.search(this.value).draw();
-                                    }
-                                });
-                            });
-
-                    },
-                }
-                $tableEl.DataTable(dataTableOptions);
-            })
-
+            GenerateDataTables($"#accounts-table");
     </script>
 }
