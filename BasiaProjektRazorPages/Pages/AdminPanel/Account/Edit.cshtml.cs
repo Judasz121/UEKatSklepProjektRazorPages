@@ -49,6 +49,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Account
 
         public IActionResult OnPost()
         {
+            
             #region Konto
             Konto oldAccount = null;
             using (IDbConnection conn = DbHelper.GetDbConnection())
@@ -58,17 +59,18 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Account
             account = editedAccount;
             if (editedAccount != null)
             {
-                account = editedAccount;
                 var verification = Konto.verifyValues(editedAccount.LoginUzytkownika, editedAccount.HashHasla, editedAccount.Email);
                 if (verification.Item1)
                 {
-                    if(editedAccount.HashHasla != null)
+                    if (editedAccount.HashHasla != null)
                     {
-                        //editedAccount.HashHasla = AccountHelper.hashPassword(editedAccount.HashHasla, );
+                        editedAccount.HashHasla = AccountHelper.hashPassword(editedAccount.HashHasla, "ojciec");
                     }
+                    else
+                        editedAccount.HashHasla = oldAccount.HashHasla;
                     using (IDbConnection conn = DbHelper.GetDbConnection())
                     {
-                        //conn.Execute("UPDATE Konto SET ")
+                        conn.Execute($"UPDATE Konto SET LoginUzytkownika = '{editedAccount.LoginUzytkownika}', Email = '{editedAccount.Email}', JestAdminem = '{editedAccount.JestAdminem}'");
                     }
                     accountAlertClass = "alert-success";
                     accountAlertValue = "Zaktualizowano";
@@ -80,6 +82,15 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Account
                 }
             }
             #endregion
+
+            #region Klient
+
+            #endregion
+
+            #region Dostawca
+
+            #endregion
+
             return Page();
         }
 

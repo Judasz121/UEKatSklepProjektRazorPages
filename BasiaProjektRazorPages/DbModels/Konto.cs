@@ -13,6 +13,7 @@ namespace BasiaProjektRazorPages.DbModels
         public string Email { get; set; }
         public string HashHasla { get; set; }
         public bool JestAdminem { get; set; }
+        public DateTime DataUtworzenia { get; set; }
 
         public static Tuple<bool, string> verifyValues(string? login, string? password, string? email)
         {

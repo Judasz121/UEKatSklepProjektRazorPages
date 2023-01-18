@@ -76,7 +76,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                     if (ok)
                     {
                         // check password
-                        if (!AccountHelper.verifyPassword(password, account.HashHasla, account.LoginUzytkownika))
+                        if (!AccountHelper.verifyPassword(password, account.HashHasla, account.DataUtworzenia.ToString("s")))
                         {
                             ok = false;
                             alertClass = "alert-danger";
