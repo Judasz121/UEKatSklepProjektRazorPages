@@ -9,11 +9,11 @@
     </div>
 }
 else{
-    <div class="container accounts-container bg-white">
+    <div class="container admin-accounts-container bg-white">
         <span style="display:table;margin:0 auto;font-size:max(2rem);">Witaj! @Model.account.LoginUzytkownika</span>
         <div class="nav nav-tabs accounts-settings-container" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Ogólne</button>
-            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Zamówienia</button>
+            <button class="nav-link" id="nav_orders_tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Zamówienia</button>
             <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Adresy</button>
         </div>
         <div class="tab-content" id="nav-tabContent">
@@ -21,40 +21,40 @@ else{
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="account-information-content">
                     <span style="width:11rem">Login użytkownika: </span>
-                    <input id="input-settings" disabled value="@Model.account.LoginUzytkownika">
+                    <input id="input-settings" class="input-settings" disabled value="@Model.account.LoginUzytkownika">
                 </div>
                 <div class="account-information-content">
                     <span style="width:11rem">Adres E-mail:</span>
-                    <input id="input-settings"  disabled value="@Model.account.Email">
+                    <input id="input-settings" class="input-settings" disabled value="@Model.account.Email">
                 </div>
                 <div style="display:flex;justify-content:center;margin-top:0.5rem">
-                    <button class="reg-button-animation" >
-                    Zmień dane
+                    <a class="reg-button-animation" id="button-account-settings" asp-page="/Account/AccountEdit" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">
+                        Zmień dane
                         <div class="btn_horizontal"></div>
                         <div class="btn_vertical"></div>
-                    </button>
+                    </a>
                 </div>
-               
+
             </div>
             @*Zamówienia panel*@
-            <div class="tab-pane fade" name="Zamowienia" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="tab-pane fade " name="Zamowienia" id="nav-profile" role="tabpanel" aria-labelledby="nav_orders_tab">
                 <table class="table">
                     <tr>
                         <th scope="col">Nr. Zamówienia</th>
                         <th scope="col">Data Zamówienia</th>
                         <th scope="col">Stan transakcji</th>
                     </tr>
-                @*Zamienic słowo "False" na "Nie" i adekwatnie do "True"*@
-                @foreach(Zamowienia zamowienia in Model.zamowienie)
-                {
-                    <tr>
-                        <th scope="row">@zamowienia.ID_Zamowienia</th>
-                        <td>@zamowienia.Data_zamowienia</td>
-                        <td>@zamowienia.Zaplacone.ToString()</td>
-                    </tr>
-                }
+                    @*Zamienic słowo "False" na "Nie" i adekwatnie do "True"*@
+                    @foreach (Zamowienia zamowienia in Model.zamowienie)
+                    {
+                        <tr>
+                            <th scope="row">@zamowienia.ID_Zamowienia</th>
+                            <td>@zamowienia.Data_zamowienia</td>
+                            <td>@zamowienia.Zaplacone.ToString()</td>
+                        </tr>
+                    }
                 </table>
-                
+
             </div>
 
 
@@ -62,38 +62,48 @@ else{
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                 <div class="account-information-content">
                     <span style="width:11rem">Kraj: </span>
-                    <input id="input-settings" disabled value="@Model.adres.Kraj">
+                    <input id="input-settings" class="input-settings" disabled value="@Model.adres.Kraj">
                 </div>
                 <div class="account-information-content">
                     <span style="width:11rem">Miasto:</span>
-                    <input id="input-settings"  disabled value="@Model.adres.Miasto">
+                    <input id="input-settings" class="input-settings" disabled value="@Model.adres.Miasto">
                 </div>
                 <div class="account-information-content">
                     <span style="width:11rem">Ulica:</span>
-                    <input id="input-settings"  disabled value="@Model.adres.Ulica">
+                    <input id="input-settings" class="input-settings" disabled value="@Model.adres.Ulica">
                 </div>
                 <div class="account-information-content">
                     <span style="width:11rem">Kod Pocztowy:</span>
-                    <input id="input-settings"  disabled value="@Model.adres.Kod_pocztowy">
+                    <input id="input-settings" class="input-settings" disabled value="@Model.adres.Kod_pocztowy">
                 </div>
                 <div class="account-information-content">
                     <span style="width:11rem">Numer Budynku:</span>
-                    <input id="input-settings"  disabled value="@Model.adres.Numer_budynku">
+                    <input id="input-settings" class="input-settings" disabled value="@Model.adres.Numer_budynku">
                 </div>
                 <div class="account-information-content">
                     <span style="width:11rem">Numer Mieszkania:</span>
-                    <input id="input-settings"  disabled value="@Model.adres.Numer_mieszkania">
+                    <input id="input-settings" class="input-settings" disabled value="@Model.adres.Numer_mieszkania">
                 </div>
                 <div style="display:flex;justify-content:center;margin-top:0.5rem">
-                    <button class="reg-button-animation" >
-                    Zmień dane
+                    <a class="reg-button-animation" id="button-account-settings" asp-page="/Account/AccountEdit" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">
+                        Zmień dane
                         <div class="btn_horizontal"></div>
                         <div class="btn_vertical"></div>
-                    </button>
+                    </a>
                 </div>
 
             </div>
         </div>
 
     </div>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let btnId = "@Model.tabId";
+            let $btn = $("#" + btnId);
+            console.log($btn);
+            $btn.click();
+            });
+        
+    </script>
+    
 }

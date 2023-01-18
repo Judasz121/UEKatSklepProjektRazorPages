@@ -61,8 +61,11 @@ body {
     .login-container, .reg-container {
         max-width: 25rem;
     }
-    .accounts-container, .accounts-settings-container{
+    .accounts-container, .accounts-settings-container, .admin-accounts-container {
         width: min(50rem) !important;
+    }
+    .edit-account-container{
+        width: min(30rem) !important;
     }
 }
 
@@ -328,14 +331,21 @@ footer{
     list-style-type: none;
     text-align: right;
 }
-.accounts-container, .accounts-settings-container {
+.accounts-container{
     border: 0.5rem outset;
     border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
     border-radius: 8px;
     box-shadow: 1px 1px 1px 1px black;
     width: min(20rem);
 }
-.account-name-container {
+.admin-accounts-container, .edit-account-container {
+    border: 0.5rem outset;
+    border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
+    border-radius: 8px;
+    box-shadow: 1px 1px 1px 1px black;
+    width: min(24rem);
+}
+.account-name-container, .accounts-settings-container{
     border: 0.5rem outset;
     border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
     border-radius: 8px;

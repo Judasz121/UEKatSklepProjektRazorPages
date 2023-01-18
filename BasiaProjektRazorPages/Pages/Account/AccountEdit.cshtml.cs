@@ -10,20 +10,15 @@ using System.Data.SqlClient;
 
 namespace BasiaProjektRazorPages.Pages.Account
 {
-    public class AccountIndexModel : PageModel
+    public class AccountEditModel : PageModel
     {
-        [BindProperty(SupportsGet =true)]
+        [BindProperty(SupportsGet = true)]
         public string id { get; set; }
 
-        [BindProperty(SupportsGet =true)]
-        public string tabId { get; set; }
-        public Konto account { get; set; }
         public bool accountNotFound { get; set; }
         public bool addressNotFound { get; set; }
+
         [BindProperty]
-        public Adres adres { get; set; }
-        [BindProperty]
-        //Stworzylem liste, bo mozna byc kilka zamowien
         public List<Zamowienia> zamowienie { get; set; }
         public void OnGet()
         {
@@ -32,7 +27,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     account = conn.QueryFirst<Konto>($"SELECT TOP 1 * FROM Konto WHERE ID_Konta = '{id}'");
-                    
+
                 }
             }
             catch (InvalidOperationException exc)
@@ -43,7 +38,7 @@ namespace BasiaProjektRazorPages.Pages.Account
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
-                    adres = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Klienta = '{id}'");
+                    address = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Klienta = '{id}'");
                     //Podjeba³em z neta rozwi¹zanie 
                     // https://www.aspsnippets.com/Articles/Using-SqlDataReader-in-ASPNet-Core-Razor-Pages.aspx
                     //Jak da sie skróciæ kod, bo nie wiem jak dzia³a dok³adnie po³¹czenie z baz¹ to ogarnij thx :)
@@ -73,8 +68,53 @@ namespace BasiaProjektRazorPages.Pages.Account
             {
                 addressNotFound = true;
             }
+
         }
-        
-        
+        [BindProperty]
+        public Konto account { get; set; }
+        public string accountAlertClass { get; set; }
+        public string accountAlertValue { get; set; }
+        [BindProperty]
+        public Adres address { get; set; }
+        public IActionResult OnPost()
+        {
+
+            #region Konto
+            Konto oldAccount = null;
+            Adres oldAdress = null;
+            using (IDbConnection conn = DbHelper.GetDbConnection())
+            {
+                oldAccount = conn.QueryFirst<Konto>($"SELECT TOP 1 * FROM Konto WHERE ID_Konta = '{account.ID_Konta}'");
+                oldAdress = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Konta = '{address.ID_Klienta}'");
+            }
+            if (account != null)
+            {
+                var verification = Konto.verifyValues(account.LoginUzytkownika, account.HashHasla, account.Email);
+                if (verification.Item1)
+                {
+                    if (account.HashHasla != null)
+                    {
+                        account.HashHasla = AccountHelper.hashPassword(account.HashHasla, "ojciec");
+                    }
+                    else
+                        account.HashHasla = oldAccount.HashHasla;
+                    using (IDbConnection conn = DbHelper.GetDbConnection())
+                    {
+                        conn.Execute($"UPDATE Konto SET LoginUzytkownika = '{account.LoginUzytkownika}', Email = '{account.Email}', JestAdminem = '{account.JestAdminem}'");
+                    }
+                    accountAlertClass = "alert-success";
+                    accountAlertValue = "Zaktualizowano";
+                }
+                else
+                {
+                    accountAlertClass = "alert-danger";
+                    accountAlertValue = verification.Item2;
+                }
+            }
+
+            #endregion
+
+            return Page();
+        }
     }
 }

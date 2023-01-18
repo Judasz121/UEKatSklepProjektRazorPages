@@ -99,7 +99,7 @@ namespace BasiaProjektRazorPages.Pages.Account
             {
                 int biggestClientId = conn.ExecuteScalar<int>("SELECT TOP 1 ID_Klienta FROM Klient ORDER BY ID_Klienta DESC");
                 biggestClientId++;
-                int clientId = conn.ExecuteScalar<int>($"INSERT INTO Klient VALUES(NULL, NULL, NULL, NULL); SELECT SCOPE_IDENTITY();");
+                int clientId = conn.ExecuteScalar<int>($"INSERT INTO Klient VALUES(NULL, NULL, NULL); SELECT SCOPE_IDENTITY();");
                 return clientId;
             }
         }

@@ -26,11 +26,13 @@
             @*Koszyk bez logowania - opacity 0*@
             @{
                 string opacity = "0";
+                string route_id = 0.ToString();
                 string pointer_events= "none";
                 if (AccountHelper.loggedInVerified)
                 {
                     opacity = "1";
                     pointer_events = "all";
+                    route_id = AccountHelper.loggedInAccount.ID_Konta.ToString();
                 }
             }
             @{
@@ -44,14 +46,20 @@
             @*Unlogged - /login, Logged - /AccountInformation + Drop menu*@
             <a class="fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Account" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events;line-height:1;padding-top:0.2rem"></a>
             <div class="dropdown">
-                <a class="fa-solid fa-user drop-a" asp-page="@loggedpath" style="color:#aab0b0"></a>
+                <a class="fa-solid fa-user drop-a" asp-page="@loggedpath" style="color:#aab0b0" asp-route-id="@route_id"></a>
                 @{
                 if (AccountHelper.loggedInVerified)
                 {
                     <div class="dropdown-content">
-                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">Konto</a>
+                    @if (AccountHelper.loggedInVerified){
+                                <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id">Konto</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex">Konto</a>
+                    }
                         @*Dodac hiperlink do podkategorii zamowienia*@
-                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">Zamówienia</a>
+                            <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id" asp-route-tabId="nav_orders_tab">Zamówienia</a>
                         <a class="dropdown-Item Logoutitem" style="text-decoration:none;" asp-page="/Account/Logout">Wyloguj</a>
                     </div>
                 }
