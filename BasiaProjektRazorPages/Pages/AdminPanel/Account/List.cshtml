@@ -12,7 +12,6 @@
 else
 {
     <div class="center accounts-container" style="background-color:white;color:black;">
-
         <table id="accounts-table">
             <thead>
                 <tr>
@@ -73,12 +72,12 @@ else
     </div>
     <script>
             document.addEventListener('DOMContentLoaded', e => {
+                $table = instanceof jQuery ? $table : $($table);
                 let $tableEl = $("#accounts-table");
                 let dataTableOptions = {
                     dom: "ltipr",
                     searching: true,
                     initComplete: function(settings) {
-                        console.log("initComplete");
                         this.api()
                             .columns()
                             .every(function() {

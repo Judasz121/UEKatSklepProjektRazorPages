@@ -4,11 +4,11 @@ using System.Data;
 using BasiaProjektRazorPages.Helpers;
 namespace BasiaProjektRazorPages.DbModels
 {
-    public class Konto
+    public class Konto : IEquatable<Konto>
     {
-        public int ID_Konta { get; set; }
-        public int ID_Klienta { get; set; }
-        public int ID_Dostawcy { get; set; }
+        public int? ID_Konta { get; set; }
+        public int? ID_Klienta { get; set; }
+        public int? ID_Dostawcy { get; set; }
         public string LoginUzytkownika { get; set; }
         public string Email { get; set; }
         public string HashHasla { get; set; }
@@ -59,6 +59,27 @@ namespace BasiaProjektRazorPages.DbModels
 
 
             return new Tuple<bool, string>(ok, msg);
+        }
+
+        bool IEquatable<Konto>.Equals(Konto? other)
+        {
+            if (other.ID_Konta != this.ID_Konta)
+                return false;
+            if (other.ID_Klienta != this.ID_Klienta)
+                return false;
+            if (other.ID_Dostawcy != this.ID_Dostawcy)
+                return false;
+            if (other.LoginUzytkownika != this.LoginUzytkownika)
+                return false;
+            if (other.Email != this.Email)
+                return false;
+            if (other.HashHasla != this.HashHasla)
+                return false;
+            if (other.JestAdminem != this.JestAdminem)
+                return false;
+            if (other.DataUtworzenia != this.DataUtworzenia)
+                return false;
+            return true;
         }
     }
 }

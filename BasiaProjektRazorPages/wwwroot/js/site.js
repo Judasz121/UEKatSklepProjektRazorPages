@@ -2,11 +2,6 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-function userWindow() {
-    let div = document.createElement("div");
-    div.id = 'userpanel';
-    div.innerHTML = 
-}
 
 function Dropdown() {
     document.getElementById("PopupMenu").classList.toggle("show");
