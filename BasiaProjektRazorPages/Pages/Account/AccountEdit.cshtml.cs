@@ -17,6 +17,7 @@ namespace BasiaProjektRazorPages.Pages.Account
 
         public bool accountNotFound { get; set; }
         public bool addressNotFound { get; set; }
+        public bool ordersNotFound { get; set; }
 
         [BindProperty]
         public List<Zamowienia> zamowienie { get; set; }
@@ -42,32 +43,14 @@ namespace BasiaProjektRazorPages.Pages.Account
                     //Podjeba³em z neta rozwi¹zanie 
                     // https://www.aspsnippets.com/Articles/Using-SqlDataReader-in-ASPNet-Core-Razor-Pages.aspx
                     //Jak da sie skróciæ kod, bo nie wiem jak dzia³a dok³adnie po³¹czenie z baz¹ to ogarnij thx :)
-                    string query_z = $"Select * FROM Zamowienie WHERE ID_Klienta = '{id}'";
-                    using (SqlCommand cmd = new SqlCommand(query_z, (SqlConnection)conn))
-                    {
-                        conn.Open();
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
-                        {
-                            zamowienie = new List<Zamowienia>();
-                            while (sdr.Read())
-                            {
-                                zamowienie.Add(new Zamowienia
-                                {
-                                    ID_Zamowienia = int.Parse(sdr["ID_Zamowienia"].ToString()),
-                                    Data_zamowienia = DateTime.Parse(sdr["Data_Zamowienia"].ToString()),
-                                    Zaplacone = bool.Parse(sdr["Zaplacone"].ToString())
-
-                                });
-                            }
-                        }
-                        conn.Close();
-                    }
+                    
                 }
             }
             catch (InvalidOperationException exc)
             {
                 addressNotFound = true;
             }
+            
 
         }
         [BindProperty]
@@ -87,20 +70,25 @@ namespace BasiaProjektRazorPages.Pages.Account
                 oldAccount = conn.QueryFirst<Konto>($"SELECT TOP 1 * FROM Konto WHERE ID_Konta = '{account.ID_Konta}'");
                 oldAdress = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Konta = '{address.ID_Klienta}'");
             }
-            if (account != null)
+            //bool passwordChange = false;
+            account.DataUtworzenia = oldAccount.DataUtworzenia;
+            if (!account.Equals(oldAccount))
             {
                 var verification = Konto.verifyValues(account.LoginUzytkownika, account.HashHasla, account.Email);
                 if (verification.Item1)
                 {
-                    if (account.HashHasla != null)
+                    if(account.HashHasla != null)
                     {
                         account.HashHasla = AccountHelper.hashPassword(account.HashHasla, "ojciec");
                     }
                     else
+                    {
                         account.HashHasla = oldAccount.HashHasla;
+
+                    }
                     using (IDbConnection conn = DbHelper.GetDbConnection())
                     {
-                        conn.Execute($"UPDATE Konto SET LoginUzytkownika = '{account.LoginUzytkownika}', Email = '{account.Email}', JestAdminem = '{account.JestAdminem}'");
+                        conn.Execute($"UPDATE Konto SET LoginUzytkownika = '{account.LoginUzytkownika}', Email = '{account.Email}'");
                     }
                     accountAlertClass = "alert-success";
                     accountAlertValue = "Zaktualizowano";
@@ -111,7 +99,6 @@ namespace BasiaProjektRazorPages.Pages.Account
                     accountAlertValue = verification.Item2;
                 }
             }
-
             #endregion
 
             return Page();

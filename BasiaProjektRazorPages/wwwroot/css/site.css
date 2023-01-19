@@ -345,7 +345,7 @@ footer{
     box-shadow: 1px 1px 1px 1px black;
     width: min(24rem);
 }
-.account-name-container, .accounts-settings-container{
+.account-name-container, .accounts-settings-container, .cards-container{
     border: 0.5rem outset;
     border-image: linear-gradient(to right, rgba(2, 80, 181, 1),rgba(34, 100, 171, 1),rgba(24, 74, 126, 1)) 1;
     border-radius: 8px;
@@ -372,6 +372,11 @@ footer{
     display:flex;
     flex-direction:row;
     justify-content:center;
+}
+.cards-container{
+    display:flex;
+    flex:1;
+    flex-direction:row;
 }
 .dropMenu-Item {
     padding: 12px 16px;

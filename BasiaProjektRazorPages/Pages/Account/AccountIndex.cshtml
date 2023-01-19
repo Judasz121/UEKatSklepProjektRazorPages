@@ -50,7 +50,15 @@ else{
                         <tr>
                             <th scope="row">@zamowienia.ID_Zamowienia</th>
                             <td>@zamowienia.Data_zamowienia</td>
-                            <td>@zamowienia.Zaplacone.ToString()</td>
+                            @if(zamowienia.Zaplacone.ToString() == "False")
+                            {
+                                <td>Nieopłacone</td>
+                            }
+                            else
+                            {
+                                <td>Zapłacone</td>
+                            }
+                            @*<td>@zamowienia.Zaplacone.ToString()</td>*@
                         </tr>
                     }
                 </table>

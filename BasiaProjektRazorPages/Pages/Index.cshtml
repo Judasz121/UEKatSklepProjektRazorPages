@@ -12,12 +12,15 @@
     ViewData["Title"] = "Home page";
     HttpContext.Session.SetString("testString1", "Centurion mk. XII");
     IDbConnection conn = DbHelper.GetDbConnection();
-    var adresy = conn.Query<Adres>("SELECT * FROM Adres");
     conn.Dispose();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+<div class="container cards-container bg-white">
+    <div class="card">item1</div>
+    <div class="card">item2</div>
+    <div class="card">item3</div>
+    <div class="card">item4</div>
+    @*<h1 class="display-4">Welcome</h1>
     @HttpContext.Session.GetString("testString1")
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
