@@ -51,7 +51,6 @@ namespace BasiaProjektRazorPages.DbModels
 
             foreach(PropertyInfo propInfo in this.GetType().GetProperties())
             {
-
                 if (propInfo.GetValue(this).Equals(other.GetType().GetProperty(propInfo.Name).GetValue(other)) == false)
                     return false;
             }

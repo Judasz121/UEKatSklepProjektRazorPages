@@ -2,9 +2,11 @@
 using Dapper;
 using System.Data;
 using BasiaProjektRazorPages.Helpers;
+using System.Reflection;
+
 namespace BasiaProjektRazorPages.DbModels
 {
-    public class Konto : IEquatable<Konto>
+    public class Konto : BaseDbModel, IEquatable<object>
     {
         public int? ID_Konta { get; set; }
         public int? ID_Klienta { get; set; }
@@ -61,25 +63,6 @@ namespace BasiaProjektRazorPages.DbModels
             return new Tuple<bool, string>(ok, msg);
         }
 
-        bool IEquatable<Konto>.Equals(Konto? other)
-        {
-            if (other.ID_Konta != this.ID_Konta)
-                return false;
-            if (other.ID_Klienta != this.ID_Klienta)
-                return false;
-            if (other.ID_Dostawcy != this.ID_Dostawcy)
-                return false;
-            if (other.LoginUzytkownika != this.LoginUzytkownika)
-                return false;
-            if (other.Email != this.Email)
-                return false;
-            if (other.HashHasla != this.HashHasla)
-                return false;
-            if (other.JestAdminem != this.JestAdminem)
-                return false;
-            if (other.DataUtworzenia != this.DataUtworzenia)
-                return false;
-            return true;
-        }
+
     }
 }
