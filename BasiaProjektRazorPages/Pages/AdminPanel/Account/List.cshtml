@@ -11,7 +11,15 @@
 }
 else
 {
-    <div class="center admin-accounts-container" style="background-color:white;color:black;">
+    <div class="container admin-panel-settings bg-white justify-content-center">
+        <div>
+            <h3 style="border-bottom:1px solid black">@AccountHelper.loggedInAccount.LoginUzytkownika</h3>
+            <a asp-page="/AdminPanel/Account/List" style="color:black;line-height:1;padding-top:0.5rem">Konta</a>
+            <a asp-page="/AdminPanel/Product/List" style="color:black;line-height:1;padding-top:0.5rem">Produkty</a>
+        </div>
+    </div>
+    <br />
+    <div class="container admin-accounts-container" style="background-color:white;color:black;">
 
         <table id="accounts-table">
             <thead>
