@@ -4,6 +4,7 @@ using Dapper;
 using BasiaProjektRazorPages.DbModels;
 using BasiaProjektRazorPages.Helpers;
 using System.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
 {
@@ -14,6 +15,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
 
         [BindProperty]
         public Produkt product { get; set; }
+        public List<SelectListItem> categories { get; set; } = new List<SelectListItem>();
         public string alertClass { get; set; }
         public string alertMessage { get; set; }
         public bool productNotFound { get; set; }
@@ -30,9 +32,11 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
             {
                 productNotFound = true;
             }
+            this.FetchCategoriesSelectItems();
         }
         public IActionResult OnPost()
         {
+            this.FetchCategoriesSelectItems();
             bool ok = true;
             if (string.IsNullOrWhiteSpace(product.Nazwa))
             {
@@ -61,7 +65,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
                 {
                     try
                     {
-                        conn.Execute($"UPDATE Produkt SET Nazwa = '{product.Nazwa}', Cena_jednostkowa = '{product.Cena_jednostkowa}' WHERE ID_Produktu = '{product.ID_Produktu}'");
+                        conn.Execute($"UPDATE Produkt SET Nazwa = '{product.Nazwa}', Cena_jednostkowa = '{product.Cena_jednostkowa}', ID_Kategorii = '{product.ID_Kategorii}' WHERE ID_Produktu = '{product.ID_Produktu}'");
                         alertClass = "alert-success";
                         alertMessage = "Zapisano";
                     }
@@ -73,6 +77,30 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
                 }
             }
             return Page();
+        }
+
+        public void FetchCategoriesSelectItems()
+        {
+            try
+            {
+                using (IDbConnection conn = DbHelper.GetDbConnection())
+                {
+                    var dbCats = conn.Query<Kategoria>("SELECT * FROM Kategoria");
+                    foreach (Kategoria cat in dbCats)
+                    {
+                        this.categories.Add(new SelectListItem()
+                        {
+                            Value = cat.ID_Kategorii.ToString(),
+                            Text = cat.Nazwa
+                        });
+                    }
+                }
+            }
+            catch (InvalidOperationException exc)
+            {
+                alertClass = "alert-danger";
+                alertMessage += "Server Error: \n" + exc.Message;
+            }
         }
     }
 }

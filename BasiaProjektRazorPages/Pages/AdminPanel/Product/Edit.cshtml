@@ -22,12 +22,18 @@ else
             <input type="hidden" asp-for="product.ID_Produktu" />
 
             <div class="mb-3">
-                <label class="form-label">@Html.DisplayFor(model => model.product.Nazwa)</label>
+                <label class="form-label">@Html.DisplayNameFor(model => model.product.Nazwa)</label>
                 <input type="text" asp-for="product.Nazwa" />
             </div>
             <div class="mb-3">
-                <label class="form-label">@Html.DisplayFor(model => model.product.Cena_jednostkowa)</label>
+                <label class="form-label">@Html.DisplayNameFor(model => model.product.Cena_jednostkowa)</label>
                 <input type="text" asp-for="product.Cena_jednostkowa" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Kategoria</label>
+                <select type="text" asp-for="product.ID_Kategorii" asp-items="Model.categories">
+
+                </select>
             </div>
             @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
             {

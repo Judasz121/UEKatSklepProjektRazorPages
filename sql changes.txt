@@ -38,3 +38,10 @@ ALTER TABLE Produkt
 ALTER COLUMN Nazwa varchar(64) NULL;
 ALTER TABLE Produkt
 ALTER COLUMN Cena_jednostkowa int NULL; 
+
+ALTER TABLE Kategoria
+DROP CONSTRAINT ID_Produktu;
+ALTER TABLE Kategoria
+DROP COLUMN ID_Produktu;
+ALTER TABLE Produkt
+ADD ID_Produktu smallint;
