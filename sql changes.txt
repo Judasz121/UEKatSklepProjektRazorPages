@@ -1,0 +1,35 @@
+USE Projekt
+
+ALTER TABLE Klient DROP COLUMN ID_Adresu
+
+ALTER TABLE dbo.Koszyk ADD ID_Koszyka INT NOT NULL IDENTITY(1,1) PRIMARY KEY 
+
+CREATE TABLE Konto(
+ID_Konta smallint not null identity(1,1) primary key ,
+ID_Klienta smallint ,
+ID_Dostawcy varchar(20) ,
+LoginUzytkownika varchar(128) not null,
+Email varchar(128) not null,
+HashHasla varchar(256) not null ,
+JestAdminem bit DEFAULT 0 ,
+);
+
+ALTER TABLE Konto
+ADD DataUtworzenia DATETIME
+
+
+ALTER TABLE Klient
+ALTER COLUMN Imie varchar(64) NULL;
+ALTER TABLE Klient
+ALTER COLUMN Nazwisko varchar(64) NULL;
+ALTER TABLE Klient
+ALTER COLUMN Telefon varchar(9) NULL;
+
+ALTER TABLE Dostawca
+ALTER COLUMN Nazwa varchar(64) NULL;
+ALTER TABLE Dostawca
+ALTER COLUMN Numer_telefonu varchar(9) NULL;
+ALTER TABLE Dostawca
+ALTER COLUMN Email varchar(64) NULL;
+ALTER TABLE Dostawca
+ALTER COLUMN NIP varchar(12) NULL;
