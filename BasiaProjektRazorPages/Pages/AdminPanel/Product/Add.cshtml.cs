@@ -25,7 +25,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
                 nullPropsSql += ")";
                 int id = conn.ExecuteScalar<int>("INSERT INTO Produkt VALUES" + nullPropsSql + "; SELECT SCOPE_IDENTITY();");
 
-                return RedirectToPage("/AdminPanel/Product/Edit", new { id = id });
+                return RedirectToPage("Edit", new { id = id });
             }
         }
     }

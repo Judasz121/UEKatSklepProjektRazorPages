@@ -12,7 +12,7 @@
 else
 {
     <div class="center admin-accounts-container" style="background-color:white;color:black;">
-
+        <a class="btn btn-primary" asp-page="Add">Dodaj Produkt</a>
         <table id="accounts-table">
             <thead>
                 <tr>
@@ -72,6 +72,9 @@ else
         </table>
     </div>
     <script>
-            GenerateDataTables($"#accounts-table");
+        document.addEventListener('DOMContentLoaded', e => {
+            console.log("halo kurwa, widzisz mnie?");
+            GenerateDataTables($("#accounts-table"));
+        });
     </script>
 }
