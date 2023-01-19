@@ -1,6 +1,6 @@
 ﻿namespace BasiaProjektRazorPages.DbModels
 {
-    public class Tag
+    public class Tag : BaseDbModel
     {
         int ID_Tagu { get; set; }
 

@@ -97,9 +97,18 @@ namespace BasiaProjektRazorPages.Pages.Account
         {
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
-                int biggestClientId = conn.ExecuteScalar<int>("SELECT TOP 1 ID_Klienta FROM Klient ORDER BY ID_Klienta DESC");
-                biggestClientId++;
-                int clientId = conn.ExecuteScalar<int>($"INSERT INTO Klient VALUES(NULL, NULL, NULL); SELECT SCOPE_IDENTITY();");
+                string nullPropsSql = "(";
+                int propsCount = new Klient().GetType().GetProperties().Length - 1;
+                for (int i = 0; i < propsCount; i++)
+                {
+                    
+                    if (i + 1 == propsCount)
+                        nullPropsSql += "NULL";
+                    else
+                        nullPropsSql += "NULL, ";
+                }
+                nullPropsSql = ")";
+                int clientId = conn.ExecuteScalar<int>($"INSERT INTO Klient VALUES{nullPropsSql}; SELECT SCOPE_IDENTITY();");
                 return clientId;
             }
         }

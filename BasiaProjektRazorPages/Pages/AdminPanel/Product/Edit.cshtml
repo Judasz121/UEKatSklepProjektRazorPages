@@ -1,0 +1,64 @@
+﻿@page
+@using BasiaProjektRazorPages.DbModels
+@model BasiaProjektRazorPages.Pages.AdminPanel.Product.EditModel
+@{
+}
+@if (Model.productNotFound)
+{
+    <div class="text-center">
+        <h3>Nimo takiego konta.</h3>
+    </div>
+}else if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="center accounts-container">
+        <form method="post">
+            <input type="hidden" asp-for="product.ID_Produktu" />
+
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayFor(model => model.product.Nazwa)</label>
+                <input type="text" asp-for="product.Nazwa" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayFor(model => model.product.Cena_jednostkowa)</label>
+                <input type="text" asp-for="product.Cena_jednostkowa" />
+            </div>
+            @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
+            {
+                <div class="alert @Model.alertClass">
+                   @Html.Raw(@Model.alertMessage.Replace("\n", "</br>"))
+                    
+               </div>
+            }
+
+            <button class="btn btn-success">Zapisz</button>
+        </form>
+    </div>
+    <script>
+        @*
+        document.addEventListener('DOMContentLoaded ', e => {
+            let btnId = "@Model.nav_tab_id";
+            $("#" + btnId).click();
+
+
+
+
+            $(".auschwitz").on('click', e => {
+                let $btn = $(e.currentTarget);
+                let $inputs = $btn.parent().find("input");
+                if ($inputs[0].hasAttribute("disabled"))
+                    e.originalEvent.preventDefault();
+                $inputs.removeAttr("disabled");
+                $btn.html("Zapisz");
+            });
+        });*@
+
+
+    </script>
+
+}

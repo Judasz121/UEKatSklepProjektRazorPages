@@ -25,7 +25,7 @@ namespace BasiaProjektRazorPages.Pages.Account
         public Adres adres { get; set; }
         [BindProperty]
         //Stworzylem liste, bo mozna byc kilka zamowien
-        public List<Zamowienia> zamowienie { get; set; }
+        public List<Zamowienie> zamowienie { get; set; }
         public void OnGet()
         {
             try
@@ -65,10 +65,10 @@ namespace BasiaProjektRazorPages.Pages.Account
                         conn.Open();
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
-                            zamowienie = new List<Zamowienia>();
+                            zamowienie = new List<Zamowienie>();
                             while (sdr.Read())
                             {
-                                zamowienie.Add(new Zamowienia
+                                zamowienie.Add(new Zamowienie
                                 {
                                     ID_Zamowienia = int.Parse(sdr["ID_Zamowienia"].ToString()),
                                     Data_zamowienia = DateTime.Parse(sdr["Data_Zamowienia"].ToString()),

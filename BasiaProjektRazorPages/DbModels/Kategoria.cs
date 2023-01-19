@@ -1,6 +1,6 @@
 ﻿namespace BasiaProjektRazorPages.DbModels
 {
-    public class Kategoria
+    public class Kategoria : BaseDbModel
     {
         int ID_Kategorii { get; set; }
 

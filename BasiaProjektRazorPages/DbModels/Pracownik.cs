@@ -1,6 +1,6 @@
 ﻿namespace BasiaProjektRazorPages.DbModels
 {
-    public class Pracownik
+    public class Pracownik : BaseDbModel
     {
         int ID_Pracownika { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace BasiaProjektRazorPages.DbModels
 {
-    public class Koszyk
+    public class Koszyk : BaseDbModel
     {
         public int ID_Koszyku { get; set; }
         public int ID_Zamowienia { get; set; }

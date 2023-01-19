@@ -1,6 +1,6 @@
 ﻿namespace BasiaProjektRazorPages.DbModels
 {
-    public class Produkt_magazyn_dostawa
+    public class Produkt_magazyn_dostawa : BaseDbModel
     {
         int ID_Produkt_magazyn_dostawa { get; set; }
         int ID_Produkt_magazyn { get; set; }

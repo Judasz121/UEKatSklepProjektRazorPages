@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace BasiaProjektRazorPages.DbModels
 {
-    public class Konto : BaseDbModel, IEquatable<object>
+    public class Konto : BaseDbModel
     {
         public int? ID_Konta { get; set; }
         public int? ID_Klienta { get; set; }

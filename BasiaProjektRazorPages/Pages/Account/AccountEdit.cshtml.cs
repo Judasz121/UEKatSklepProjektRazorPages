@@ -20,7 +20,7 @@ namespace BasiaProjektRazorPages.Pages.Account
         public bool ordersNotFound { get; set; }
 
         [BindProperty]
-        public List<Zamowienia> zamowienie { get; set; }
+        public List<Zamowienie> zamowienie { get; set; }
         public void OnGet()
         {
             try

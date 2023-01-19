@@ -17,13 +17,6 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Account
         public bool accountNotFound { get; set; }
         public void OnGet()
         {
-            Konto k1 = new Konto()
-            {
-                HashHasla = "ruchanie"
-            };
-            Konto k2 = new Konto();
-            bool test = k1.Equals(k2);
-
             try
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())

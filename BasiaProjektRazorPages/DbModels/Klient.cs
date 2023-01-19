@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 namespace BasiaProjektRazorPages.DbModels
 {
-    public class Klient : IEquatable<Klient>
+    public class Klient : BaseDbModel
     {
         public int? ID_Klienta { get; set; }
         public string Imie { get; set; }
@@ -37,24 +37,5 @@ namespace BasiaProjektRazorPages.DbModels
             return new Tuple<bool, string>(ok, msg);
         }
 
-        bool IEquatable<Klient>.Equals(Klient? other)
-        {
-            //if (other.ID_Klienta != this.ID_Klienta)
-            //    return false;
-            //if (other.Imie != this.Imie)
-            //    return false;
-            //if (other.Nazwisko != this.Nazwisko)
-            //    return false;
-            //if (other.Telefon != this.Telefon)
-            //    return false;
-            //return true;
-
-            foreach(PropertyInfo propInfo in this.GetType().GetProperties())
-            {
-                if (propInfo.GetValue(this).Equals(other.GetType().GetProperty(propInfo.Name).GetValue(other)) == false)
-                    return false;
-            }
-            return true;
-        }
     }
 }

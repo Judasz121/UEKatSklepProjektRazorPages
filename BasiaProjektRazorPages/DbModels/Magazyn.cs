@@ -1,6 +1,6 @@
 ﻿namespace BasiaProjektRazorPages.DbModels
 {
-    public class Magazyn
+    public class Magazyn : BaseDbModel
     {
         int ID_Magazynu { get; set; }
 

@@ -33,3 +33,8 @@ ALTER TABLE Dostawca
 ALTER COLUMN Email varchar(64) NULL;
 ALTER TABLE Dostawca
 ALTER COLUMN NIP varchar(12) NULL;
+
+ALTER TABLE Produkt
+ALTER COLUMN Nazwa varchar(64) NULL;
+ALTER TABLE Produkt
+ALTER COLUMN Cena_jednostkowa int NULL; 

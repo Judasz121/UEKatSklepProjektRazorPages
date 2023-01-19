@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 namespace BasiaProjektRazorPages.DbModels
 {
-    public class Dostawca : IEquatable<Dostawca>
+    public class Dostawca : BaseDbModel
     {
         public int? ID_Dostawcy { get; set; }  
 
@@ -52,19 +52,6 @@ namespace BasiaProjektRazorPages.DbModels
             }
 
             return new Tuple<bool, string>(ok, msg);
-        }
-
-        bool IEquatable<Dostawca>.Equals(Dostawca? other)
-        {
-            if (other.ID_Dostawcy != this.ID_Dostawcy)
-                return false;
-            if (other.Nazwa != this.Nazwa)
-                return false;
-            if (other.Email != this.Email)
-                return false;
-            if (other.NIP != this.NIP)
-                return false;            
-            return true;
         }
     }
 }

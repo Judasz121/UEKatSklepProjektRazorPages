@@ -2,7 +2,7 @@
 
 namespace BasiaProjektRazorPages.DbModels
 {
-    public class Adres
+    public class Adres : BaseDbModel
     {
         public int ID_Adresu { get; set; }
         public int ID_Klienta { get; set; }
