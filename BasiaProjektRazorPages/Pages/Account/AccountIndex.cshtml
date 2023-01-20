@@ -33,6 +33,7 @@ else{
                         <div class="btn_horizontal"></div>
                         <div class="btn_vertical"></div>
                     </a>
+                    @*Ewentualnie dodać dezaktywacje konta *@
                 </div>
 
             </div>
@@ -49,7 +50,7 @@ else{
                     {
                         <tr>
                             <th scope="row">@zamowienia.ID_Zamowienia</th>
-                            <td>@zamowienia.Data_zamowienia</td>
+                            <td>@zamowienia.Data_zamowienia.ToString("dd MMMM yyyy")</td>
                             @if(zamowienia.Zaplacone.ToString() == "False")
                             {
                                 <td>Nieopłacone</td>

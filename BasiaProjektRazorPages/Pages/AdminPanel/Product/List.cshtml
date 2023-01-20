@@ -3,6 +3,7 @@
 @model BasiaProjektRazorPages.Pages.AdminPanel.Product.ListModel
 @{
 }
+@*Product list*@
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )
 {
     <div class="text-center">
@@ -11,16 +12,31 @@
 }
 else
 {
-    <div class="container admin-panel-settings bg-white justify-content-center">
+    <div class="container admin-panel-settings bg-white text-ce" style="width:min(36rem)">
         <div>
-            <h3 style="border-bottom:1px solid black">@AccountHelper.loggedInAccount.LoginUzytkownika</h3>
-            <a asp-page="/AdminPanel/Account/List" style="color:black;line-height:1;padding-top:0.5rem">Konta</a>
-            <a asp-page="/AdminPanel/Product/List" style="color:black;line-height:1;padding-top:0.5rem">Produkty</a>
+            <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
+            <div class="admin-button-container">
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Index">
+                    Strona główna
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Account/List">
+                    Konta
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Product/List">
+                    Produkty
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+            </div>
         </div>
     </div>
     <br />
-    <div class="cont admin-accounts-container" style="background-color:white;color:black;">
-        <a class="btn btn-primary" asp-page="Add">Dodaj Produkt</a>
+    <div class="cont admin-accounts-container text-center" style="background-color:white;color:black;">
+        <a class="btn btn-primary" style="margin:0.4rem 0" asp-page="Add">Dodaj Produkt</a>
         <table id="accounts-table">
             <thead>
                 <tr>

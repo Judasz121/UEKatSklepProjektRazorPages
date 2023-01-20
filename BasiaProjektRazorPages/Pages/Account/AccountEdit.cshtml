@@ -50,12 +50,20 @@ else{
                     <span style="width:11rem">Numer Mieszkania:</span>
                     <input id="input-settings" class="input-settings" asp-for="address.Numer_mieszkania">
                 </div>
-                <div style="display:flex;justify-content:center;margin-top:0.5rem">
-                    <button class="reg-button-animation" id="button-account-settings">
-                        Zmień dane
-                        <div class="btn_horizontal"></div>
-                        <div class="btn_vertical"></div>
-                    </button>
+                <div style="display:flex;justify-content:center">
+                    <div class="button-container">
+                        <button type="submit" class="button-animation">
+                            Zapisz zmiany
+                            <div class="btn_horizontal"></div>
+                            <div class="btn_vertical"></div>
+                        </button>
+                        <br />
+                        <a class="button-animation" asp-page="/Account/AccountIndex" asp-route-id="@AccountHelper.loggedInAccount.ID_Klienta">
+                            Anuluj zmiany
+                            <div class="btn_horizontal"></div>
+                            <div class="btn_vertical"></div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
