@@ -65,10 +65,11 @@ namespace BasiaProjektRazorPages.Pages.Account
             #region Konto
             Konto oldAccount = null;
             Adres oldAdress = null;
+            address.ID_Klienta = (int)account.ID_Konta;
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
                 oldAccount = conn.QueryFirst<Konto>($"SELECT TOP 1 * FROM Konto WHERE ID_Konta = '{account.ID_Konta}'");
-                oldAdress = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Konta = '{address.ID_Klienta}'");
+                oldAdress = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Klienta = '{address.ID_Klienta}'");
             }
             //bool passwordChange = false;
             account.DataUtworzenia = oldAccount.DataUtworzenia;
@@ -98,6 +99,19 @@ namespace BasiaProjektRazorPages.Pages.Account
                     accountAlertClass = "alert-danger";
                     accountAlertValue = verification.Item2;
                 }
+            }
+            var verification2 = Adres.verifyAddress(address.Kraj, address.Miasto, address.Ulica, address.Kod_pocztowy, address.Numer_budynku, address.Numer_mieszkania);
+            if (verification2.Item1)
+            {
+                using(IDbConnection conn = DbHelper.GetDbConnection())
+                {
+                    conn.Execute($"UPDATE Adres SET Kraj = '{address.Kraj}',Miasto = '{address.Miasto}',Ulica = '{address.Ulica}', Kod_pocztowy = '{address.Kod_pocztowy}', Numer_budynku = '{address.Numer_budynku}', Numer_mieszkania = '{address.Numer_mieszkania}' WHERE ID_Klienta = '{address.ID_Klienta}'");
+                }
+            }
+            else
+            {
+                accountAlertClass = "alert-danger";
+                accountAlertValue = verification2.Item2;
             }
             #endregion
 
