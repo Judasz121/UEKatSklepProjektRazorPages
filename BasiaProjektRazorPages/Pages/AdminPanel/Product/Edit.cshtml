@@ -29,6 +29,12 @@ else
                 <label class="form-label">@Html.DisplayNameFor(model => model.product.Cena_jednostkowa)</label>
                 <input type="text" asp-for="product.Cena_jednostkowa" />
             </div>
+            <div class="mb-3">
+                <label class="form-label">Kategoria</label>
+                <select type="text" asp-for="product.ID_Kategorii" asp-items="Model.categories">
+
+                </select>
+            </div>
             @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
             {
                 <div class="alert @Model.alertClass">

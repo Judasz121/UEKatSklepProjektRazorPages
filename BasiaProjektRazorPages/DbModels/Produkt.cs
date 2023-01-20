@@ -7,6 +7,7 @@ namespace BasiaProjektRazorPages.DbModels
         public int ID_Produktu { get; set; }
         public string Nazwa { get; set; }
         public int? Cena_jednostkowa { get; set; }
+        public int? ID_Kategorii { get; set; }
 
         public static Tuple<bool, string> VerifyValues(string name, int? price)
         {
