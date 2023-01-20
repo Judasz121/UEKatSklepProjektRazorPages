@@ -18,7 +18,7 @@ else
 {
     <div class="center accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót na listę</a>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="product.ID_Produktu" />
 
             <div class="mb-3">
@@ -34,6 +34,14 @@ else
                 <select type="text" asp-for="product.ID_Kategorii" asp-items="Model.categories">
 
                 </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Zdjęcie</label>
+                <br>
+                <img src="@Url.Content(Model.product.sciezkaZdjecia)" style="max-width: 70%"/>
+                <br><br>
+                <input class="form-control" type="file" asp-for="productCoverPhoto" />
+                <div class="form-text">Wgraj nowe</div>
             </div>
             @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
             {

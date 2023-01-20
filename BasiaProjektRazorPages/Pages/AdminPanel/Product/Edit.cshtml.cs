@@ -5,6 +5,7 @@ using BasiaProjektRazorPages.DbModels;
 using BasiaProjektRazorPages.Helpers;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
 {
@@ -16,6 +17,9 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
         [BindProperty]
         public Produkt product { get; set; }
         public List<SelectListItem> categories { get; set; } = new List<SelectListItem>();
+        [BindProperty, DataType(DataType.Upload)]
+        public IFormFile productCoverPhoto { get; set; }
+
         public string alertClass { get; set; }
         public string alertMessage { get; set; }
         public bool productNotFound { get; set; }
@@ -38,6 +42,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
         {
             this.FetchCategoriesSelectItems();
             bool ok = true;
+
             if (string.IsNullOrWhiteSpace(product.Nazwa))
             {
                 ok = false;
@@ -51,6 +56,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
                 alertMessage += "Cena nie mo¿e byæ pusta";
             }
             var verification = Produkt.VerifyValues(product.Nazwa, product.Cena_jednostkowa);
+
             if (!ok || !verification.Item1)
             {
                 alertClass = "alert-danger";
@@ -63,13 +69,16 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
+                    if (this.productCoverPhoto != null && productCoverPhoto.Length != 0)
+                        product.sciezkaZdjecia = this.MoveToDbImageStorageFolder(productCoverPhoto).Split("wwwroot")[1];                    
                     try
                     {
-                        conn.Execute($"UPDATE Produkt SET Nazwa = '{product.Nazwa}', Cena_jednostkowa = '{product.Cena_jednostkowa}', ID_Kategorii = '{product.ID_Kategorii}' WHERE ID_Produktu = '{product.ID_Produktu}'");
+                        string sql = $"UPDATE Produkt SET Nazwa = '{product.Nazwa}', Cena_jednostkowa = '{product.Cena_jednostkowa}', ID_Kategorii = '{product.ID_Kategorii}', sciezkaZdjecia = '{product.sciezkaZdjecia}' WHERE ID_Produktu = '{product.ID_Produktu}'";
+                        conn.Execute(sql);
                         alertClass = "alert-success";
                         alertMessage = "Zapisano";
                     }
-                    catch (Exception exc)
+                    catch (InvalidOperationException exc)
                     {
                         alertClass = "alert-danger";
                         alertMessage = "Server error: \n" + exc.Message;
@@ -77,6 +86,34 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
                 }
             }
             return Page();
+        }
+
+        public string MoveToDbImageStorageFolder(IFormFile file)
+        {
+            string dirPath = DbHelper.absoluteImageStorageFolderPath;
+            string finalRelativeFilePath = null;
+
+            bool nameTaken = true;
+            int i = 0;
+            while (nameTaken)
+            {
+                string newFileName = file.FileName.Split('.')[0] + "_" + i.ToString() + '.' + file.FileName.Split('.')[1];
+                string filePath = Path.Combine(dirPath, newFileName);
+                if (!System.IO.File.Exists(filePath))
+                {
+                    nameTaken = false;
+                    finalRelativeFilePath = Path.Combine(DbHelper.relativeImageStorageFolderPath, newFileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return finalRelativeFilePath;
         }
 
         public void FetchCategoriesSelectItems()

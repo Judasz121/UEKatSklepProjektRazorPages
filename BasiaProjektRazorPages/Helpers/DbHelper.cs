@@ -23,5 +23,15 @@ namespace BasiaProjektRazorPages.Helpers
                 connectionString = DbHelper.GetConnectionString();
             return new System.Data.SqlClient.SqlConnection(connectionString);
         }
+
+        public static string absoluteImageStorageFolderPath
+        {
+            get
+            {
+                string rootPath = Directory.GetCurrentDirectory();
+                return Path.Combine(rootPath, relativeImageStorageFolderPath);
+            }
+        }
+        public static string relativeImageStorageFolderPath = @"wwwroot\DbImages";
     }
 }
