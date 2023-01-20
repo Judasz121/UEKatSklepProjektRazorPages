@@ -107,7 +107,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                     else
                         nullPropsSql += "NULL, ";
                 }
-                nullPropsSql = ")";
+                nullPropsSql += ")";
                 int clientId = conn.ExecuteScalar<int>($"INSERT INTO Klient VALUES{nullPropsSql}; SELECT SCOPE_IDENTITY();");
                 return clientId;
             }

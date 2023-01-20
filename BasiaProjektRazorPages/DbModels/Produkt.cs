@@ -4,7 +4,7 @@ namespace BasiaProjektRazorPages.DbModels
 {
     public class Produkt : BaseDbModel
     {
-        public int ID_Produktu { get; set; }
+        public int? ID_Produktu { get; set; }
         public string Nazwa { get; set; }
         public int? Cena_jednostkowa { get; set; }
         public int? ID_Kategorii { get; set; }
