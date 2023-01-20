@@ -1,0 +1,22 @@
+﻿@page
+@model BasiaProjektRazorPages.Pages.AdminPanel.IndexModel
+@using BasiaProjektRazorPages.DbModels;
+@using BasiaProjektRazorPages.Helpers;
+@{
+}
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="container admin-panel-settings bg-white justify-content-center">
+        <div>
+            <h3 style="border-bottom:1px solid black">@AccountHelper.loggedInAccount.LoginUzytkownika</h3>
+            <a asp-page="/AdminPanel/Account/List" style="color:black;line-height:1;padding-top:0.5rem">Konta</a>
+            <a asp-page="/AdminPanel/Product/List" style="color:black;line-height:1;padding-top:0.5rem">Produkty</a>
+        </div>
+    </div>
+}
