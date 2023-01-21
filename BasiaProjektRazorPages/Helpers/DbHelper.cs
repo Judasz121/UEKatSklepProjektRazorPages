@@ -24,6 +24,27 @@ namespace BasiaProjektRazorPages.Helpers
             return new System.Data.SqlClient.SqlConnection(connectionString);
         }
 
+        public static string ReplacePolishChars(string target)
+        {
+            return target
+                .Replace('ą', 'a')
+                .Replace('Ą', 'A')
+                .Replace('ć', 'c')
+                .Replace('Ć', 'C')
+                .Replace('ę', 'e')
+                .Replace('Ę', 'E')
+                .Replace('ł', 'l')
+                .Replace('Ł', 'L')
+                .Replace('ó', 'o')
+                .Replace('Ó', 'O')
+                .Replace('ś', 's')
+                .Replace('Ś', 'S')
+                .Replace('ż', 'z')
+                .Replace('Ż', 'Z')
+                .Replace('ź', 'z')
+                .Replace('Ź', 'Z');
+        }
+
         public static string absoluteImageStorageFolderPath
         {
             get

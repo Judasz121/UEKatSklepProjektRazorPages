@@ -6,6 +6,7 @@ using BasiaProjektRazorPages.Helpers;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
 {
@@ -70,11 +71,22 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     if (this.productCoverPhoto != null && productCoverPhoto.Length != 0)
-                        product.sciezkaZdjecia = this.MoveToDbImageStorageFolder(productCoverPhoto).Split("wwwroot")[1];                    
+                    {
+                        product.sciezkaZdjecia = this.MoveToDbImageStorageFolder(productCoverPhoto).Split("wwwroot")[1];
+                        product.sciezkaZdjecia = DbHelper.ReplacePolishChars(product.sciezkaZdjecia);
+                    }
+
+                    else
+                    {
+                        Produkt oldProduct = conn.QueryFirst<Produkt>($"SELECT * FROM Produkt WHERE ID_Produktu = '{product.ID_Produktu}'");
+                        product.sciezkaZdjecia = oldProduct.sciezkaZdjecia;
+                    }
                     try
                     {
-                        string sql = $"UPDATE Produkt SET Nazwa = '{product.Nazwa}', Cena_jednostkowa = '{product.Cena_jednostkowa}', ID_Kategorii = '{product.ID_Kategorii}', sciezkaZdjecia = '{product.sciezkaZdjecia}' WHERE ID_Produktu = '{product.ID_Produktu}'";
-                        conn.Execute(sql);
+                        //string sql = $"UPDATE Produkt SET Nazwa = '{product.Nazwa}', Cena_jednostkowa = '{product.Cena_jednostkowa}', ID_Kategorii = '{product.ID_Kategorii}', sciezkaZdjecia = '{product.sciezkaZdjecia}' WHERE ID_Produktu = '{product.ID_Produktu}'";
+                        string sql = $"UPDATE Produkt SET Nazwa = @Nazwa, Cena_jednostkowa = @Cena_jednostkowa, ID_Kategorii = @ID_Kategorii, sciezkaZdjecia = @sciezkaZdjecia WHERE ID_Produktu = @ID_Produktu ";
+
+                        conn.Execute(sql, product);
                         alertClass = "alert-success";
                         alertMessage = "Zapisano";
                     }
@@ -98,11 +110,12 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
             while (nameTaken)
             {
                 string newFileName = file.FileName.Split('.')[0] + "_" + i.ToString() + '.' + file.FileName.Split('.')[1];
+                newFileName = DbHelper.ReplacePolishChars(newFileName);
                 string filePath = Path.Combine(dirPath, newFileName);
                 if (!System.IO.File.Exists(filePath))
                 {
                     nameTaken = false;
-                    finalRelativeFilePath = Path.Combine(DbHelper.relativeImageStorageFolderPath, newFileName);
+                    finalRelativeFilePath = Path.Combine(DbHelper.relativeImageStorageFolderPath, newFileName);                    
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         file.CopyTo(stream);
