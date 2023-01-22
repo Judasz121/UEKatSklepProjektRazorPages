@@ -24,6 +24,11 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
+                    try
+                    {
+                        conn.Execute("DELETE FROM Koszyk WHERE ID_Produktu = @id", new { id = this.id });
+                    }
+                    catch (InvalidOperationException exc) { }
                     deletedProduct = conn.QueryFirst<Produkt>($"DELETE FROM Produkt OUTPUT DELETED.* WHERE ID_Produktu = {id}");
                 }
             }
