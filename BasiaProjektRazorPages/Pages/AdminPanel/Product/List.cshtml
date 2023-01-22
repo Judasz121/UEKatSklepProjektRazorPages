@@ -53,12 +53,12 @@ else
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
-@*                    <th>
+                    <th>
                         @{
-                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().JestAdminem);
+                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().usuniety);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
-                    </th>*@
+                    </th>
                     <th>
                         Opcje
                     </th>
@@ -74,9 +74,9 @@ else
                         <td>
                             @Html.DisplayFor(model => product.Cena_jednostkowa)
                         </td>
-@*                        <td>
-                            @Html.DisplayFor(model => acc.JestAdminem)
-                        </td>*@
+                        <td>
+                            @Html.DisplayFor(model => product.usuniety)
+                        </td>
                         <td>
                             <div id="options">
                                 <a class="btn btn-primary" asp-page="/AdminPanel/Product/View" asp-route-id="@product.ID_Produktu">
