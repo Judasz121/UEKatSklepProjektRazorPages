@@ -1,9 +1,8 @@
 ﻿@page
 @using BasiaProjektRazorPages.DbModels
-@model BasiaProjektRazorPages.Pages.AdminPanel.Product.ListModel
+@model BasiaProjektRazorPages.Pages.AdminPanel.Delivery.ListModel
 @{
 }
-@*Product list*@
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )
 {
     <div class="text-center">
@@ -25,58 +24,75 @@ else
         </div>
     </div>
     <br />
-    <div class="cont admin-accounts-container text-center" style="background-color:white;color:black;">
-        <a class="btn btn-primary" style="margin:0.4rem 0" asp-page="Add">Dodaj Produkt</a>
+    <div class="container admin-accounts-container text-center" style="background-color:white;color:black;">
         <table id="accounts-table">
             <thead>
                 <tr>
                     <th>
                         @{
                             string displayName = null;
-                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Nazwa);
+                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().ID_Dostawy);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
                     <th>
                         @{
-                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Cena_jednostkowa);
+                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().ID_Dostawcy);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
                     <th>
                         @{
-                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().usuniety);
+                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().ID_Magazynu);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
                     <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().ID_Produkt_magazyn);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().Ilosc_produktu);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th style="width:min(9rem)">
                         Opcje
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Produkt product in Model.products)
+                @foreach (Dostawa dev in Model.delivery)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(model => product.Nazwa)
+                            @Html.DisplayFor(model => dev.ID_Dostawy)
                         </td>
                         <td>
-                            @Html.DisplayFor(model => product.Cena_jednostkowa)
+                            @Html.DisplayFor(model => dev.ID_Dostawcy)
                         </td>
                         <td>
-                            @Html.DisplayFor(model => product.usuniety)
+                            @Html.DisplayFor(model => dev.ID_Magazynu)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dev.ID_Produkt_magazyn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dev.Ilosc_produktu)
                         </td>
                         <td>
                             <div id="options">
-                                <a class="btn btn-primary" asp-page="/AdminPanel/Product/View" asp-route-id="@product.ID_Produktu">
+                                <a class="btn btn-primary" asp-page="/AdminPanel/Delivery/View" asp-route-id="@dev.ID_Dostawy">
                                     <i class="far fa-eye"></i>
                                 </a>
-                                <a class="btn btn-warning" asp-page="/AdminPanel/Product/Edit" asp-route-id="@product.ID_Produktu">
+                                <a class="btn btn-warning" asp-page="/AdminPanel/Delivery/Edit" asp-route-id="@dev.ID_Dostawy">
                                     <i class="far fa-edit"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-page="/AdminPanel/Product/Delete" asp-route-id="@product.ID_Produktu">
-                                    <i class="fa-solid fa-trash"></i>
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Delivery/Delete" asp-route-id="@dev.ID_Dostawy">
+                                   <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>
                         </td>
@@ -84,6 +100,7 @@ else
                 }
             </tbody>
         </table>
+
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', e => {

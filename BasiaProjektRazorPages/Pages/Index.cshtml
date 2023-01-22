@@ -14,61 +14,24 @@
 
 <div class="container bg-white border-container">
     <h3 style="text-align:center;">Polecane dla Ciebie</h3>
-    <div class="cards-container">
-        <div class="card">
-            <div class="card-image">
-                <img src="/Images/TV_Benq.jpg"/>
-            </div>
-            <div class="card-price">680 zł</div>
-            <div class="card-shopping">
-                <div class="card-item-name">Telewizor BENQ 23'</div>
-                <button class="card-add-cart fa-solid fa-cart-shopping"></button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="/Images/ps5.webp" />
-            </div>
-            <div class="card-price">1300 zł</div>
-            <div class="card-shopping">
-                <div class="card-item-name">Konsola Playstation 5</div>
-                <button class="card-add-cart fa-solid fa-cart-shopping"></button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="/Images/Logitech_mouse.jpg" />
-            </div>
-            <div class="card-price">130 zł</div>
-            <div class="card-shopping">
-                <div class="card-item-name">Logitech G Pro Wireless</div>
-                <button class="card-add-cart fa-solid fa-cart-shopping"></button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="/Images/Corsair_powersupply.jpg" />
-            </div>
-            <div class="card-price">240 zł</div>
-            <div class="card-shopping">
-                <div class="card-item-name">Corsair RMX 750W</div>
-                <button class="card-add-cart fa-solid fa-cart-shopping"></button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="/Images/Corsair_keyboard.jpg" />
-            </div>
-            <div class="card-price">550 zł</div>
-            <div class="card-shopping">
-                <div class="card-item-name">Corsair K70 RBG</div>
-                <button class="card-add-cart fa-solid fa-cart-shopping"></button>
-            </div>
-        </div>
+    <div id="cards-container" class="cards-container snaps-inline">
+        @{
+            foreach(Produkt p in @Model.ProductList)
+            {
+                <div class="card">
+                    <div class="card-image">
+                        <img src="@p.sciezkaZdjecia"/>
+                    </div>
+                    <div class="card-price">@p.Cena_jednostkowa zł</div>
+                    <div class="card-shopping">
+                        <div class="card-item-name">@p.Nazwa</div>
+                        <button class="card-add-cart fa-solid fa-cart-shopping"></button>
+                    </div>
+                </div>
+            }
+        }
+
         
     </div>
-
-    @*<h1 class="display-4">Welcome</h1>
-    @HttpContext.Session.GetString("testString1")
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
+

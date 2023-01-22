@@ -2,20 +2,19 @@
 {
     public class Magazyn : BaseDbModel
     {
-        int ID_Magazynu { get; set; }
+        public int ID_Magazynu { get; set; }
 
-        string Nazwa { get; set; }  
+        public string Nazwa { get; set; }  
 
-        string Kraj { get; set; }
+        public string Kraj { get; set; }
 
-        string Miasto { get; set; } 
+        public string Miasto { get; set; } 
 
-        string Kod_pocztowy { get; set; }  
+        public string Kod_pocztowy { get; set; }  
 
-        string Ulica { get; set; }
+        public string Ulica { get; set; }
         
-        string Numer_budynku { get; set; }
+        public string Numer_budynku { get; set; }
        
-        string Numer_mieszkania { get; set; }
     }
 }

@@ -1,0 +1,128 @@
+﻿@page
+@using BasiaProjektRazorPages.DbModels
+@model BasiaProjektRazorPages.Pages.AdminPanel.Warehouse.ListModel
+@{
+}
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+        <div class="text-center">
+            <h3>Nie mosz uprawnień do tej strony.</h3>
+        </div>
+}
+else
+{
+        <div class="container admin-panel-settings bg-white text-ce" style="width:min(36rem)">
+            <div>
+                <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
+                <div class="admin-button-container">
+                    <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Index">
+                        Strona główna
+                        <div class="btn_horizontal"></div>
+                        <div class="btn_vertical"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br />
+    <div class="container admin-accounts-container text-center" style="background-color:white;color:black;">
+        <table id="accounts-table">
+            <thead>
+                <tr>
+                    <th>
+                        @{
+                            string displayName = null;
+                            displayName = @Html.DisplayNameFor(model => model.warehouse.FirstOrDefault().ID_Magazynu);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.warehouse.FirstOrDefault().Nazwa);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.warehouse.FirstOrDefault().Kraj);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.warehouse.FirstOrDefault().Miasto);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.warehouse.FirstOrDefault().Kod_pocztowy);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.warehouse.FirstOrDefault().Ulica);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.warehouse.FirstOrDefault().Numer_budynku);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th style="width:min(9rem)">
+                        Opcje
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Magazyn war in Model.warehouse)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => war.ID_Magazynu)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => war.Nazwa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => war.Kraj)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => war.Miasto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => war.Kod_pocztowy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => war.Ulica)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => war.Numer_budynku)
+                        </td>
+                        <td>
+                            <div id="options">
+                                <a class="btn btn-primary" asp-page="/AdminPanel/Warehouse/View" asp-route-id="@war.ID_Magazynu">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                <a class="btn btn-warning" asp-page="/AdminPanel/Warehouse/Edit" asp-route-id="@war.ID_Magazynu">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Warehouse/Delete" asp-route-id="@war.ID_Magazynu">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            GenerateDataTables($("#accounts-table"));
+        });
+    </script>
+}

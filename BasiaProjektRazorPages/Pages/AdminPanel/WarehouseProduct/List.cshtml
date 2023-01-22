@@ -1,14 +1,13 @@
 ﻿@page
 @using BasiaProjektRazorPages.DbModels
-@model BasiaProjektRazorPages.Pages.AdminPanel.Product.ListModel
+@model BasiaProjektRazorPages.Pages.AdminPanel.WarehouseProduct.ListModel
 @{
 }
-@*Product list*@
-@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
 {
-    <div class="text-center">
-        <h3>Nie mosz uprawnień do tej strony.</h3>
-    </div>
+        <div class="text-center">
+            <h3>Nie mosz uprawnień do tej strony.</h3>
+        </div>
 }
 else
 {
@@ -25,57 +24,65 @@ else
         </div>
     </div>
     <br />
-    <div class="cont admin-accounts-container text-center" style="background-color:white;color:black;">
-        <a class="btn btn-primary" style="margin:0.4rem 0" asp-page="Add">Dodaj Produkt</a>
+    <div class="container admin-accounts-container text-center" style="background-color:white;color:black;">
         <table id="accounts-table">
             <thead>
                 <tr>
                     <th>
                         @{
                             string displayName = null;
-                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Nazwa);
+                            displayName = @Html.DisplayNameFor(model => model.warehouseproduct.FirstOrDefault().ID_Produkt_magazyn);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
                     <th>
                         @{
-                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Cena_jednostkowa);
+                            displayName = @Html.DisplayNameFor(model => model.warehouseproduct.FirstOrDefault().ID_Magazynu);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
                     <th>
                         @{
-                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().usuniety);
+                            displayName = @Html.DisplayNameFor(model => model.warehouseproduct.FirstOrDefault().ID_Produktu);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
                     <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.warehouseproduct.FirstOrDefault().Ilosc_produktu);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th style="width:min(9rem)">
                         Opcje
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Produkt product in Model.products)
+                @foreach (Produkt_magazyn war in Model.warehouseproduct)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(model => product.Nazwa)
+                            @Html.DisplayFor(model => war.ID_Produkt_magazyn)
                         </td>
                         <td>
-                            @Html.DisplayFor(model => product.Cena_jednostkowa)
+                            @Html.DisplayFor(model => war.ID_Magazynu)
                         </td>
                         <td>
-                            @Html.DisplayFor(model => product.usuniety)
+                            @Html.DisplayFor(model => war.ID_Produktu)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => war.Ilosc_produktu)
                         </td>
                         <td>
                             <div id="options">
-                                <a class="btn btn-primary" asp-page="/AdminPanel/Product/View" asp-route-id="@product.ID_Produktu">
+                                <a class="btn btn-primary" asp-page="/AdminPanel/WarehouseProduct/View" asp-route-id="@war.ID_Produkt_magazyn">
                                     <i class="far fa-eye"></i>
                                 </a>
-                                <a class="btn btn-warning" asp-page="/AdminPanel/Product/Edit" asp-route-id="@product.ID_Produktu">
+                                <a class="btn btn-warning" asp-page="/AdminPanel/WarehouseProduct/Edit" asp-route-id="@war.ID_Produkt_magazyn">
                                     <i class="far fa-edit"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-page="/AdminPanel/Product/Delete" asp-route-id="@product.ID_Produktu">
+                                <a class="btn btn-danger" asp-page="/AdminPanel/WarehouseProduct/Delete" asp-route-id="@war.ID_Produkt_magazyn">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>
@@ -84,6 +91,7 @@ else
                 }
             </tbody>
         </table>
+
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', e => {
