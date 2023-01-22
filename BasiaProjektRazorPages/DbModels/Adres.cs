@@ -53,7 +53,7 @@ namespace BasiaProjektRazorPages.DbModels
                     ok= false;
                     msg += "Nazwa Ulicy nie może być pusta";
                 }
-                if(Miasto.Length > 20)
+                if(Ulica.Length > 20)
                 {
                     ok = false;
                     msg += "Taka nazwa Ulicy nie istnieje";
@@ -87,6 +87,7 @@ namespace BasiaProjektRazorPages.DbModels
                     msg += "Taki numer budynku nie istnieje";
                 }
             }
+            //Numer mieszkania
             if (Numer_mieszkania == null)
             {
                 ok = true;

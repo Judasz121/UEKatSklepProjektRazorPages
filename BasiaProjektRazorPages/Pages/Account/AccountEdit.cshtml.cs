@@ -65,7 +65,9 @@ namespace BasiaProjektRazorPages.Pages.Account
             #region Konto
             Konto oldAccount = null;
             Adres oldAdress = null;
+            //Debugging purposes
             address.ID_Klienta = (int)account.ID_Konta;
+            //
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
                 oldAccount = conn.QueryFirst<Konto>($"SELECT TOP 1 * FROM Konto WHERE ID_Konta = '{account.ID_Konta}'");
@@ -100,19 +102,39 @@ namespace BasiaProjektRazorPages.Pages.Account
                     accountAlertValue = verification.Item2;
                 }
             }
-            var verification2 = Adres.verifyAddress(address.Kraj, address.Miasto, address.Ulica, address.Kod_pocztowy, address.Numer_budynku, address.Numer_mieszkania);
-            if (verification2.Item1)
+            if (!address.Equals(oldAdress))
             {
-                using(IDbConnection conn = DbHelper.GetDbConnection())
+                var verification2 = Adres.verifyAddress(address.Kraj, address.Miasto, address.Ulica, address.Kod_pocztowy, address.Numer_budynku, address.Numer_mieszkania);
+                if (verification2.Item1)
                 {
-                    conn.Execute($"UPDATE Adres SET Kraj = '{address.Kraj}',Miasto = '{address.Miasto}',Ulica = '{address.Ulica}', Kod_pocztowy = '{address.Kod_pocztowy}', Numer_budynku = '{address.Numer_budynku}', Numer_mieszkania = '{address.Numer_mieszkania}' WHERE ID_Klienta = '{address.ID_Klienta}'");
+                    using (IDbConnection conn = DbHelper.GetDbConnection())
+                    {
+                        conn.Execute($"UPDATE Adres SET Kraj = '{address.Kraj}',Miasto = '{address.Miasto}',Ulica = '{address.Ulica}', Kod_pocztowy = '{address.Kod_pocztowy}', Numer_budynku = '{address.Numer_budynku}', Numer_mieszkania = '{address.Numer_mieszkania}' WHERE ID_Klienta = '{address.ID_Klienta}'");
+                    }
+                    accountAlertClass = "alert-success";
+                    accountAlertValue = "Zaktualizowano";
+                }
+                else
+                {
+                    accountAlertClass = "alert-danger";
+                    accountAlertValue = verification2.Item2;
                 }
             }
-            else
-            {
-                accountAlertClass = "alert-danger";
-                accountAlertValue = verification2.Item2;
-            }
+            //var verification2 = Adres.verifyAddress(address.Kraj, address.Miasto, address.Ulica, address.Kod_pocztowy, address.Numer_budynku, address.Numer_mieszkania);
+            //if (verification2.Item1)
+            //{
+            //    using(IDbConnection conn = DbHelper.GetDbConnection())
+            //    {
+            //        conn.Execute($"UPDATE Adres SET Kraj = '{address.Kraj}',Miasto = '{address.Miasto}',Ulica = '{address.Ulica}', Kod_pocztowy = '{address.Kod_pocztowy}', Numer_budynku = '{address.Numer_budynku}', Numer_mieszkania = '{address.Numer_mieszkania}' WHERE ID_Klienta = '{address.ID_Klienta}'");
+            //    }
+            //    accountAlertClass = "alert-success";
+            //    accountAlertValue = "Zaktualizowano";
+            //}
+            //else
+            //{
+            //    accountAlertClass = "alert-danger";
+            //    accountAlertValue = verification2.Item2;
+            //}
             #endregion
 
             return Page();

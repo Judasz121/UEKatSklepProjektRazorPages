@@ -419,6 +419,7 @@ footer{
     height:100%;
     overflow: scroll;
     overflow: hidden;
+    position:unset !important;
 }
 .card-image {
     margin-left: auto;

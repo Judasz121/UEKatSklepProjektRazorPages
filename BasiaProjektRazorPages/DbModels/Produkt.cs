@@ -11,6 +11,8 @@ namespace BasiaProjektRazorPages.DbModels
         public string sciezkaZdjecia { get; set; }
         public bool usuniety { get; set; }
 
+        public bool usuniety { get; set; }
+
         public static Tuple<bool, string> VerifyValues(string name, int? price)
         {
             Regex nonDigit = new Regex(@"/D");
