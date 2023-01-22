@@ -33,7 +33,8 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
                 alertMessage = "Nie znaleziono produktu z tym id lub wyst¹pi³ se ¿ydowski b³¹d serwera.";
             }
 
-            if (!string.IsNullOrWhiteSpace(redirect) && deletedProduct != null && deletedProduct.ID_Produktu != null)
+            //if (!string.IsNullOrWhiteSpace(redirect) && deletedProduct != null && deletedProduct.ID_Produktu != null)
+            if (!string.IsNullOrWhiteSpace(redirect)) 
                 return RedirectToPage(redirect);
             else
                 return Page();

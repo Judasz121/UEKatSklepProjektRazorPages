@@ -75,7 +75,7 @@ else
                                 <a class="btn btn-warning" asp-page="/AdminPanel/Product/Edit" asp-route-id="@product.ID_Produktu">
                                     <i class="far fa-edit"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-page="/AdminPanel/Product/Delete" asp-route-id="@product.ID_Produktu">
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Product/Delete" asp-route-id="@product.ID_Produktu" asp-route-redirect="List">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>
