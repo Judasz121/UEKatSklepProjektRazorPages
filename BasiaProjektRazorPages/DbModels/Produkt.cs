@@ -9,6 +9,7 @@ namespace BasiaProjektRazorPages.DbModels
         public int? Cena_jednostkowa { get; set; }
         public int? ID_Kategorii { get; set; }
         public string sciezkaZdjecia { get; set; }
+        public bool usuniety { get; set; }
 
         public bool usuniety { get; set; }
 

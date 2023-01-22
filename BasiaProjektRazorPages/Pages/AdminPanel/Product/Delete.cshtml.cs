@@ -24,18 +24,13 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
-                    try
-                    {
-                        conn.Execute("DELETE FROM Koszyk WHERE ID_Produktu = @id", new { id = this.id });
-                    }
-                    catch (InvalidOperationException exc) { }
-                    deletedProduct = conn.QueryFirst<Produkt>($"DELETE FROM Produkt OUTPUT DELETED.* WHERE ID_Produktu = {id}");
+                    conn.Execute($"UPDATE Produkt SET usuniety = 1 WHERE ID_Produktu = @id", new {id = this.id});
                 }
             }
             catch (InvalidOperationException exc)
-            {
-                alertClass = "alert-danger";
-                alertMessage = "Nie znaleziono konta z tym id lub wyst¹pi³ se ¿ydowski b³¹d serwera.";
+            { 
+                alertClass = "alert-danger"; // check incorrect id handling
+                alertMessage = "Nie znaleziono produktu z tym id lub wyst¹pi³ se ¿ydowski b³¹d serwera.";
             }
 
             if (!string.IsNullOrWhiteSpace(redirect) && deletedProduct != null && deletedProduct.ID_Produktu != null)
