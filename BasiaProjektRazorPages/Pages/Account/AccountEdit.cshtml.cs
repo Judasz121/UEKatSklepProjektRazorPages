@@ -65,13 +65,22 @@ namespace BasiaProjektRazorPages.Pages.Account
             #region Konto
             Konto oldAccount = null;
             Adres oldAdress = null;
+            bool addressDoesntExist = false;
             //Debugging purposes
             address.ID_Klienta = (int)account.ID_Konta;
             //
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
                 oldAccount = conn.QueryFirst<Konto>($"SELECT TOP 1 * FROM Konto WHERE ID_Konta = '{account.ID_Konta}'");
-                oldAdress = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Klienta = '{address.ID_Klienta}'");
+                try
+                {
+                    oldAdress = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Klienta = '{address.ID_Klienta}'");
+                }
+                catch(InvalidOperationException exc)
+                {
+                    addressDoesntExist = true;
+                }
+
             }
             //bool passwordChange = false;
             account.DataUtworzenia = oldAccount.DataUtworzenia;
@@ -104,12 +113,23 @@ namespace BasiaProjektRazorPages.Pages.Account
             }
             if (!address.Equals(oldAdress))
             {
+                address.changeNullStringPropertiesToEmptyStrings();
                 var verification2 = Adres.verifyAddress(address.Kraj, address.Miasto, address.Ulica, address.Kod_pocztowy, address.Numer_budynku, address.Numer_mieszkania);
                 if (verification2.Item1)
                 {
                     using (IDbConnection conn = DbHelper.GetDbConnection())
                     {
-                        conn.Execute($"UPDATE Adres SET Kraj = '{address.Kraj}',Miasto = '{address.Miasto}',Ulica = '{address.Ulica}', Kod_pocztowy = '{address.Kod_pocztowy}', Numer_budynku = '{address.Numer_budynku}', Numer_mieszkania = '{address.Numer_mieszkania}' WHERE ID_Klienta = '{address.ID_Klienta}'");
+                        if (addressDoesntExist)
+                        {
+                            int clientId = conn.ExecuteScalar<int>("SELECT ID_Klienta FROM Konto WHERE ID_Konta = @id", new { id = this.id });
+                            address.ID_Klienta = clientId;
+                            conn.Execute("INSERT INTO Adres (ID_Klienta, Kraj, Miasto, Ulica, Kod_pocztowy, Numer_budynku, Numer_mieszkania)" +
+                                "VALUES(@ID_Klienta, @Kraj, @Miasto, @Ulica, @Kod_pocztowy, @Numer_budynku, @Numer_mieszkania)", address);
+                        }
+                        else
+                        {
+                            conn.Execute($"UPDATE Adres SET Kraj = '{address.Kraj}',Miasto = '{address.Miasto}',Ulica = '{address.Ulica}', Kod_pocztowy = '{address.Kod_pocztowy}', Numer_budynku = '{address.Numer_budynku}', Numer_mieszkania = '{address.Numer_mieszkania}' WHERE ID_Klienta = '{address.ID_Klienta}'");
+                        }
                     }
                     accountAlertClass = "alert-success";
                     accountAlertValue = "Zaktualizowano";

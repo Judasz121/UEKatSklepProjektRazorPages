@@ -6,6 +6,8 @@ namespace BasiaProjektRazorPages.DbModels
     {
         public override bool Equals(object? other)
         {
+            if (other == null)
+                return false;
             foreach (PropertyInfo propInfo in this.GetType().GetProperties())
             {
                 var val1 = propInfo.GetValue(this);
@@ -22,6 +24,17 @@ namespace BasiaProjektRazorPages.DbModels
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public void changeNullStringPropertiesToEmptyStrings()
+        {
+            foreach(PropertyInfo propInfo in this.GetType().GetProperties())
+            {
+                if (typeof(string).IsAssignableFrom(propInfo.PropertyType) && propInfo.GetValue(this) == null)
+                {
+                    propInfo.SetValue(this, "");
+                }
+            }
         }
     }
 }

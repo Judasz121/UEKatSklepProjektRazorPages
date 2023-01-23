@@ -51,6 +51,7 @@ namespace BasiaProjektRazorPages.Pages.Account
             catch (InvalidOperationException exc)
             {
                 addressNotFound = true;
+                this.adres = new Adres();
             }
             try
             {

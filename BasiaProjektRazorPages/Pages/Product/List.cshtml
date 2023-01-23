@@ -82,30 +82,30 @@
 
 
 
-            function updateCart() {
+            //function updateCart() {
 
-                function genCartProductItem(record){
-                    console.log(record);
-                    let $container = $(document.createElement('div'));
-                    $container.attr("class", "cart-product");
-                    $container.attr("id", record.product.iD_Produktu);
-                    $container.html(`${record.product.nazwa}</br>x${record.amount}`);
-                    return $container[0];
-                }
+            //    function genCartProductItem(record){
+            //        console.log(record);
+            //        let $container = $(document.createElement('div'));
+            //        $container.attr("class", "cart-product");
+            //        $container.attr("id", record.product.iD_Produktu);
+            //        $container.html(`${record.product.nazwa}</br>x${record.amount}`);
+            //        return $container[0];
+            //    }
 
-                $.ajax({
-                    url: '@cartApiUrl' + "?handler=GetCart",
-                    method: "POST",
-                    contentType: 'application/json',
-                }).done(function(data, status, xhr) {
-                        let $cartList = $("#cart-products");
-                        console.log(data);
-                        data.products.forEach(productRecord => {
-                            $cartList.append(genCartProductItem(productRecord));
-                        });
-                    });
-            }
-            updateCart();
+            //    $.ajax({
+            //        url: '@cartApiUrl' + "?handler=GetCart",
+            //        method: "POST",
+            //        contentType: 'application/json',
+            //    }).done(function(data, status, xhr) {
+            //            let $cartList = $("#cart-products");
+            //        $cartList.html('');
+            //            data.products.forEach(productRecord => {
+            //                $cartList.append(genCartProductItem(productRecord));
+            //            });
+            //        });
+            //}
+            //updateCart();
 
 
             $(document).on('click', '[product-id]', e => {

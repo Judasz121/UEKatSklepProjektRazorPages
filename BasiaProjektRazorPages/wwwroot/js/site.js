@@ -49,4 +49,28 @@ function GenerateDataTables($tableEl) {
 };
 
 
+function updateCart() {
+
+    function genCartProductItem(record) {
+        console.log(record);
+        let $container = $(document.createElement('div'));
+        $container.attr("class", "cart-product");
+        $container.attr("id", record.product.iD_Produktu);
+        $container.html(`${record.product.nazwa}</br>x${record.amount}`);
+        return $container[0];
+    }
+
+    $.ajax({
+        url: '/Cart/api' + "?handler=GetCart",
+        method: "POST",
+        contentType: 'application/json',
+    }).done(function (data, status, xhr) {
+        let $cartList = $("#cart-products");
+        $cartList.html('');
+        data.products.forEach(productRecord => {
+            $cartList.append(genCartProductItem(productRecord));
+        });
+    });
+}
+updateCart();
 
