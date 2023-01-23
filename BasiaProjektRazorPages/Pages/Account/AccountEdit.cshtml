@@ -58,15 +58,21 @@ else{
                             <div class="btn_vertical"></div>
                         </button>
                         <br />
-                        <a class="button-animation" asp-page="/Account/AccountIndex" asp-route-id="@AccountHelper.loggedInAccount.ID_Klienta">
+                        <a class="button-animation" asp-page="/Account/AccountIndex" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">
                             Anuluj zmiany
                             <div class="btn_horizontal"></div>
                             <div class="btn_vertical"></div>
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
-
+        @if (!string.IsNullOrWhiteSpace(Model.accountAlertValue))
+        {
+            <div class="alert @Model.accountAlertClass" role="alert">
+                @Model.accountAlertValue
+            </div>
+        }
     </form>
 }

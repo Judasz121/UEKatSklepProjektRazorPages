@@ -1,0 +1,78 @@
+﻿@page
+@using BasiaProjektRazorPages.DbModels
+@model BasiaProjektRazorPages.Pages.AdminPanel.Employee.ViewModel
+@{
+}
+@if (Model.employeeNotFound)
+{
+    <div class="text-center">
+        <h3>Nimo takiego pracownika.</h3>
+    </div>
+}else if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="center accounts-container bg-white">
+        <form method="get" enctype="multipart/form-data">
+            <input type="hidden" asp-for="employee.ID_Pracownika" />
+
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.Imie)</label>
+                <input type="text" disabled asp-for="employee.Imie" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.Nazwisko)</label>
+                <input type="text" disabled asp-for="employee.Nazwisko" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.ID_Magazynu)</label>
+                <input type="text" disabled asp-for="employee.ID_Magazynu" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.Wyplata)</label>
+                <input type="text" disabled asp-for="employee.Wyplata" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.Numer_telefonu)</label>
+                <input type="text" disabled asp-for="employee.Numer_telefonu" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.PESEL)</label>
+                <input type="text" disabled asp-for="employee.PESEL" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.Numer_konta)</label>
+                <input type="text" disabled asp-for="employee.Numer_konta" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.Data_Zatrudnienia)</label>
+                <input type="text" disabled asp-for="employee.Data_Zatrudnienia" />
+            </div>
+            @if (Model.employee.Data_Zwolnienia == DateTime.MinValue){
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.Data_Zatrudnienia)</label>
+                <input type="text" disabled placeholder="Brak" />
+            </div>
+            }
+            else
+            {
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.Data_Zatrudnienia)</label>
+                <input type="text" disabled asp-for="employee.Data_Zwolnienia" />
+            </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
+            {
+                <div class="alert @Model.alertClass">
+                    @Html.Raw(@Model.alertMessage.Replace("\n", "</br>"))
+
+                </div>
+            }
+            <a class="btn btn-secondary" asp-page="List">Powrót na listę</a>
+        </form>
+    </div>
+}

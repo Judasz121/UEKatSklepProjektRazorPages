@@ -47,7 +47,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Product
             if (string.IsNullOrWhiteSpace(product.Nazwa))
             {
                 ok = false;
-                alertMessage = "Nazwa nie mo¿ê byæ pust¹ suk¹";
+                alertMessage = "Nazwa nie mo¿ê byæ pusta";
             }
             if (product.Cena_jednostkowa == null)
             {

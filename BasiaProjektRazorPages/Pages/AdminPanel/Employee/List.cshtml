@@ -24,12 +24,14 @@ else
         </div>
     </div>
     <br />
-    <div class="container admin-accounts-container text-center" style="background-color:white;color:black;">
+    <div class="container admin-accounts-container text-center" style="width:min(80rem) !important;background-color:white;color:black;">
+        <a class="btn btn-primary" style="margin:0.4rem 0" asp-page="Add">Dodaj Pracownika</a>
         <table id="accounts-table">
             <thead>
                 <tr>
                     <th>
                         @{
+                            string displayValue = null;
                             string displayName = null;
                             displayName = @Html.DisplayNameFor(model => model.employee.FirstOrDefault().ID_Pracownika);
                         }
@@ -59,6 +61,12 @@ else
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.employee.FirstOrDefault().Data_Zwolnienia);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
                     <th style="width:min(9rem)">
                         Opcje
                     </th>
@@ -83,6 +91,20 @@ else
                         <td>
                             @Html.DisplayFor(model => emp.Numer_telefonu)
                         </td>
+
+                            @if (emp.Data_Zwolnienia == DateTime.MinValue)
+                            {
+                                displayValue = "Brak";
+                                <td>
+                                    @displayValue
+                                </td>
+                            }    
+                            else{
+                                <td>
+                                @emp.Data_Zwolnienia.ToString("dd/MM/yyyy");
+                                </td>
+                                
+                            }
                         <td>
                             <div id="options">
                                 <a class="btn btn-primary" asp-page="/AdminPanel/Employee/View" asp-route-id="@emp.ID_Pracownika">

@@ -20,7 +20,7 @@ namespace BasiaProjektRazorPages.DbModels
             //Kraj
             if (Kraj != null)
             {
-                if (string.IsNullOrEmpty(Kraj))
+                if (!string.IsNullOrEmpty(Kraj))
                 {
                     ok = false;
                     msg += "Nazwa Kraju nie może być pusta";
@@ -34,7 +34,7 @@ namespace BasiaProjektRazorPages.DbModels
             //Miasto
             if(Miasto != null)
             {
-                if (string.IsNullOrEmpty(Miasto))
+                if (!string.IsNullOrEmpty(Miasto))
                 {
                     ok = false;
                     msg += "Nazwa Miasta nie może być pusta";
@@ -48,7 +48,7 @@ namespace BasiaProjektRazorPages.DbModels
             //Ulica
             if(Ulica != null)
             {
-                if(string.IsNullOrEmpty(Ulica))
+                if(!string.IsNullOrEmpty(Ulica))
                 {
                     ok= false;
                     msg += "Nazwa Ulicy nie może być pusta";
@@ -62,7 +62,7 @@ namespace BasiaProjektRazorPages.DbModels
             //Kod_pocztowy
             if (Kod_pocztowy != null)
             {
-                if (string.IsNullOrEmpty(Kod_pocztowy))
+                if (!string.IsNullOrEmpty(Kod_pocztowy))
                 {
                     ok = false;
                     msg += "Kod pocztowy nie może być pusty";
@@ -76,7 +76,7 @@ namespace BasiaProjektRazorPages.DbModels
             //Numer budynku
             if (Numer_budynku != null)
             {
-                if (string.IsNullOrEmpty(Numer_budynku))
+                if (!string.IsNullOrEmpty(Numer_budynku))
                 {
                     ok = false;
                     msg += "Numer_budynku nie może być pusty";

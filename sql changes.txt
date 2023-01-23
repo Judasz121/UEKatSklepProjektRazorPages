@@ -45,3 +45,35 @@ ALTER TABLE Kategoria
 DROP COLUMN ID_Produktu;
 ALTER TABLE Produkt
 ADD ID_Produktu smallint;
+
+23.01.2023
+
+alter table Pracownik
+alter column Imie varchar(15) null;
+alter table Pracownik
+alter column Nazwisko varchar(15) null;
+alter table Pracownik
+alter column Wyplata int null;
+alter table Pracownik
+alter column Numer_telefonu varchar(9) null;
+alter table Pracownik
+alter column PESEL varchar(11) null;
+alter table Pracownik
+alter column Numer_konta varchar(26) null;
+alter table Pracownik
+alter column Data_zatrudnienia date null;
+
+alter table Magazyn
+alter column Nazwa varchar(30) null;
+alter table Magazyn
+alter column Kraj varchar(20) null;
+alter table Magazyn
+alter column Miasto varchar(20) null;
+alter table Magazyn
+alter column Kod_pocztowy varchar(20) null;
+alter table Magazyn
+alter column Ulica varchar(20) null;
+alter table Magazyn
+alter column Numer_budynku varchar(3) null;
+alter table Magazyn
+add Usunieta bit not null default 0;

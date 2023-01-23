@@ -68,6 +68,9 @@ body {
         display: none !important;
         pointer-events: none;
     }
+    .admin-accounts-container{
+        width:min(30rem) !important;
+    }
 
 }   
 @media (min-width: 600px){
@@ -519,4 +522,12 @@ footer{
 }
 .dropdown:hover .dropdown-content{
     display:block;
+}
+.datatable-container{
+    display:flex;
+    gap:1rem;
+    flex-direction:row;
+}
+#options{
+    width:min(10rem) !important;
 }
