@@ -6,7 +6,7 @@
 @if (Model.productNotFound)
 {
     <div class="text-center">
-        <h3>Nimo takiego konta.</h3>
+        <h3>Nimo takiego produktu.</h3>
     </div>
 }else if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
 {
@@ -38,7 +38,7 @@ else
             <div class="mb-3">
                 <label class="form-label">Zdjęcie</label>
                 <br>
-                <img src="@Url.Content(Model.product.sciezkaZdjecia)" style="max-width: 70%"/>
+                <img src="@Url.Content(Model.product.sciezkaZdjecia)" style="max-width:50%"/>
                 <br><br>
                 <input class="form-control" type="file" asp-for="productCoverPhoto" />
                 <div class="form-text">Wgraj nowe</div>

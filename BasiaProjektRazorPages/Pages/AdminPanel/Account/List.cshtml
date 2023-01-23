@@ -12,22 +12,12 @@
 }
 else
 {
-    <div class="container admin-panel-settings bg-white" style="width:min(36rem)">
+    <div class="container admin-panel-settings bg-white text-ce" style="width:min(36rem)">
         <div>
             <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
             <div class="admin-button-container">
                 <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Index">
                     Strona główna
-                    <div class="btn_horizontal"></div>
-                    <div class="btn_vertical"></div>
-                </a>
-                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Account/List">
-                    Konta
-                    <div class="btn_horizontal"></div>
-                    <div class="btn_vertical"></div>
-                </a>
-                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Product/List">
-                    Produkty
                     <div class="btn_horizontal"></div>
                     <div class="btn_vertical"></div>
                 </a>
@@ -96,6 +86,8 @@ else
         </table>
     </div>
     <script>
-            GenerateDataTables($"#accounts-table");
+        document.addEventListener('DOMContentLoaded', e => {
+            GenerateDataTables($("#accounts-table"));
+        });
     </script>
 }
