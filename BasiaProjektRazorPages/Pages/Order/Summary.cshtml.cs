@@ -64,8 +64,12 @@ namespace BasiaProjektRazorPages.Pages.Order
                         new { ID_Adresu = order.ID_Adresu, ID_Zamowienia = order.ID_Zamowienia });
                 }
             }
-            else
+            else if (order.ID_Adresu == null)
             {
+                alertClass = "alert-danger";
+                alertMessage = "Adres jest wymagany.";
+            }
+            else { // order submitted successfully
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     conn.Execute("UPDATE Zamowienie SET ID_Adresu = @ID_Adresu, Data_Zamowienia = GETDATE(), Zlozone = 1 WHERE ID_Zamowienia = @ID_Zamowienia",
