@@ -40,38 +40,41 @@
                 if (AccountHelper.loggedInVerified)
                 {
                     loggedpath = "/Account/AccountIndex";
-                    
+
                 }
             }
             @*Unlogged - /login, Logged - /AccountInformation + Drop menu*@
             @*<a class="fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Account" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events;line-height:1;padding-top:0.2rem"></a>*@
-            <div class="dropdown" style="margin-left:0.5rem">
-                <a class="fa-solid fa-cart-shopping" style="color:#aab0b0"></a>
-                <div class="dropdown-content">
-                    <ul aria-labelledby="dropdownMenuButton1" >
-                        <ul>
+            @if (AccountHelper.loggedInVerified)
+            {
+                <div class="dropdown" style="margin-left:0.5rem">
+                    <a class="fa-solid fa-cart-shopping" style="color:#aab0b0"></a>
+                    <div class="dropdown-content">
+                        <ul aria-labelledby="dropdownMenuButton1">
+                            <ul>
+                            </ul>
+                            <li><a class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="Order/Summary">Finalizuj zamówienie</a></li>
                         </ul>
-                        <li ><a class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="Order/Summary">Finalizuj zamówienie</a></li>
-                    </ul>
+                    </div>
                 </div>
-            </div>
+            }
             <div class="dropdown">
                 <a class="fa-solid fa-user drop-a" asp-page="@loggedpath" style="color:#aab0b0" asp-route-id="@route_id"></a>
                 @{
                 if (AccountHelper.loggedInVerified)
                 {
-                    <div class="dropdown-content">
-                    @if (AccountHelper.loggedInVerified){
-                                <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id">Konto</a>
+                        <div class="dropdown-content">
+                        @if (AccountHelper.loggedInVerified){
+                                    <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id">Konto</a>
                     }
                     else
                     {
-                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex">Konto</a>
+                            <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex">Konto</a>
                     }
-                        @*Dodac hiperlink do podkategorii zamowienia*@
-                            <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id" asp-route-tabId="nav_orders_tab">Zamówienia</a>
-                        <a class="dropdown-Item Logoutitem" style="text-decoration:none;" asp-page="/Account/Logout">Wyloguj</a>
-                    </div>
+                            @*Dodac hiperlink do podkategorii zamowienia*@
+                                <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id" asp-route-tabId="nav_orders_tab">Zamówienia</a>
+                            <a class="dropdown-Item Logoutitem" style="text-decoration:none;" asp-page="/Account/Logout">Wyloguj</a>
+                        </div>
                 }
                 }
             </div>

@@ -26,6 +26,16 @@ namespace BasiaProjektRazorPages.Pages.Cart
         {
             dynamic resp = new ExpandoObject();
             resp.success = false;
+            resp.errros = new List<Error>();
+            if (AccountHelper.loggedInVerified == false)
+            {
+                resp.errors.Add(new Error
+                {
+                    title = "You are not logged in",
+                    message = "in order to add to cart you need to be logged in"
+                });
+                return new JsonResult(resp);
+            }
             Zamowienie order = this.EnsureEmptyOrderExists();
             productsAmount = String.IsNullOrWhiteSpace(productsAmount) ? "1" : productsAmount;
             using (IDbConnection conn = DbHelper.GetDbConnection())
@@ -53,7 +63,17 @@ namespace BasiaProjektRazorPages.Pages.Cart
         {
             dynamic resp = new ExpandoObject();
             resp.success = false;
+            resp.errors = new List<Error>();
             resp.products = new List<CartRecord>();
+            if (AccountHelper.loggedInVerified == false)
+            {
+                resp.errors.Add(new Error
+                {
+                    title = "You are not logged in",
+                    message = "in order to add to cart you need to be logged in"
+                });
+                return new JsonResult(resp);
+            }
             Zamowienie order = this.EnsureEmptyOrderExists();
             using(IDbConnection conn = DbHelper.GetDbConnection())
             {
@@ -97,7 +117,12 @@ namespace BasiaProjektRazorPages.Pages.Cart
         public struct CartRecord
         {
             public Produkt product { get; set; }
-            public int amount { get; set;  }
+            public int amount { get; set; }
+        }
+        public struct Error
+        {
+            public string title { get; set; }
+            public string message { get; set; }
         }
 
     }
