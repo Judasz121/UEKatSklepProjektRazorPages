@@ -22,7 +22,7 @@
             <input id="searching-bar" class="searching-bar d-inline-block" list="datalistOptions" placeholder="Wyszukaj produkt...">
             <button class="fa-solid fa-x clear-button" onclick="document.getElementById('searching-bar').value = ''"></button>
         </div> 
-        <div class="account-panel" style="margin-right:1.5rem;display:flex;flex-direction:row;transform:scale(1.5)">
+        <div class="account-panel" style="margin-right:1.5rem;display:flex;flex-direction:row;transform:scale(1.5);gap:1rem;">
             @*Koszyk bez logowania - opacity 0*@
             @{
                 string opacity = "0";
@@ -45,15 +45,15 @@
             }
             @*Unlogged - /login, Logged - /AccountInformation + Drop menu*@
             @*<a class="fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Account" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events;line-height:1;padding-top:0.2rem"></a>*@
-            <div class="dropdown">
-                <button class=" dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <ul id="cart-products">
+            <div class="dropdown" style="margin-left:0.5rem">
+                <a class="fa-solid fa-cart-shopping" style="color:#aab0b0"></a>
+                <div class="dropdown-content">
+                    <ul aria-labelledby="dropdownMenuButton1" >
+                        <ul>
+                        </ul>
+                        <li ><a class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="Order/Summary">Finalizuj zamówienie</a></li>
                     </ul>
-                    <li><a class="dropdown-item" asp-page="Order/Summary">Finalizuj zamówienie</a></li>
-                </ul>
+                </div>
             </div>
             <div class="dropdown">
                 <a class="fa-solid fa-user drop-a" asp-page="@loggedpath" style="color:#aab0b0" asp-route-id="@route_id"></a>

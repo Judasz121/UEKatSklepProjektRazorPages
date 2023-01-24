@@ -450,6 +450,9 @@ footer{
     scroll-snap-type:inline mandatory;
 
 }
+ul {
+    list-style-type: none;
+}
 .snaps-inline > *{
     scroll-snap-align:start;
     scroll-padding-inline: 1rem;
