@@ -18,7 +18,7 @@ namespace BasiaProjektRazorPages.Pages.Order
         public List<SelectListItem> addresses { get; set; } = new List<SelectListItem>();
         public string alertClass { get; set; }
         public string alertMessage { get; set; }
-        public bool nigger { get; set; }
+        public bool boolek { get; set; }
         public void OnGet()
         {
             using (IDbConnection conn = DbHelper.GetDbConnection())
@@ -40,6 +40,15 @@ namespace BasiaProjektRazorPages.Pages.Order
                             ID_Zamowienia = dbOrder.ID_Zamowienia
                         });
                 }
+                var adresy = conn.Query<Adres>("SELECT * FROM Adres WHERE ID_Klienta = @ID_Klienta", new
+                {
+                    ID_Klienta = AccountHelper.loggedInAccount.ID_Klienta
+                });
+                foreach(Adres adres in adresy)
+                {
+                    adres.changeNullStringPropertiesToEmptyStrings();
+                    this.addresses.Add(new SelectListItem() { Text = adres.Kraj + adres.Miasto + adres.Ulica + adres.Kod_pocztowy + adres.Numer_budynku + adres.Numer_mieszkania, Value = adres.ID_Adresu.ToString() });
+                }
                 this.order = new OrderViewModel(dbOrder);
             }
         }
@@ -52,6 +61,14 @@ namespace BasiaProjektRazorPages.Pages.Order
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     conn.Execute("UPDATE Zamowienie SET ID_Adresu = @ID_Adresu WHERE ID_Zamowienia = @ID_Zamowienia",
+                        new { ID_Adresu = order.ID_Adresu, ID_Zamowienia = order.ID_Zamowienia });
+                }
+            }
+            else
+            {
+                using (IDbConnection conn = DbHelper.GetDbConnection())
+                {
+                    conn.Execute("UPDATE Zamowienie SET ID_Adresu = @ID_Adresu, Data_Zamowienia = GETDATE(), Zlozone = 1 WHERE ID_Zamowienia = @ID_Zamowienia",
                         new { ID_Adresu = order.ID_Adresu, ID_Zamowienia = order.ID_Zamowienia });
                 }
             }

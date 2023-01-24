@@ -44,7 +44,7 @@ namespace BasiaProjektRazorPages.Pages.Account
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
-                    adres = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Klienta = '{id}'");
+                    adres = conn.QueryFirst<Adres>($"SELECT TOP 1 * FROM Adres WHERE ID_Klienta = '{account.ID_Klienta}'");
                     
                 }
             }
@@ -60,7 +60,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                     //Podjeba³em z neta rozwi¹zanie 
                     // https://www.aspsnippets.com/Articles/Using-SqlDataReader-in-ASPNet-Core-Razor-Pages.aspx
                     //Jak da sie skróciæ kod, bo nie wiem jak dzia³a dok³adnie po³¹czenie z baz¹ to ogarnij thx :)
-                    string query_z = $"Select * FROM Zamowienie WHERE ID_Klienta = '{id}'";
+                    string query_z = $"Select * FROM Zamowienie WHERE ID_Klienta = '{account.ID_Klienta}'";
                     using (SqlCommand cmd = new SqlCommand(query_z, (SqlConnection)conn))
                     {
                         conn.Open();
@@ -70,7 +70,7 @@ namespace BasiaProjektRazorPages.Pages.Account
                             while (sdr.Read())
                             {
                                 zamowienie.Add(new Zamowienie
-                                {
+                                {       
                                     ID_Zamowienia = int.Parse(sdr["ID_Zamowienia"].ToString()),
                                     Data_zamowienia = DateTime.Parse(sdr["Data_Zamowienia"].ToString()),
                                     Zaplacone = bool.Parse(sdr["Zaplacone"].ToString())

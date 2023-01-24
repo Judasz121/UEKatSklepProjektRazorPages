@@ -35,7 +35,7 @@ function GenerateDataTables($tableEl) {
                     let $input = $("input", this.header());
 
                     $input.click(false); // prevent sorting when clicked
-                    $input.on("keyup change clear", function () {
+                    $input.on("keyup change clear ", function () {
                         if (that.search() !== this.value) {
                             that.search(this.value).draw();
                         }
@@ -45,7 +45,7 @@ function GenerateDataTables($tableEl) {
         },
     };
 
-    $tableEl.DataTable(dataTableOptions);
+    return $tableEl.DataTable(dataTableOptions);
 };
 
 
