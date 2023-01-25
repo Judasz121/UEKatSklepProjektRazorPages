@@ -1,12 +1,13 @@
 ﻿@page
 @using BasiaProjektRazorPages.Helpers;
 @using BasiaProjektRazorPages.ViewModels;
+@using BasiaProjektRazorPages.DbModels;
 @model BasiaProjektRazorPages.Pages.Product.ListModel
 @{
 }
     <br />
     <div class="cont admin-accounts-container text-center" style="background-color:white;color:black;width:min(40rem) !important">
-        <a class="btn btn-primary" style="margin:0.4rem 0" asp-page="Add">Dodaj Produkt</a>
+        <h3 style="text-align:center;padding-top:0.5rem">Wyszukanie dla: "@Model.searching_bar" </h3>
     <table id="accounts-table">
         <thead>
             <tr>

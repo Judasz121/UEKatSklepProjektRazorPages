@@ -53,11 +53,11 @@
             {
                 <div class="dropdown" style="margin-left:0.5rem">
                     <a class="fa-solid fa-cart-shopping" style="color:#aab0b0"></a>
-                    <div class="dropdown-content">
-                        <ul aria-labelledby="dropdownMenuButton1">
-                            <ul id="cart-products"></ul>
-                            <li><a class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="/Order/Summary">Finalizuj zamówienie</a></li>
-                        </ul>
+                    <div class="cart-dropdown-content">
+                        <div aria-labelledby="dropdownMenuButton1">
+                            <table id="cart-products"></table>
+                            <div><a class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="/Order/Summary">Finalizuj zamówienie</a></div>
+                        </div>
                     </div>
                 </div>
             }
@@ -66,18 +66,18 @@
                 @{
                 if (AccountHelper.loggedInVerified)
                 {
-                        <div class="dropdown-content">
-                        @if (AccountHelper.loggedInVerified){
-                                    <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id">Konto</a>
+                    <div class="dropdown-content">
+                    @if (AccountHelper.loggedInVerified){
+                                <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id">Konto</a>
                     }
                     else
                     {
                             <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex">Konto</a>
                     }
-                            @*Dodac hiperlink do podkategorii zamowienia*@
-                                <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id" asp-route-tabId="nav_orders_tab">Zamówienia</a>
-                            <a class="dropdown-Item Logoutitem" style="text-decoration:none;" asp-page="/Account/Logout">Wyloguj</a>
-                        </div>
+                        @*Dodac hiperlink do podkategorii zamowienia*@
+                        <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id" asp-route-tabId="nav_orders_tab">Zamówienia</a>
+                        <a class="dropdown-Item Logoutitem" style="text-decoration:none;" asp-page="/Account/Logout">Wyloguj</a>
+                    </div>
                 }
                 }
             </div>

@@ -4,35 +4,43 @@
 @model BasiaProjektRazorPages.Pages.Order.SummaryModel
 @{
 }
-    <div class="center accounts-container bg-white">
-        <a class="btn btn-secondary" asp-page="/Product/List">Powrót na listę</a>
+    <div class="container accounts-container bg-white">
+        <div  class="admin-button-container">
+            <a class="button-animation" style="padding: 1rem 1em;" asp-page="/Product/List">Powrót na listę</a>
+        </div>
+        
         <form method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="order.ID_Zamowienia" />
             <input type="hidden" asp-for="order" />
-
-        @foreach(CartRecord cr in @Model.order.cart)
-        {
-            <div class="product mb-3" id="@cr.product.ID_Produktu">
-                <h6>@Html.DisplayFor(model => cr.product.Nazwa)</h6> x @cr.amount
-                <br>
+            <table id="cart-products" style="margin-top:0.5rem;">
+                <tr>
+                    <th>Nazwa produktu</th>
+                    <th>Ilość</th>
+                </tr>
+                @foreach(CartRecord cr in @Model.order.cart)
+                {
+                    <tr class="product" id="@cr.product.ID_Produktu">
+                        <td>@Html.DisplayFor(model => cr.product.Nazwa)</td>
+                        <td>@cr.amount</td>
+                    </tr>
+                }
+            </table>
+            <div class="address-select-container">
+                <h5 style="margin:0 !important">Adres:</h5>
+                <select asp-for="order.ID_Adresu" asp-items="Model.addresses"></select>
             </div>
-        }
-
-        <div class="mb-3">
-            <label class="form-label" >Adres</label>
-            <select asp-for="order.ID_Adresu" asp-items="Model.addresses"></select>
-        </div>
 
             @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
             {
                 <div class="alert @Model.alertClass">
-                   @Html.Raw(@Model.alertMessage.Replace("\n", "</br>"))
-                    
-               </div>
+                    @Html.Raw(@Model.alertMessage.Replace("\n", "</br>"))
+                </div>
             }
-            <button type="submit" class="btn btn-primary" name="nigger">
-                Zmień address
-            </button>
-            <button type="submit" class="btn btn-success">Zapisz</button>
+            <div class="admin-button-container">
+                @*Po co ten button?*@
+                @*<button type="submit" class="button-animation">Zmień Adres</button>*@
+                <button type="submit" class="button-animation">Złóż zamówienie</button>
+            </div>
+
         </form>
     </div>
