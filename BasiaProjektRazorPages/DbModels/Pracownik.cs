@@ -25,7 +25,7 @@ namespace BasiaProjektRazorPages.DbModels
         public DateTime Data_Zatrudnienia { get; set; }   
 
         public DateTime Data_Zwolnienia { get; set; }
-        public static Tuple<bool, string> verifyValues(string? Imie, string? Nazwisko, int? ID_Magazynu,int? Wyplata, string? Numer_telefonu, string? Numer_konta)
+        public static Tuple<bool, string> verifyValues(string? Imie, string? Nazwisko, int? ID_Magazynu,int? Wyplata, string? Numer_telefonu,string? PESEL, string? Numer_konta)
         {
             bool ok = true;
             string msg = "";
@@ -65,6 +65,14 @@ namespace BasiaProjektRazorPages.DbModels
                 {
                     ok = false;
                     msg += "Taki magazyn nie istnieje";
+                }
+            }
+
+            if(PESEL != null) { 
+                if(PESEL.Length != 9)
+                {
+                    ok = false;
+                    msg += "Taki Pesel nie istnieje";
                 }
             }
 

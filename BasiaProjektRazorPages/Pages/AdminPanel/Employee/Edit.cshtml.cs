@@ -41,7 +41,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Employee
                 oldEmployee = conn.QueryFirst<Pracownik>($"SELECT TOP 1 * FROM Pracownik WHERE ID_Pracownika = '{employee.ID_Pracownika}'");
             }
             if (!employee.Equals(oldEmployee)) {
-                var verification = Pracownik.verifyValues(employee.Imie, employee.Nazwisko, employee.ID_Magazynu, employee.Wyplata, employee.Numer_telefonu, employee.Numer_konta);
+                var verification = Pracownik.verifyValues(employee.Imie, employee.Nazwisko, employee.ID_Magazynu, employee.Wyplata, employee.Numer_telefonu,employee.PESEL, employee.Numer_konta);
                 if (verification.Item1)
                 {
                     using (IDbConnection conn = DbHelper.GetDbConnection())
