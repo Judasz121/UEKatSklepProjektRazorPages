@@ -36,5 +36,16 @@ namespace BasiaProjektRazorPages.DbModels
                 }
             }
         }
+
+        public void changeNullPropertiesToDefaultValues(IEnumerable<Type> typesToMakeDefault)
+        {
+            foreach (PropertyInfo propInfo in this.GetType().GetProperties())
+            {
+                if (typesToMakeDefault.Contains(propInfo.PropertyType) && propInfo.GetValue(this) == null)
+                {
+                    propInfo.SetValue(this, Activator.CreateInstance(propInfo.PropertyType));
+                }
+            }
+        }
     }
 }
