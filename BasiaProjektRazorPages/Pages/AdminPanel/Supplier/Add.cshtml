@@ -1,0 +1,43 @@
+﻿@page
+@using BasiaProjektRazorPages.DbModels
+@model BasiaProjektRazorPages.Pages.AdminPanel.Supplier.AddModel
+@{
+}
+
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="center accounts-container bg-white">
+        <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.supplier.Nazwa)</label>
+                <input type="text" asp-for="supplier.Nazwa" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.supplier.Numer_telefonu)</label>
+                <input type="text" asp-for="supplier.Numer_telefonu" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.supplier.Email)</label>
+                <input type="text" asp-for="supplier.Email" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.supplier.NIP)</label>
+                <input type="text" asp-for="supplier.NIP" />
+            </div>
+            <button type="submit" class="btn btn-success">Dodaj magazyn</button>
+            @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
+            {
+                <div class="alert @Model.alertClass" role="alert">
+                    @Model.alertMessage
+                </div>
+            }
+        </form>
+    </div>
+ }

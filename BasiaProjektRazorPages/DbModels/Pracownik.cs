@@ -150,7 +150,7 @@ namespace BasiaProjektRazorPages.DbModels
         {
             Pracownik toVerify = (Pracownik)this.MemberwiseClone();
             if (!ignoreNullProps)
-                toVerify.changeNullPropertiesToDefaultValues();
+                toVerify.changeNullValueTypePropertiesToDefaultValues();
             return Pracownik.VerifyValues(toVerify.Imie, toVerify.Nazwisko, toVerify.Wyplata, toVerify.Numer_telefonu, toVerify.PESEL, toVerify.Numer_konta);
         }
     }

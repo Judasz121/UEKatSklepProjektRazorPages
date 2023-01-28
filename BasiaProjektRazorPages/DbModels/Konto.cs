@@ -67,7 +67,7 @@ namespace BasiaProjektRazorPages.DbModels
             Konto toVerify = (Konto)this.MemberwiseClone();
             if (ignoreNullProps == false)
             {
-                toVerify.changeNullPropertiesToDefaultValues();
+                toVerify.changeNullValueTypePropertiesToDefaultValues();
             }
             return Konto.verifyValues(toVerify.LoginUzytkownika, toVerify.HashHasla, toVerify.Email);            
         }
