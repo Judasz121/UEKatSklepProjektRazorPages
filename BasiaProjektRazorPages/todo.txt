@@ -1,0 +1,4 @@
+﻿- finalizacja zamówienia ( nie działa złożenie )
+- produkty_magazyn, dostawcy i ew. kategorie
+- dezaktywacja konta (?)
+- w db modelach w VerifyValues() trzeba do typów liczbowych dodać sprawdzanie czy mają wartość domyślną ( jeśli mają to wyjebać msg = "Pole x nie może byc puste"; )
