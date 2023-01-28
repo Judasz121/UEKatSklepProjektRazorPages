@@ -43,6 +43,7 @@ namespace BasiaProjektRazorPages.DbModels
             else
             {
                 Klient temp = (Klient)this.MemberwiseClone();
+                temp.changeNullPropertiesToDefaultValues();
                 return Klient.VerifyValues(temp.Imie, temp.Nazwisko, temp.Telefon);
             }
         }

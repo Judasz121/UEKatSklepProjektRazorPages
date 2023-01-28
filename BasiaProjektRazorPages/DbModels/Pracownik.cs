@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.ComponentModel;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
@@ -12,6 +13,8 @@ namespace BasiaProjektRazorPages.DbModels
 
         public string Nazwisko { get; set; }
 
+
+        [DisplayName("Magazyn")]
         public int ID_Magazynu { get; set; }
 
         public int Wyplata { get; set; }
@@ -65,8 +68,15 @@ namespace BasiaProjektRazorPages.DbModels
                 }
             }
 
-            if(PESEL != null) { 
-                if(PESEL.Length != 9)
+            if(PESEL != null) {
+                if (string.IsNullOrWhiteSpace(PESEL))
+                {
+                    ok = false;
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "Pesel nie może być pusty.";
+                }
+                else if (PESEL.Length != 9)
                 {
                     ok = false;
                     if (!string.IsNullOrWhiteSpace(msg))
@@ -95,7 +105,7 @@ namespace BasiaProjektRazorPages.DbModels
           
             if (Numer_telefonu != null)
             {
-                if (!string.IsNullOrWhiteSpace(Numer_telefonu))
+                if (string.IsNullOrWhiteSpace(Numer_telefonu))
                 {
                     ok = false;
                     if (!string.IsNullOrWhiteSpace(msg))
@@ -107,7 +117,7 @@ namespace BasiaProjektRazorPages.DbModels
                     ok = false;
                     if (!string.IsNullOrWhiteSpace(msg))
                         msg += "\n";
-                    msg += "Numer mo niedozwolone znaki, synek.";
+                    msg += "Numer mo niedozwolone znaki.";
                 }
                 if (Numer_telefonu.Length > 9)
                 {
@@ -120,17 +130,17 @@ namespace BasiaProjektRazorPages.DbModels
 
             if (Numer_konta != null)
             {
-                if (string.IsNullOrWhiteSpace(Numer_konta) &&)
+                if (string.IsNullOrWhiteSpace(Numer_konta))
                 {
                     ok = false;
                     if (!string.IsNullOrWhiteSpace(msg))
                         msg += "\n";
-                    msg += "Numer konta jest pusty, matołku ładny.";
+                    msg += "Numer konta jest pusty.";
                 }               
                 if (Numer_konta.Length > 26)
                 {
                     ok = false;
-                    msg += "Numer konta jest za długi";
+                    msg += "Numer konta jest za długi.";
                 }
             }
 
@@ -139,7 +149,7 @@ namespace BasiaProjektRazorPages.DbModels
         public Tuple<bool, string> VerifyInstanceValues(bool ignoreNullProps = false)
         {
             Pracownik toVerify = (Pracownik)this.MemberwiseClone();
-            if (ignoreNullProps)
+            if (!ignoreNullProps)
                 toVerify.changeNullPropertiesToDefaultValues();
             return Pracownik.VerifyValues(toVerify.Imie, toVerify.Nazwisko, toVerify.Wyplata, toVerify.Numer_telefonu, toVerify.PESEL, toVerify.Numer_konta);
         }

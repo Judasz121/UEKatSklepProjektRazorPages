@@ -109,6 +109,7 @@ namespace BasiaProjektRazorPages.DbModels
             else
             {
                 Adres temp = (Adres)this.MemberwiseClone();
+                temp.changeNullPropertiesToDefaultValues();
                 return Adres.verifyAddress(temp.Kraj, temp.Miasto, temp.Ulica, temp.Kod_pocztowy, temp.Numer_budynku, temp.Numer_mieszkania);
             }
         }

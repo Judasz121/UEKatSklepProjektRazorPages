@@ -45,7 +45,11 @@ namespace BasiaProjektRazorPages.DbModels
             {
                 if (typesToMakeDefault.Contains(propInfo.PropertyType) && propInfo.GetValue(this) == null)
                 {
-                    propInfo.SetValue(this, Activator.CreateInstance(propInfo.PropertyType));
+                    Type type = propInfo.PropertyType;
+                    if (type == typeof(string))
+                        propInfo.SetValue(this, "");
+                    else
+                        propInfo.SetValue(this, Activator.CreateInstance(type));
                 }
             }
         }

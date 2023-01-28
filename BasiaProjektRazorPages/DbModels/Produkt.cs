@@ -42,6 +42,7 @@ namespace BasiaProjektRazorPages.DbModels
             else
             {
                 Produkt temp = (Produkt)this.MemberwiseClone();
+                temp.changeNullPropertiesToDefaultValues();
                 return Produkt.VerifyValues(temp.Nazwa, temp.Cena_jednostkowa);
             }
         }
