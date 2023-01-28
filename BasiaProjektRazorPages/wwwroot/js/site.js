@@ -53,10 +53,10 @@ function updateCart() {
 
     function genCartProductItem(record) {
         console.log(record);
-        let $container = $(document.createElement('div'));
+        let $container = $(document.createElement('tr'));
         $container.attr("class", "cart-product");
         $container.attr("id", record.product.iD_Produktu);
-        $container.html(`${record.product.nazwa}</br>x${record.amount}`);
+        $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}</td>`);
         return $container[0];
     }
 

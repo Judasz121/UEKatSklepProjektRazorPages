@@ -1,4 +1,52 @@
 ﻿@page
 @model BasiaProjektRazorPages.Pages.AdminPanel.Warehouse.AddModel
+@using BasiaProjektRazorPages.DbModels;
 @{
 }
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="center accounts-container bg-white">
+        <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" value="@Model.id" asp-for="warehouse.ID_Magazynu" />
+
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Nazwa)</label>
+                <input type="text" asp-for="warehouse.Nazwa" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Kraj)</label>
+                <input type="text" asp-for="warehouse.Kraj" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Miasto)</label>
+                <input type="text" asp-for="warehouse.Miasto" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Kod_pocztowy)</label>
+                <input type="text" asp-for="warehouse.Kod_pocztowy" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Ulica)</label>
+                <input type="text" asp-for="warehouse.Ulica" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Numer_budynku)</label>
+                <input type="text" asp-for="warehouse.Numer_budynku" />
+            </div>
+            <button type="submit" class="btn btn-success">Dodaj magazyn</button>
+            @if (!string.IsNullOrWhiteSpace(Model.accountAlertValue))
+            {
+                <div class="alert @Model.accountAlertClass" role="alert">
+                    @Model.accountAlertValue
+                </div>
+            }
+        </form>
+    </div>
+ }

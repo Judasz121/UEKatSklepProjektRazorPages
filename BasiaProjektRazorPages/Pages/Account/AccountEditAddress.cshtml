@@ -1,0 +1,67 @@
+﻿@page
+@using BasiaProjektRazorPages.DbModels;
+@model BasiaProjektRazorPages.Pages.Account.AccountEditAddressModel
+@{
+}
+@if (!AccountHelper.loggedInVerified)
+{
+        <div class="text-container">
+            <h3>Nie masz uprawnień do tej strony.</h3>
+        </div>
+}
+else{
+    <form method="post">
+        <input type="hidden" value="@Model.id" asp-for="address.ID_Adresu" />
+        <div class="container edit-account-container bg-white">
+            <div>
+                <h3 style="text-align:center">Ustawienia adresu:</h3>
+                <div class="account-information-content">
+                    <span style="width:11rem">Kraj: </span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Kraj">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Miasto:</span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Miasto">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Ulica:</span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Ulica">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Kod Pocztowy:</span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Kod_pocztowy">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Numer Budynku:</span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Numer_budynku">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Numer Mieszkania:</span>
+                    <input id="input-settings" class="input-settings" asp-for="address.Numer_mieszkania">
+                </div>
+                <div style="display:flex;justify-content:center">
+                    <div class="button-container">
+                        <button type="submit" class="button-animation">
+                            Zapisz zmiany
+                            <div class="btn_horizontal"></div>
+                            <div class="btn_vertical"></div>
+                        </button>
+                        <br />
+                        <a class="button-animation" asp-page="/Account/AccountIndex" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">
+                            Anuluj zmiany
+                            <div class="btn_horizontal"></div>
+                            <div class="btn_vertical"></div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.accountAlertValue))
+        {
+            <div class="alert @Model.accountAlertClass" role="alert">
+                @Model.accountAlertValue
+            </div>
+        }
+    </form>
+}

@@ -18,7 +18,6 @@ namespace BasiaProjektRazorPages.Pages.Order
         public List<SelectListItem> addresses { get; set; } = new List<SelectListItem>();
         public string alertClass { get; set; }
         public string alertMessage { get; set; }
-        public bool boolek { get; set; }
         public void OnGet()
         {
             using (IDbConnection conn = DbHelper.GetDbConnection())
@@ -47,7 +46,7 @@ namespace BasiaProjektRazorPages.Pages.Order
                 foreach(Adres adres in adresy)
                 {
                     adres.changeNullStringPropertiesToEmptyStrings();
-                    this.addresses.Add(new SelectListItem() { Text = adres.Kraj + adres.Miasto + adres.Ulica + adres.Kod_pocztowy + adres.Numer_budynku + adres.Numer_mieszkania, Value = adres.ID_Adresu.ToString() });
+                    this.addresses.Add(new SelectListItem() { Text = adres.Kraj + " " + adres.Miasto + " " + adres.Ulica  + " " + adres.Numer_budynku +"/"+ adres.Numer_mieszkania + " " + adres.Kod_pocztowy, Value = adres.ID_Adresu.ToString() });
                 }
                 this.order = new OrderViewModel(dbOrder);
             }
@@ -56,7 +55,7 @@ namespace BasiaProjektRazorPages.Pages.Order
         public void OnPost()
         {
             // zmien adres btn submit
-            if (Request.Form.ContainsKey("changeAddress"))
+            if (Request.Form.ContainsKey("Zmieñ Adres"))
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {

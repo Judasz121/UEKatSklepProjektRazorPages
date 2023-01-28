@@ -1,3 +1,4 @@
+using BasiaProjektRazorPages.DbModels;
 using BasiaProjektRazorPages.Helpers;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -8,14 +9,34 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Employee
 {
     public class AddModel : PageModel
     {
-        public IActionResult OnGet()
-        {
-            using (IDbConnection conn = DbHelper.GetDbConnection())
-            {
-                int id = conn.ExecuteScalar<int>("insert into pracownik (Data_Zatrudnienia) VALUES (GETDATE()); SELECT SCOPE_IDENTITY();");
+        [BindProperty(SupportsGet = true)]
+        public int id { get; set; }
+        [BindProperty]
+        public Pracownik employee { get; set; }
 
-                return RedirectToPage("Edit", new { id = id });
+
+        public string accountAlertClass { get; set; }
+        public string accountAlertValue { get; set; }
+
+        public IActionResult OnPost() {
+            
+            using(IDbConnection conn = DbHelper.GetDbConnection()) {
+                var verification = Pracownik.verifyValues(employee.Imie,employee.Nazwisko,employee.ID_Magazynu,employee.Wyplata,employee.Numer_telefonu,employee.PESEL,employee.Numer_konta);
+                if (verification.Item1)
+                {
+                    conn.Execute($"INSERT INTO Pracownik VALUES(@Imie,@Nazwisko,@ID_Magazynu,@Wyplata,@Numer_telefonu,@PESEL,@Numer_konta,GETDATE(),NULL)",employee);
+                    accountAlertClass = "alert-success";
+                    accountAlertValue = "Dodano pomyœlnie";
+                }
+                else
+                {
+                    accountAlertClass = "alert-danger";
+                    accountAlertValue = verification.Item2;
+                }
             }
+
+
+            return Page();
         }
     }
 }
