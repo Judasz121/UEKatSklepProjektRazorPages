@@ -25,7 +25,7 @@ namespace BasiaProjektRazorPages.DbModels
         public DateTime Data_Zatrudnienia { get; set; }   
 
         public DateTime Data_Zwolnienia { get; set; }
-        public static Tuple<bool, string> verifyValues(string? Imie, string? Nazwisko, int? ID_Magazynu,int? Wyplata, string? Numer_telefonu,string? PESEL, string? Numer_konta)
+        public static Tuple<bool, string> VerifyValues(string? Imie, string? Nazwisko, int? Wyplata, string? Numer_telefonu,string? PESEL, string? Numer_konta)
         {
             bool ok = true;
             string msg = "";
@@ -33,38 +33,35 @@ namespace BasiaProjektRazorPages.DbModels
             Regex nonLetter = new Regex(@"[^a-zA-Z]");
             if (Imie != null)
             {
-                if (!string.IsNullOrEmpty(Imie) && nonLetter.IsMatch(Imie))
+                if (string.IsNullOrWhiteSpace(Imie))
                 {
                     ok = false;
                     msg += "Imie nie może być pusta";
                 }
-                if (Imie.Length > 20)
+                if (nonLetter.IsMatch(Imie))
                 {
                     ok = false;
-                    msg += "Takie imie nie istnieje.";
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "Imię zawiera znaki niedozwolone";                    
                 }
             }
   
             if (Nazwisko != null)
             {
-                if (string.IsNullOrEmpty(Nazwisko) && nonLetter.IsMatch(Nazwisko))
+                if (string.IsNullOrWhiteSpace(Nazwisko))
                 {
                     ok = false;
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
                     msg += "Nazwisko nie może być puste";
                 }
-                if (Nazwisko.Length > 20)
+                if (nonLetter.IsMatch(Nazwisko))
                 {
                     ok = false;
-                    msg += "Takie nazwisko nie istnieje";
-                }
-            }
-
-            if (ID_Magazynu != null)
-            {
-                if (ID_Magazynu <= 0)
-                {
-                    ok = false;
-                    msg += "Taki magazyn nie istnieje";
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "Nazwisko zawiera znaki niedozwolone";
                 }
             }
 
@@ -72,44 +69,79 @@ namespace BasiaProjektRazorPages.DbModels
                 if(PESEL.Length != 9)
                 {
                     ok = false;
-                    msg += "Taki Pesel nie istnieje";
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "PESEL ma nieprawidłową długość";
                 }
             }
 
             if (Wyplata != null)
             {
+                if(Wyplata.Value == default)
+                {
+                    ok = false;
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "Wyplata nie może być pusta.";
+                }
                 if (Wyplata <= 3100)
                 {
                     ok = false;
-                    msg += "Taka wypłata nie może zostać zaaplikowana.";
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "Taka wypłata tylko na czarno.";
                 }
             }
           
             if (Numer_telefonu != null)
             {
-                if (!string.IsNullOrEmpty(Numer_telefonu) && nonDigit.IsMatch(Numer_telefonu))
+                if (!string.IsNullOrWhiteSpace(Numer_telefonu))
                 {
                     ok = false;
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
                     msg += "Numer telefonu nie może być pusty";
+                }
+                if (nonDigit.IsMatch(Numer_telefonu))
+                {
+                    ok = false;
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "Numer mo niedozwolone znaki, synek.";
                 }
                 if (Numer_telefonu.Length > 9)
                 {
                     ok = false;
-                    msg += "Taki numer telefonu nie istnieje";
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "Numer jest za długi.";
                 }
             }
-  
-            if (!string.IsNullOrEmpty(Numer_konta) && nonDigit.IsMatch(Numer_konta))
+
+            if (Numer_konta != null)
             {
-                ok = true;
-            }
-            else if (Numer_konta.Length > 26)
-            {
-                ok = false;
-                msg += "Taki numer konta nie istnieje.";
+                if (string.IsNullOrWhiteSpace(Numer_konta) &&)
+                {
+                    ok = false;
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "Numer konta jest pusty, matołku ładny.";
+                }               
+                if (Numer_konta.Length > 26)
+                {
+                    ok = false;
+                    msg += "Numer konta jest za długi";
+                }
             }
 
             return new Tuple<bool, string>(ok, msg);
+        }
+        public Tuple<bool, string> VerifyInstanceValues(bool ignoreNullProps = false)
+        {
+            Pracownik toVerify = (Pracownik)this.MemberwiseClone();
+            if (ignoreNullProps)
+                toVerify.changeNullPropertiesToDefaultValues();
+            return Pracownik.VerifyValues(toVerify.Imie, toVerify.Nazwisko, toVerify.Wyplata, toVerify.Numer_telefonu, toVerify.PESEL, toVerify.Numer_konta);
         }
     }
 }
