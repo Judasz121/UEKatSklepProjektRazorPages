@@ -35,5 +35,15 @@ namespace BasiaProjektRazorPages.DbModels
 
             return new Tuple<bool, string>(ok, msg);
         }
+        public Tuple<bool, string> VerifyInstanceValues(bool ignoreNullProps = false)
+        {
+            if (ignoreNullProps)
+                return Produkt.VerifyValues(this.Nazwa, this.Cena_jednostkowa);
+            else
+            {
+                Produkt temp = (Produkt)this.MemberwiseClone();
+                return Produkt.VerifyValues(temp.Nazwa, temp.Cena_jednostkowa);
+            }
+        }
     }
 }

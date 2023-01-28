@@ -37,8 +37,10 @@ namespace BasiaProjektRazorPages.DbModels
             }
         }
 
-        public void changeNullPropertiesToDefaultValues(IEnumerable<Type> typesToMakeDefault)
+        public void changeNullPropertiesToDefaultValues(IEnumerable<Type>? typesToMakeDefault = null)
         {
+            if (typesToMakeDefault == null)
+                typesToMakeDefault = new List<Type> { typeof(string), typeof(int), typeof(float), typeof(double) };
             foreach (PropertyInfo propInfo in this.GetType().GetProperties())
             {
                 if (typesToMakeDefault.Contains(propInfo.PropertyType) && propInfo.GetValue(this) == null)

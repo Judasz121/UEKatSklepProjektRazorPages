@@ -62,6 +62,15 @@ namespace BasiaProjektRazorPages.DbModels
 
             return new Tuple<bool, string>(ok, msg);
         }
+        public Tuple<bool, string> VerifyInstanceValues(bool ignoreNullProps = false)
+        {
+            Konto toVerify = (Konto)this.MemberwiseClone();
+            if (ignoreNullProps == false)
+            {
+                toVerify.changeNullPropertiesToDefaultValues();
+            }
+            return Konto.verifyValues(toVerify.LoginUzytkownika, toVerify.HashHasla, toVerify.Email);            
+        }
 
 
     }
