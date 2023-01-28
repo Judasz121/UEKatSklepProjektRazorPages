@@ -14,6 +14,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Supplier
         public bool supplierNotFound { get; set; } = false;
         public string alertMessage { get; set; }
         public string alertClass { get; set; }
+        [BindProperty]
         public Dostawca supplier { get; set; }
 
         public void OnGet()
@@ -22,7 +23,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Supplier
             {
                 try
                 {
-                    supplier = conn.QueryFirst<Dostawca>("SElECT * TOP 1 FROM Dostawca WHERE ID_Dostawcy = @id", new { id = this.id });
+                    supplier = conn.QueryFirst<Dostawca>("SElECT TOP 1 * FROM Dostawca WHERE ID_Dostawcy = @id", new { id = this.id });
                 }
                 catch (InvalidOperationException exc)
                 {
@@ -40,9 +41,9 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Supplier
                 {
                     try
                     {
-                        conn.Execute("UPDATE Dostawca SET Nazwa = @Nazwa, Numer_telefonu = @Numer_telefonu, Email = @Email, NIP = @NIP) WHERE ID_Dostawcy = @ID_Dostawcy", this.supplier);
+                        conn.Execute("UPDATE Dostawca SET Nazwa = @Nazwa, Numer_telefonu = @Numer_telefonu, Email = @Email, NIP = @NIP WHERE ID_Dostawcy = @ID_Dostawcy", this.supplier);
                         alertClass = "alert-success";
-                        alertMessage = "Pomyœlnie dodano";
+                        alertMessage = "Pomyœlnie zapisano";
                     }
                     catch (InvalidOperationException exc)
                     {
