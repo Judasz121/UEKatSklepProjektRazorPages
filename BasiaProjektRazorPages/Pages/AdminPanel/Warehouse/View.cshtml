@@ -97,17 +97,17 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (Produkt pro in Model.warehouse.ProductList)
+                    @foreach (Produkt product in Model.warehouse.ProductList)
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(model => pro.ID_Produktu)
+                                @Html.DisplayFor(model => product.ID_Produktu)
                             </td>
                             <td>
-                                @Html.DisplayFor(model => pro.Nazwa)
+                                @Html.DisplayFor(model => product.Nazwa)
                             </td>
                             <td>
-                                @Html.DisplayFor(model => pro.Cena_jednostkowa)
+                                @Html.DisplayFor(model => product.Cena_jednostkowa)
                             </td>
                         </tr>
                     }

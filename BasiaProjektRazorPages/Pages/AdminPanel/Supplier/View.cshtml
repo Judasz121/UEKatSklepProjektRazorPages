@@ -1,0 +1,181 @@
+﻿@page
+@using BasiaProjektRazorPages.DbModels
+@using BasiaProjektRazorPages.ViewModels
+@model BasiaProjektRazorPages.Pages.AdminPanel.Supplier.ViewModel
+@{
+}
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="container admin-panel-settings bg-white text-ce" style="width:min(36rem)">
+        <div>
+            <h3 style="border-bottom:1px solid black;text-align:center;">Dostawca: @Model.supplier.Nazwa</h3>
+            <div class="admin-button-container">
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="List">
+                    Powróć do listy
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">@Html.DisplayNameFor(model => model.supplier.Nazwa)</label>
+            <input disabled type="text" asp-for="supplier.Nazwa" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">@Html.DisplayNameFor(model => model.supplier.Numer_telefonu)</label>
+            <input disabled type="text" asp-for="supplier.Numer_telefonu" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">@Html.DisplayNameFor(model => model.supplier.Email)</label>
+            <input disabled type="text" asp-for="supplier.Email" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">@Html.DisplayNameFor(model => model.supplier.NIP)</label>
+            <input disabled type="text" asp-for="supplier.NIP" />
+        </div>
+    </div>
+    <br />
+    <div class="datatable-container">
+        <div class="container admin-accounts-container text-center" style="width:min(80rem) !important;background-color:white;color:black;">
+            <h3 style="border-bottom:1px solid black;text-align:center;">Dostawy:</h3>
+            <table id="accounts-table">
+                <thead>
+                    <tr>
+                        <th>
+                            @{
+                                string displayName = null;
+                                displayName = @Html.DisplayNameFor(model => model.supplier.Deliveries.FirstOrDefault().ID_Dostawy);
+                            }
+                            <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                        </th>
+                        <th>
+                            @{
+                                displayName = @Html.DisplayNameFor(model => model.supplier.Deliveries.FirstOrDefault().Data_zamowienia);
+                            }
+                            <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                        </th>
+                        <th>
+                            @{
+                                displayName = @Html.DisplayNameFor(model => model.supplier.Deliveries.FirstOrDefault().Data_zrealizowania);
+                            }
+                            <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                        </th>
+                        <th>
+                           Opcje
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Dostawa delivery in Model.supplier.Deliveries)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => delivery.ID_Dostawy)
+                            </td>
+                            <td>
+                                @if (delivery.Data_zamowienia == DateTime.MinValue)
+                                {
+                                    string displayValue = "Brak";
+                                <td>
+                                        @displayValue
+                                </td>
+                                }
+                                else
+                                {
+                                <td>
+                                        @delivery.Data_zamowienia.ToString("dd/MM/yyyy");
+                                </td>
+                                }
+                            </td>
+                            <td>
+                                @if (delivery.Data_zrealizowania == DateTime.MinValue)
+                                {
+                                    string displayValue = "Brak";
+                                <td>
+                                        @displayValue
+                                </td>
+                                }
+                                else
+                                {
+                                <td>
+                                        @delivery.Data_zrealizowania.ToString("dd/MM/yyyy");
+                                </td>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-page="/AdminPanel/Delivery/View" asp-route-id="@delivery.ID_Dostawy">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                <a class="btn btn-warning" asp-page="/AdminPanel/Delivery/Edit" asp-route-id="@delivery.ID_Dostawy">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Delivery/Delete" asp-route-id="@delivery.ID_Dostawy">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+       @* <div class="container admin-accounts-container text-center" style="width:min(80rem) !important;background-color:white;color:black;">
+            <h3 style="border-bottom:1px solid black;text-align:center;">Produkty:</h3> 
+            <table id="accounts-table2">
+                <thead>
+                    <tr>
+                        <th>
+                            @{
+                                //string displayName = null;
+                                displayName = @Html.DisplayNameFor(model => model.warehouse.ProductList.FirstOrDefault().ID_Produktu);
+                            }
+                            <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                        </th>
+                        <th>
+                            @{
+                                displayName = @Html.DisplayNameFor(model => model.warehouse.ProductList.FirstOrDefault().Nazwa);
+                            }
+                            <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                        </th>
+                        <th>
+                            @{
+                                displayName = @Html.DisplayNameFor(model => model.warehouse.ProductList.FirstOrDefault().Cena_jednostkowa);
+                            }
+                            <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Produkt pro in Model.warehouse.ProductList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => pro.ID_Produktu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => pro.Nazwa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => pro.Cena_jednostkowa)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>*@
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            GenerateDataTables($("#accounts-table"));
+            GenerateDataTables($("#accounts-table2"));
+        });
+    </script>
+}

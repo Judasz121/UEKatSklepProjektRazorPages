@@ -22,11 +22,14 @@ namespace BasiaProjektRazorPages.DbModels
             Regex nonLetter = new Regex(@"[^a-zA-Z]");
 
             // name
-            //if(name != null && (string.IsNullOrWhiteSpace(name) || nonLetter.IsMatch(name)))
-            //{
-            //    ok = false;
-            //    msg = "Imię zawiera znaki niedozwolone";
-            //}
+            if(name != null)
+            {
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    ok = false;
+                    msg = "Scheiße! ze name ist puste!";
+                }
+            }
             // phone
             if (phone != null)
             {
@@ -35,7 +38,7 @@ namespace BasiaProjektRazorPages.DbModels
                     ok = false;
                     if (!string.IsNullOrWhiteSpace(msg))
                         msg += "\n";
-                    msg += "Telefon zawiera znaki niedozwolone lub wogle nie zawiera zanków 😠";
+                    msg += "Telefon zawiera znaki niedozwolone lub wogle nie zawiera znaków 😠";
                 }
             }
             // e-mail

@@ -1,0 +1,30 @@
+﻿@page
+@model BasiaProjektRazorPages.Pages.AdminPanel.Supplier.DeleteModel
+@{
+}
+@using BasiaProjektRazorPages.DbModels;
+@if (AccountHelper.loggedInVerified == false)
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+@*    if (Model.deletedWarehouse != null)
+    {
+        <div class="text-center">
+            <div class="alert alert-success">
+                Usunięto.
+            </div>
+        </div>
+    }
+    else if (!string.IsNullOrWhiteSpace(Model.alertMessage))
+    {
+        <div class="text-center">
+            <div class="alert @Model.alertClass">
+                @Model.alertMessage
+            </div>
+        </div>
+    }*@
+}
