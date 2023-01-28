@@ -28,11 +28,15 @@ namespace BasiaProjektRazorPages.DbModels
             //    msg = "Imię zawiera znaki niedozwolone";
             //}
             // phone
-            if(phone != null && (string.IsNullOrWhiteSpace(phone) || nonDigit.IsMatch(phone))){
-                ok = false;
-                if (!string.IsNullOrWhiteSpace(msg))
-                    msg += "\n";
-                msg += "Telefon zawiera znaki niedozwolone";
+            if (phone != null)
+            {
+                if ((string.IsNullOrWhiteSpace(phone) || nonDigit.IsMatch(phone)))
+                {
+                    ok = false;
+                    if (!string.IsNullOrWhiteSpace(msg))
+                        msg += "\n";
+                    msg += "Telefon zawiera znaki niedozwolone lub wogle nie zawiera zanków 😠";
+                }
             }
             // e-mail
             if ((string.IsNullOrWhiteSpace(email) || mailRegex.IsMatch(email) == false) && email != null)
@@ -40,7 +44,7 @@ namespace BasiaProjektRazorPages.DbModels
                 ok = false;
                 if (string.IsNullOrWhiteSpace(msg) == false)
                     msg += "\n";
-                msg += "E-mail jest nieprawidłowy. 😡";
+                msg += "E-mail jest nieprawidłowy lub go nima 😡";
             }
             // nip
             if(nip != null && (string.IsNullOrWhiteSpace(nip) || nonDigit.IsMatch(nip)))
@@ -48,7 +52,7 @@ namespace BasiaProjektRazorPages.DbModels
                 ok = false;
                 if (!string.IsNullOrWhiteSpace(msg))
                     msg += "\n";
-                msg = "Nieprawidłowy NIPek";
+                msg += "Nieprawidłowy lub brak NIPka";
             }
 
             return new Tuple<bool, string>(ok, msg);
