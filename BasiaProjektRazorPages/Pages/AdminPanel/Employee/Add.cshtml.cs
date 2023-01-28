@@ -21,7 +21,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Employee
         public IActionResult OnPost() {
             
             using(IDbConnection conn = DbHelper.GetDbConnection()) {
-                var verification = Pracownik.verifyValues(employee.Imie,employee.Nazwisko,employee.ID_Magazynu,employee.Wyplata,employee.Numer_telefonu,employee.PESEL,employee.Numer_konta);
+                var verification = employee.VerifyInstanceValues();
                 if (verification.Item1)
                 {
                     conn.Execute($"INSERT INTO Pracownik VALUES(@Imie,@Nazwisko,@ID_Magazynu,@Wyplata,@Numer_telefonu,@PESEL,@Numer_konta,GETDATE(),NULL)",employee);

@@ -16,7 +16,7 @@
 }
 else
 {
-    <div class="center accounts-container bg-white">
+    <div class="center text-center row accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
         <form method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="employee.ID_Pracownika" />
@@ -30,8 +30,12 @@ else
                 <input type="text" asp-for="employee.Nazwisko" />
             </div>
             <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.employee.PESEL)</label>
+                <input type="text" asp-for="employee.PESEL" />
+            </div>
+            <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.employee.ID_Magazynu)</label>
-                <input type="text"  asp-for="employee.ID_Magazynu" />
+                <select type="text" asp-items="Model.warehouses"  asp-for="employee.ID_Magazynu" ></select>
             </div>
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.employee.Wyplata)</label>
