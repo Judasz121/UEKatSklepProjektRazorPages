@@ -1,0 +1,217 @@
+﻿@page
+@using BasiaProjektRazorPages.DbModels
+@model BasiaProjektRazorPages.Pages.AdminPanel.Delivery.AddModel
+@{
+}
+
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="center accounts-container bg-white">
+        <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
+        <form method="post" >
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.ID_Dostawcy)</label>
+                <select type="text" asp-items="Model.Suppliers" asp-for="Delivery.ID_Dostawcy" ></select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.Data_zamowienia)</label>
+                <input type="text" asp-for="Delivery.Data_zamowienia" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.Data_zrealizowania)</label>
+                <input type="text" asp-for="Delivery.Data_zrealizowania" />
+            </div>
+            <div class="mb-3 mt-2" id="warehouse-product-delivery-selection-container">
+                <div class="row" id="add-warehouse">
+                    <button class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Dodaj magazyn
+                    </button>
+                    <select asp-items="Model.Warehouses"></select>
+                </div>
+                <div class="row warehouses">
+
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Zapisz</button>
+            @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
+            {
+                <div class="alert @Model.alertClass" role="alert">
+                    @Model.alertMessage
+                </div>
+            }
+        </form>
+    </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", e => {
+
+            function setupWarehousesProductsSelectionList() {
+                let self = this;
+                this.$el = $("#warehouse-product-delivery-selection-container");
+                this.warehouses = @Html.Raw(Json.Serialize(Model.Warehouses));
+                this.products = @Html.Raw(Json.Serialize(Model.Products));
+                this.freeProducts_warehouses_deliveryIndex = 0;
+
+                let $addWarehouse = $el.find("#add-warehouse");
+                $addWarehouse.find("button").on('click', e => {
+                    e.originalEvent.preventDefault();
+                    e.preventDefault();
+                    let id = $addWarehouse.find('select').val();
+                    if (self.$el.find(`[warehouse-id="${id}"]`).length > 0) {
+                        alert("Taki magazyn już jest");
+                        return;
+                    }
+                    let name = $addWarehouse.find('select option:selected').text();
+                    $el.find('.warehouses').append(genWarehouseSection(id, name));
+                });
+
+                function genWarehouseSection(warehouseId, warehouseName) {
+                    let $container = $(document.createElement("div"));
+                    $container.attr("warehouse-id", String(warehouseId));
+                    $container.attr("class", "border-top border-primary mb-3 warehouse-section");
+
+                    let $header = $(document.createElement("header"));
+                    $header.attr("class", "fs-4");
+                    $header.html(warehouseName);
+                    $container.append($header);
+
+                    function genAddProductSection() {
+                        function genHiddenProducts_warehouses_deliveryFormItem(productId, warehouseId, deliveryId, productAmount) {
+                            let $container = $(document.createElement("div"));
+                            $container.attr("style", "display:none");
+                            $container.attr("product-id", productId);
+                            $container.attr("product-amount", productAmount);
+                            $container.attr("warehouse-id", warehouseId);
+                            $container.attr("delivery-id", deliveryId);
+                            $container.attr("id", self.freeProducts_warehouses_deliveryIndex)
+
+                            let $warehouse = $(document.createElement("input"));
+                            $warehouse.attr("type", "hidden");
+                            $warehouse.attr("value", warehouseId);
+                            $warehouse.attr("name", `Products_warehouses_delivery[${self.freeProducts_warehouses_deliveryIndex}].ID_Magazynu`);
+                            $container.append($warehouse);
+
+                            let $delivery = $(document.createElement("input"));
+                            $delivery.attr("type", "hidden");
+                            $delivery.attr("value", deliveryId);
+                            $delivery.attr("name", `Products_warehouses_delivery[${self.freeProducts_warehouses_deliveryIndex}].ID_Dostawy`);
+                            $container.append($delivery);
+
+                            let $product = $(document.createElement("input"));
+                            $product.attr("type", "hidden");
+                            $product.attr("value", productId);
+                            $product.attr("name", `Products_warehouses_delivery[${self.freeProducts_warehouses_deliveryIndex}].ID_Produktu`);
+                            $container.append($product);
+
+                            let $productAmount = $(document.createElement("input"));
+                            $productAmount.attr("type", "hidden");
+                            $productAmount.attr("value", productId);
+                            $productAmount.attr("name", `Products_warehouses_delivery[${self.freeProducts_warehouses_deliveryIndex}].Ilosc_produktu`);
+                            $container.append($productAmount);
+
+                            self.freeProducts_warehouses_deliveryIndex++;
+                            return $container;
+                        }
+
+                        function genProductElement(productId, productName, warehouseId, productAmount) {
+                            let $container = $(document.createElement("div"));
+                            $container.attr("style", "");
+                            $container.attr("product-id", productId);
+                            $container.attr("product-amount", productAmount);
+                            $container.attr("warehouse-id", warehouseId);
+                            $container.attr("delivery-id", "");
+                            $container.attr("id", self.freeProducts_warehouses_deliveryIndex);
+
+                            let $displayName = $(document.createElement("div"));
+                            $displayName.attr("class", "fs-5");
+                            $displayName.html(productName);
+                            $container.append($displayName);
+
+                            let $warehouse = $(document.createElement("input"));
+                            $warehouse.attr("type", "hidden");
+                            $warehouse.attr("value", warehouseId);
+                            $warehouse.attr("name", `Products_warehouses_delivery[${self.freeProducts_warehouses_deliveryIndex}].ID_Magazynu`);
+                            $container.append($warehouse);
+
+                            let $product = $(document.createElement("input"));
+                            $product.attr("type", "hidden");
+                            $product.attr("value", productId);
+                            $product.attr("name", `Products_warehouses_delivery[${self.freeProducts_warehouses_deliveryIndex}].ID_Produktu`);
+                            $container.append($product);
+
+                            let $amount = $(document.createElement('input'));
+                            $amount.attr("name", `Products_warehouses_delivery[${self.freeProducts_warehouses_deliveryIndex}].Ilosc_produktu`);
+                            $amount.attr('type', 'number');
+                            $amount.val(productAmount);
+                            $container.append(" x");
+                            $container.append($amount);
+
+                            self.freeProducts_warehouses_deliveryIndex++;
+                            return $container;
+                        }
+
+                        let $addProductSection = $(document.createElement("div"));
+                        $addProductSection.attr("class", "add-warehouse-product-section")
+                        let $addProductBtn = $(document.createElement("button"));
+                        $addProductBtn.attr("class", "btn btn-primary");
+                        $addProductBtn.html(`<i class="fa-solid fa-plus"></i> Dodaj`);
+                        $addProductSection.append($addProductBtn);
+
+                        let $product = $(document.createElement('select'));
+                        $product.attr("class", "product-id");
+                        self.products.forEach(product => {
+                            let $option = $(document.createElement('option'));
+                            $option.attr("value", product.value);
+                            $option.html(product.text);
+                            $product.append($option);
+                        });
+                        $addProductSection.append($product);
+
+                        $addProductSection.append(" w ilości: ")
+                        let $amount = $(document.createElement('input'));
+                        $amount.attr("class", "border-0 product-amount");
+                        $amount.attr("type", "number");
+                        $amount.attr("value", "1");
+                        $addProductSection.append($amount);
+
+                        $addProductBtn.on('click', e => {
+                            e.preventDefault();
+                            let $target = $(e.currentTarget);
+                            let deliveryId = "";
+                            let productId = $product.val();
+                            // warehouseId from genWarehouseSection function argument
+                            let productAmount = $amount.val();
+                            let productName = $product.find("option:selected").text();
+
+                            let $warehouseProducts = $target.parents('.warehouse-section').first().find('.warehouse-products');
+                            if ($warehouseProducts.find(`[product-id="${productId}"]`).length > 0) {
+                                alert("Ten produkt w tym magazynie jest już dodany");
+                                return;
+                            }
+                            //$warehouseProducts.append(genHiddenProducts_warehouses_deliveryFormItem(productId, warehouseId, deliveryId, productAmount));
+                            $warehouseProducts.append(genProductElement(productId, productName, warehouseId, productAmount));                            
+                        });
+
+                        return $addProductSection;
+                    }
+                    $container.append(genAddProductSection());
+
+                    
+                    let $productsContainer = $(document.createElement("div"));
+                    $productsContainer.attr("class", "ps-2 warehouse-products");
+                    $container.append($productsContainer);
+
+                    return $container;
+                }
+
+            }
+            setupWarehousesProductsSelectionList()
+        });
+
+    </script>
+}
