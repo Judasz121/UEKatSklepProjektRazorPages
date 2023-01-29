@@ -24,7 +24,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Supplier
             {
                 try
                 {
-                    var dbSupplier = conn.Query<Dostawca>("SELECT TOP 1 * FROM Dostawca WHERE ID_Dodstawcy = @id", new { id = this.id });
+                    var dbSupplier = conn.Query<Dostawca>("SELECT TOP 1 * FROM Dostawca WHERE ID_Dostawcy = @id", new { id = this.id });
                     if (dbSupplier.Any() == false)
                         supplierNotFound = true;
                     else
