@@ -79,34 +79,10 @@ else
                                 @Html.DisplayFor(model => delivery.ID_Dostawy)
                             </td>
                             <td>
-                                @if (delivery.Data_zamowienia == DateTime.MinValue)
-                                {
-                                    string displayValue = "Brak";
-                                <td>
-                                        @displayValue
-                                </td>
-                                }
-                                else
-                                {
-                                <td>
-                                        @delivery.Data_zamowienia.ToString("dd/MM/yyyy");
-                                </td>
-                                }
+                                @Html.DisplayFor(model => delivery.Data_zamowienia)
                             </td>
                             <td>
-                                @if (delivery.Data_zrealizowania == DateTime.MinValue)
-                                {
-                                    string displayValue = "Brak";
-                                <td>
-                                        @displayValue
-                                </td>
-                                }
-                                else
-                                {
-                                <td>
-                                        @delivery.Data_zrealizowania.ToString("dd/MM/yyyy");
-                                </td>
-                                }
+                               @Html.DisplayFor(model => delivery.Data_zrealizowania)
                             </td>
                             <td>
                                 <a class="btn btn-primary" asp-page="/AdminPanel/Delivery/View" asp-route-id="@delivery.ID_Dostawy">

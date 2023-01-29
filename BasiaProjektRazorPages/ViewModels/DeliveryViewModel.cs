@@ -50,6 +50,7 @@ namespace BasiaProjektRazorPages.ViewModels
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
                 var pmds = conn.Query<Produkt_magazyn_dostawa>("SELECT * FROM Produkt_magazyn_dostawa WHERE ID_Dostawy = @ID_Dostawy", this);
+                var alreadyHandledWarehousesId = new List<int>();
                 Dostawa thisDelivery = new Dostawa()
                 {
                     ID_Dostawy = this.ID_Dostawy,
@@ -59,9 +60,10 @@ namespace BasiaProjektRazorPages.ViewModels
                 };
                 foreach (Produkt_magazyn_dostawa pmd in pmds)
                 {
-                    if (pmd.ID_Magazynu == null)
+                    if (pmd.ID_Magazynu == null || alreadyHandledWarehousesId.Contains((int)pmd.ID_Magazynu))
                         continue;
                     this.ProductsDeliveredToWarehouses.Add(new ProductsDeliveredToWarehouseViewModel(thisDelivery, (int)pmd.ID_Magazynu));
+                    alreadyHandledWarehousesId.Add((int)pmd.ID_Magazynu);
                 }
             }
         }

@@ -9,7 +9,7 @@ namespace BasiaProjektRazorPages.ViewModels
     {
         public Dostawa Delivery { get; set; }
         public Magazyn Warehouse { get; set; }
-        public List<Tuple<Produkt, int>> Products { get; set; }
+        public List<Tuple<Produkt, int>> Products { get; set; } = new List<Tuple<Produkt, int>>();
 
 
 
@@ -43,7 +43,7 @@ namespace BasiaProjektRazorPages.ViewModels
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
                 try
-                {
+                {                    
                     var pmds = conn.Query<Produkt_magazyn_dostawa>("SElECT * FROM Produkt_magazyn_dostawa WHERE ID_Dostawy = @ID_Dostawy AND ID_Magazynu = @ID_Magazynu",
                         new { ID_Magazynu = this.Warehouse.ID_Magazynu, ID_Dostawy = this.Delivery.ID_Dostawy });
                     foreach (Produkt_magazyn_dostawa pmd in pmds)

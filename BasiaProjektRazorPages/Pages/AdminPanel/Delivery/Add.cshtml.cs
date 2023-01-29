@@ -38,6 +38,10 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Delivery
                 // delivery
                 try
                 {
+                    if (Delivery.Data_zrealizowania == DateTime.MinValue)
+                        Delivery.Data_zamowienia = null;
+                    if (Delivery.Data_zrealizowania == DateTime.MinValue)
+                        Delivery.Data_zrealizowania = null;
                     deliveryId = conn.ExecuteScalar<int>("INSERT INTO Dostawa (ID_Dostawcy, Data_zamowienia, Data_zrealizowania)" +
                         "Values (@ID_Dostawcy, @Data_zamowienia, @Data_zrealizowania); SELECT SCOPE_IDENTITY();",
                         this.Delivery);
@@ -55,6 +59,7 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Delivery
                     {
                         foreach (Produkt_magazyn_dostawa pmd in this.Products_warehouses_delivery)
                         {
+                            pmd.ID_Dostawy = deliveryId;
                             conn.Execute("INSERT INTO Produkt_magazyn_dostawa (ID_Magazynu, ID_Dostawy, Ilosc_produktu, ID_Produktu)" +
                                 "VALUES(@ID_Magazynu, @ID_Dostawy, @Ilosc_produktu, @ID_Produktu)", pmd);
                         }
@@ -65,6 +70,11 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Delivery
                         alertClass = "alert-danger";
                         alertMessage = "Server Error:\n" + exc.Message;
                     }
+                if (ok)
+                {
+                    alertClass = "alert-success";
+                    alertMessage = "Pomyœlnie dodano";
+                }
             }
         }
 
