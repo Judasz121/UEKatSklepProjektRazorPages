@@ -522,6 +522,11 @@ ul {
 .card-item-name{
     font-size:13px;
 }
+#warehouse-product-delivery-selection-container{
+    width:max(30rem);
+    margin-left:auto;
+    margin-right:auto;
+}
 .admin-panel-settings{
     display:flex;
     flex-direction:column;

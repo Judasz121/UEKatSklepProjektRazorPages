@@ -30,6 +30,8 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Supplier
                     {
                         conn.Execute("INSERT INTO Dostawca (Nazwa, Numer_telefonu, Email, NIP) VALUES(@Nazwa, @Numer_telefonu, @Email, @NIP)", this.supplier);
                         success = true;
+                        alertClass = "alert-success";
+                        alertMessage = "Dodano pomyœlnie";
                     }
                     catch (InvalidOperationException exc)
                     {
