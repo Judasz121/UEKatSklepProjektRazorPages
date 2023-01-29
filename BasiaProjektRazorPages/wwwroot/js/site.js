@@ -26,7 +26,7 @@ function GenerateDataTables($tableEl) {
         dom: "ltipr",
         searching: true,
         initComplete: function (settings) {
-            console.log("initComplete");
+            //console.log("initComplete");
             this.api()
                 .columns()
                 .every(function () {
@@ -52,7 +52,7 @@ function GenerateDataTables($tableEl) {
 function updateCart() {
 
     function genCartProductItem(record) {
-        console.log(record);
+        //console.log(record);
         let $container = $(document.createElement('tr'));
         $container.attr("class", "cart-product");
         $container.attr("id", record.product.iD_Produktu);
