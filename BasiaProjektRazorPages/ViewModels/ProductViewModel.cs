@@ -21,7 +21,7 @@ namespace BasiaProjektRazorPages.ViewModels
                     // tag
                     try
                     {
-                        var tag_products = conn.Query<Tag_produkt>($"SELECT * FROM Tag_produktu WHERE ID_Produktu = @ID_Produktu", product);
+                        var tag_products = conn.Query<Tag_produkt>($"SELECT * FROM Tag_produkt WHERE ID_Produktu = @ID_Produktu", product);
                         foreach (Tag_produkt tag_product in tag_products)
                         {
                             Tagi.Add(conn.QueryFirst<Tag>("SELECT * FROM Tag WHERE ID_Tagu = @ID_Tagu", tag_product));
