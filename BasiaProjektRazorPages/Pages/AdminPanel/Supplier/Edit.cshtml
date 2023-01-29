@@ -37,7 +37,7 @@ else
                 <label class="form-label">@Html.DisplayNameFor(model => model.supplier.NIP)</label>
                 <input type="text" asp-for="supplier.NIP" />
             </div>
-            <button type="submit" class="btn btn-success">Zapisz</button>
+            <button type="submit" class="btn btn-success">Zapisz Dane</button>
             @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
             {
                 <div class="alert @Model.alertClass" role="alert">

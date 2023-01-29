@@ -12,7 +12,7 @@
 }
 else
 {
-    <div class="center accounts-container bg-white">
+    <div class="container accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
         <form method="post" >
             <div class="mb-3">
@@ -48,7 +48,7 @@ else
         </form>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", e => {
+    document.addEventListener("DOMContentLoaded", e => {
 
             function setupWarehousesProductsSelectionList() {
                 let self = this;
@@ -195,14 +195,14 @@ else
                                 return;
                             }
                             //$warehouseProducts.append(genHiddenProducts_warehouses_deliveryFormItem(productId, warehouseId, deliveryId, productAmount));
-                            $warehouseProducts.append(genProductElement(productId, productName, warehouseId, productAmount));
+                            $warehouseProducts.append(genProductElement(productId, productName, warehouseId, productAmount));                            
                         });
 
                         return $addProductSection;
                     }
                     $container.append(genAddProductSection());
 
-
+                    
                     let $productsContainer = $(document.createElement("div"));
                     $productsContainer.attr("class", "ps-2 warehouse-products");
                     $container.append($productsContainer);
