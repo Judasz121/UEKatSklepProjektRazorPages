@@ -42,13 +42,17 @@ namespace BasiaProjektRazorPages.ViewModels
         {
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
-                var pmds = conn.Query<Produkt_magazyn_dostawa>("SElECT * FROM Produkt_magazyn_dostawa WHERE ID_Dostawy = @ID_Dostawy AND ID_Magazynu = @ID_Magazynu",
-                    new { ID_Magazynu = this.Warehouse.ID_Magazynu, ID_Dostawy = this.Delivery.ID_Dostawy });
-                foreach (Produkt_magazyn_dostawa pmd in pmds)
+                try
                 {
-                    Produkt prod = conn.QueryFirst<Produkt>("SELECT * FROM Produkt WHERE ID_Produkut = @ID_Produktu", pmd);
-                    Products.Add(new Tuple<Produkt, int>(prod, (int)pmd.Ilosc_produktu));
+                    var pmds = conn.Query<Produkt_magazyn_dostawa>("SElECT * FROM Produkt_magazyn_dostawa WHERE ID_Dostawy = @ID_Dostawy AND ID_Magazynu = @ID_Magazynu",
+                        new { ID_Magazynu = this.Warehouse.ID_Magazynu, ID_Dostawy = this.Delivery.ID_Dostawy });
+                    foreach (Produkt_magazyn_dostawa pmd in pmds)
+                    {
+                        Produkt prod = conn.QueryFirst<Produkt>("SELECT * FROM Produkt WHERE ID_Produktu = @ID_Produktu", pmd);
+                        Products.Add(new Tuple<Produkt, int>(prod, (int)pmd.Ilosc_produktu));
+                    }
                 }
+                catch (InvalidOperationException exc) { }
             }
         }
 
