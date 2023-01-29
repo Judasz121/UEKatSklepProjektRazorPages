@@ -71,13 +71,10 @@
     </div>
     @*<a asp-page="/Cart/api" asp-page-handler="Testuwa">halo polaki</a>*@
 @{
-
     //ajax
     string pre = "http" + new string(HttpContext.Request.IsHttps ? "s" : "");
     pre = pre + "://";
     string cartApiUrl = pre + HttpContext.Request.Host + @Url.Page("/Cart/api");
-    // url = @"https://localhost:44332/Cart/api?handler=AddProductToCart";
-
 }
 
 @section scripts {

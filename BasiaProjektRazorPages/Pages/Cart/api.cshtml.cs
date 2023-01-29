@@ -45,8 +45,8 @@ namespace BasiaProjektRazorPages.Pages.Cart
                     , new {ID_Produktu = productId, ID_Zamowienia = order.ID_Zamowienia}).ToList();
                 if (dbCart.Count > 0)
                 {
-                    conn.Execute("UPDATE Koszyk SET Ilosc_produktow = Ilosc_produktow + @ilosc WHERE ID_Zamowienia = @id",
-                        new { ilosc = productsAmount, id = order.ID_Zamowienia });
+                    conn.Execute("UPDATE Koszyk SET Ilosc_produktow = Ilosc_produktow + @ilosc WHERE ID_Zamowienia = @ID_Zamowienia AND ID_Produktu = @ID_Produktu",
+                        new { ilosc = productsAmount, ID_Zamowienia = order.ID_Zamowienia, ID_Produktu = this.productId });
                 }
                 else
                 {
