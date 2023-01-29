@@ -3,3 +3,4 @@
 - dezaktywacja konta (?)
 - w db modelach w VerifyValues() trzeba do typów liczbowych dodać sprawdzanie czy mają wartość domyślną ( jeśli mają to wyjebać msg = "Pole x nie może byc puste"; )
 - (mało istotne) fetchowanie w view, edit, delete powinno odróżniać pomiędzy nieznaliezionym rekordem a błędem w sql
+- dodawanie do koszyka z indexu calej strony

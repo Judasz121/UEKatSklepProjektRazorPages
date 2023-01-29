@@ -1,0 +1,78 @@
+﻿@page
+@using BasiaProjektRazorPages.DbModels
+@using BasiaProjektRazorPages.ViewModels
+@model BasiaProjektRazorPages.Pages.AdminPanel.Delivery.ViewModel
+@{
+}
+
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else if (Model.deliveryNotFound)
+{
+    <div class="text-center">
+        <h3>Nimo dostawy</h3>
+    </div>
+}
+else if (string.IsNullOrWhiteSpace(Model.alertMessage) == false)
+{
+    <div class="text-center alert @Model.alertClass">
+        @Model.alertMessage
+    </div>
+}
+else
+{
+    <div class="center accounts-container bg-white">
+        <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
+            <div class="mb-3">
+                <label class="form-label">Dostawca</label>
+                <a asp-page="/Supplier/View" asp-route-id="Delivery.Supplier.ID_Dostawy">
+                    @Html.DisplayFor(m => Model.Delivery.Supplier.Nazwa)
+                </a>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.Data_zamowienia)</label>
+               @Html.DisplayFor(m => Model.Delivery.Data_zamowienia)
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.Data_zrealizowania)</label>
+                @Html.DisplayFor(m => Model.Delivery.Data_zrealizowania)
+            </div>
+        <hr>
+        <h4>Magazyny:</h4>
+        <br/>
+        <div class="accordion">
+            @if(Model.Delivery.ProductsDeliveredToWarehouses.Count == 0)
+            {
+                <span>
+                    Nimo magazynów ani produktów
+                </span>
+            }
+            else
+            @foreach (ProductsDeliveredToWarehouseViewModel prodToWh in Model.Delivery.ProductsDeliveredToWarehouses)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            @prodToWh.Warehouse.Nazwa
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @foreach(Tuple<Produkt, int> product in prodToWh.Products)
+                            {
+                                @product.Item1.Nazwa
+                                @Html.Raw(" x");
+                                @product.Item2;
+                                <br />
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
