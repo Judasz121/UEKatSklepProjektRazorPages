@@ -1,5 +1,6 @@
 using BasiaProjektRazorPages.DbModels;
 using BasiaProjektRazorPages.Helpers;
+using BasiaProjektRazorPages.ViewModels;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,12 +10,16 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Delivery
 {
     public class ListModel : PageModel
     {
-        public IEnumerable<Dostawa> delivery { get; set; }
+        public List<DeliveryViewModel> delivery { get; set; } = new List<DeliveryViewModel>();
         public void OnGet()
         {
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
-                delivery = conn.Query<Dostawa>("SELECT * FROM Dostawa");
+                var dbDeliveries = conn.Query<Dostawa>("SELECT * FROM Dostawa");
+                foreach(Dostawa delivery in dbDeliveries)
+                {
+                    this.delivery.Add(new DeliveryViewModel(delivery, true));
+                }
             }
         }
         public IActionResult OnPost()

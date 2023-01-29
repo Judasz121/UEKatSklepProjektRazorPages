@@ -1,0 +1,13 @@
+﻿@model DateTime
+
+@if (Model == DateTime.MinValue)
+{
+        @Html.Raw("Brak")
+}
+else if (@Model.Hour == 0 && Model.Minute == 0 && Model.Second == 0 && Model.Millisecond == 0)
+{
+        @Model.ToString("dd.MM.yyyy");
+}
+else{
+    @Model.ToString();
+}

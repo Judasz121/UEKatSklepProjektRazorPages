@@ -1,5 +1,6 @@
 ﻿@page
 @using BasiaProjektRazorPages.DbModels
+@using BasiaProjektRazorPages.ViewModels
 @model BasiaProjektRazorPages.Pages.AdminPanel.Delivery.ListModel
 @{
 }
@@ -31,31 +32,20 @@ else
                     <th>
                         @{
                             string displayName = null;
-                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().ID_Dostawy);
+                            //displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().Supplier.Nazwa);
+                            displayName = "Dostawca";
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
                     <th>
                         @{
-                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().ID_Dostawcy);
+                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().Data_zamowienia);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
                     <th>
                         @{
-                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().ID_Magazynu);
-                        }
-                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
-                    </th>
-                    <th>
-                        @{
-                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().ID_Produkt_magazyn);
-                        }
-                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
-                    </th>
-                    <th>
-                        @{
-                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().Ilosc_produktu);
+                            displayName = @Html.DisplayNameFor(model => model.delivery.FirstOrDefault().Data_zrealizowania);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                     </th>
@@ -65,33 +55,27 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (Dostawa dev in Model.delivery)
+                @foreach (DeliveryViewModel delivery in Model.delivery)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(model => dev.ID_Dostawy)
+                            @Html.DisplayFor(model => delivery.Supplier.Nazwa)
                         </td>
                         <td>
-                            @Html.DisplayFor(model => dev.ID_Dostawcy)
+                            @Html.DisplayFor(model => delivery.Data_zamowienia)
                         </td>
                         <td>
-                            @Html.DisplayFor(model => dev.ID_Magazynu)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dev.ID_Produkt_magazyn)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dev.Ilosc_produktu)
+                            @Html.DisplayFor(model => delivery.Data_zrealizowania, "DateTime")
                         </td>
                         <td>
                             <div id="options">
-                                <a class="btn btn-primary" asp-page="/AdminPanel/Delivery/View" asp-route-id="@dev.ID_Dostawy">
+                                <a class="btn btn-primary" asp-page="/AdminPanel/Delivery/View" asp-route-id="@delivery.ID_Dostawy">
                                     <i class="far fa-eye"></i>
                                 </a>
-                                <a class="btn btn-warning" asp-page="/AdminPanel/Delivery/Edit" asp-route-id="@dev.ID_Dostawy">
+                                <a class="btn btn-warning" asp-page="/AdminPanel/Delivery/Edit" asp-route-id="@delivery.ID_Dostawy">
                                     <i class="far fa-edit"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-page="/AdminPanel/Delivery/Delete" asp-route-id="@dev.ID_Dostawy">
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Delivery/Delete" asp-route-id="@delivery.ID_Dostawy">
                                    <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>
