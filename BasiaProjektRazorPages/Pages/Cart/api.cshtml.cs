@@ -29,7 +29,7 @@ namespace BasiaProjektRazorPages.Pages.Cart
             resp.errros = new List<Error>();
             if (AccountHelper.loggedInVerified == false)
             {
-                resp.errors.Add(new Error
+                resp.errros.Add(new Error
                 {
                     title = "You are not logged in",
                     message = "in order to add to cart you need to be logged in"
