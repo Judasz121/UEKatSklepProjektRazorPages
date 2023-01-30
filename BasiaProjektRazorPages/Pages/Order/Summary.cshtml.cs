@@ -14,7 +14,9 @@ namespace BasiaProjektRazorPages.Pages.Order
     {
         [BindProperty(SupportsGet = true)]
         public int? id { get; set; }
-        public OrderViewModel order { get; set; }
+        public OrderViewModel orderView { get; set; }
+        [BindProperty]
+        public Zamowienie orderDb { get; set;}
         public List<SelectListItem> addresses { get; set; } = new List<SelectListItem>();
         public string alertClass { get; set; }
         public string alertMessage { get; set; }
@@ -48,11 +50,11 @@ namespace BasiaProjektRazorPages.Pages.Order
                     adres.changeNullStringPropertiesToEmptyStrings();
                     this.addresses.Add(new SelectListItem() { Text = adres.Kraj + " " + adres.Miasto + " " + adres.Ulica  + " " + adres.Numer_budynku +"/"+ adres.Numer_mieszkania + " " + adres.Kod_pocztowy, Value = adres.ID_Adresu.ToString() });
                 }
-                this.order = new OrderViewModel(dbOrder);
+                this.orderView = new OrderViewModel(dbOrder);
             }
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             // zmien adres btn submit
             if (Request.Form.ContainsKey("Zmieñ Adres"))
@@ -60,10 +62,10 @@ namespace BasiaProjektRazorPages.Pages.Order
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     conn.Execute("UPDATE Zamowienie SET ID_Adresu = @ID_Adresu WHERE ID_Zamowienia = @ID_Zamowienia",
-                        new { ID_Adresu = order.ID_Adresu, ID_Zamowienia = order.ID_Zamowienia });
+                        new { ID_Adresu = orderDb.ID_Adresu, ID_Zamowienia = orderDb.ID_Zamowienia });
                 }
             }
-            else if (order.ID_Adresu == null)
+            else if (orderDb.ID_Adresu == null)
             {
                 alertClass = "alert-danger";
                 alertMessage = "Adres jest wymagany.";
@@ -72,9 +74,10 @@ namespace BasiaProjektRazorPages.Pages.Order
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     conn.Execute("UPDATE Zamowienie SET ID_Adresu = @ID_Adresu, Data_Zamowienia = GETDATE(), Zlozone = 1 WHERE ID_Zamowienia = @ID_Zamowienia",
-                        new { ID_Adresu = order.ID_Adresu, ID_Zamowienia = order.ID_Zamowienia });
+                        new { ID_Adresu = orderDb.ID_Adresu, ID_Zamowienia = orderDb.ID_Zamowienia });
                 }
             }
+            return RedirectToPage("SuccessfullyPlaced");
         }
 
         public void fillAddressesProperty(int? clientId = null)

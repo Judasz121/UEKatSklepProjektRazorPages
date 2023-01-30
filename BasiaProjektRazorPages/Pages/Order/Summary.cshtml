@@ -10,14 +10,14 @@
         </div>
         
         <form method="post" enctype="multipart/form-data">
-            <input type="hidden" asp-for="order.ID_Zamowienia" />
-            <input type="hidden" asp-for="order" />
+            <input type="hidden" value="@Model.orderView.ID_Zamowienia" asp-for="orderDb.ID_Zamowienia" />
+@*            <input type="hidden" asp-for="orderView" />*@
             <table id="cart-products" style="margin-top:0.5rem;">
                 <tr>
                     <th>Nazwa produktu</th>
                     <th>Ilość</th>
                 </tr>
-                @foreach(CartRecord cr in @Model.order.cart)
+                @foreach(CartRecord cr in @Model.orderView.cart)
                 {
                     <tr class="product" id="@cr.product.ID_Produktu">
                         <td>@Html.DisplayFor(model => cr.product.Nazwa)</td>
@@ -27,7 +27,7 @@
             </table>
             <div class="address-select-container">
                 <h5 style="margin:0 !important">Adres:</h5>
-                <select asp-for="order.ID_Adresu" asp-items="Model.addresses"></select>
+                <select asp-for="orderDb.ID_Adresu" asp-items="Model.addresses"></select>
             </div>
 
             @if (!string.IsNullOrWhiteSpace(Model.alertMessage))

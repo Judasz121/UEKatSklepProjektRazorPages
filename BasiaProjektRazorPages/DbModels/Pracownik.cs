@@ -76,7 +76,7 @@ namespace BasiaProjektRazorPages.DbModels
                         msg += "\n";
                     msg += "Pesel nie może być pusty.";
                 }
-                else if (PESEL.Length != 9)
+                else if (PESEL.Length != 11)
                 {
                     ok = false;
                     if (!string.IsNullOrWhiteSpace(msg))

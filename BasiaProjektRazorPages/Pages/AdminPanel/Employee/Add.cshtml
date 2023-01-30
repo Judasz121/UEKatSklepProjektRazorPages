@@ -26,7 +26,7 @@ else
             </div>
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.employee.ID_Magazynu)</label>
-                <input type="text"  asp-for="employee.ID_Magazynu" />
+                <select type="text" asp-items="Model.warehouses"  asp-for="employee.ID_Magazynu" ></select>
             </div>
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.employee.Wyplata)</label>

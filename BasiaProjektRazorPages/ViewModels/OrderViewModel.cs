@@ -24,7 +24,7 @@ namespace BasiaProjektRazorPages.ViewModels
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     // products
-                    IEnumerable<Koszyk> cart = conn.Query<Koszyk>("SELECT * FROM Koszyk WHERE ID_Zamowienia = ID_Zamowienia", zam);
+                    IEnumerable<Koszyk> cart = conn.Query<Koszyk>("SELECT * FROM Koszyk WHERE ID_Zamowienia = @ID_Zamowienia", zam);
                     foreach(Koszyk c in cart)
                     {
                         Produkt p = conn.QueryFirst<Produkt>("SELECT * FROM PRODUKT WHERE ID_Produktu = @ID_Produktu", c);

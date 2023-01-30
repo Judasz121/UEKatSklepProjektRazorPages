@@ -3,6 +3,7 @@ using BasiaProjektRazorPages.Helpers;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 
 namespace BasiaProjektRazorPages.Pages.AdminPanel.Employee
@@ -13,14 +14,20 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Employee
         public int id { get; set; }
         [BindProperty]
         public Pracownik employee { get; set; }
+        public List<SelectListItem> warehouses { get; set; } = new List<SelectListItem>();
 
 
         public string accountAlertClass { get; set; }
         public string accountAlertValue { get; set; }
 
+        public void OnGet()
+        {
+            this.FillWarehousesSelectListItems();
+        }
+
         public IActionResult OnPost() {
-            
-            using(IDbConnection conn = DbHelper.GetDbConnection()) {
+            this.FillWarehousesSelectListItems();
+            using (IDbConnection conn = DbHelper.GetDbConnection()) {
                 var verification = employee.VerifyInstanceValues();
                 if (verification.Item1)
                 {
@@ -37,6 +44,29 @@ namespace BasiaProjektRazorPages.Pages.AdminPanel.Employee
 
 
             return Page();
+        }
+
+        public void FillWarehousesSelectListItems()
+        {
+            using (IDbConnection conn = DbHelper.GetDbConnection())
+            {
+                try
+                {
+                    var dbWarehouses = conn.Query<Magazyn>("SELECT * FROM Magazyn");
+                    foreach (Magazyn wh in dbWarehouses)
+                    {
+                        this.warehouses.Add(new SelectListItem
+                        {
+                            Text = wh.Nazwa,
+                            Value = wh.ID_Magazynu.ToString(),
+                        });
+                    }
+                }
+                catch (InvalidOperationException exc)
+                {
+                    // no warehouses in db
+                }
+            }
         }
     }
 }
