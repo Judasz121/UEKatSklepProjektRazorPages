@@ -1,0 +1,93 @@
+﻿@page
+@using SklepProjektRazorPages.DbModels
+@model SklepProjektRazorPages.Pages.AdminPanel.AccountsModel
+@{
+}
+@*Accounts list*@
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="container admin-panel-settings bg-white text-ce" style="width:min(36rem)">
+        <div>
+            <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
+            <div class="admin-button-container">
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Index">
+                    Strona główna
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container admin-accounts-container text-center" style="background-color:white;color:black;">
+
+        <table id="accounts-table">
+            <thead>
+                <tr>
+                    <th>
+                        @{
+                            string displayName = null;
+                            displayName = @Html.DisplayNameFor(model => model.accounts.FirstOrDefault().LoginUzytkownika);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.accounts.FirstOrDefault().Email);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.accounts.FirstOrDefault().JestAdminem);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th style="width:min(9rem)">
+                        Opcje
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Konto acc in Model.accounts)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => acc.LoginUzytkownika)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => acc.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => acc.JestAdminem)
+                        </td>
+                        <td>
+                            <div id="options">
+                                <a class="btn btn-primary" asp-page="/AdminPanel/Account/View" asp-route-id="@acc.ID_Konta">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                <a class="btn btn-warning" asp-page="/AdminPanel/Account/Edit" asp-route-id="@acc.ID_Konta">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Account/Delete" asp-route-id="@acc.ID_Konta">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            GenerateDataTables($("#accounts-table"));
+        });
+    </script>
+}

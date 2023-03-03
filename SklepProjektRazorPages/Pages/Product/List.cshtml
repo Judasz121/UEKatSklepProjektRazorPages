@@ -1,0 +1,134 @@
+﻿@page
+@using SklepProjektRazorPages.Helpers;
+@using SklepProjektRazorPages.ViewModels;
+@using SklepProjektRazorPages.DbModels;
+@model SklepProjektRazorPages.Pages.Product.ListModel
+@{
+}
+    <br />
+    <div class="cont admin-accounts-container text-center" style="background-color:white;color:black;width:min(40rem) !important">
+        <h3 style="text-align:center;padding-top:0.5rem">Wyszukanie dla: " @Model.searching_bar" </h3>
+    <table id="accounts-table">
+        <thead>
+            <tr>
+                <th>
+                    @{
+                        string displayName = null;
+                        displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Nazwa);
+                        string value = "";
+                        if (Model.searching_bar != null)
+                        {
+                            value = Model.searching_bar;
+                        }
+                    }
+                    <input class="form-control" type="text" name="@displayName" placeholder="@displayName" value="@value" id="productName" />
+                </th>
+                <th>
+                    @{
+                        //displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Kategoria.Nazwa);
+                        displayName = "Kategoria";
+                    }
+                    <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                </th>
+                <th>
+                    @{
+                        displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Cena_jednostkowa);
+                    }
+                    <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                </th>
+                <th>
+                    Opcje
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ProductViewModel product in Model.products)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => product.Nazwa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => product.Kategoria.Nazwa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => product.Cena_jednostkowa)
+                        </td>
+                        <td>
+                            <div id="options">
+                                <a class="btn btn-primary" asp-page="View" asp-route-id="@product.ID_Produktu">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                <button class="btn btn-primary" product-id="@product.ID_Produktu">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @*<a asp-page="/Cart/api" asp-page-handler="Testuwa">halo polaki</a>*@
+@{
+    //ajax
+    string pre = "http" + new string(HttpContext.Request.IsHttps ? "s" : "");
+    pre = pre + "://";
+    string cartApiUrl = pre + HttpContext.Request.Host + @Url.Page("/Cart/api");
+}
+
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            console.log("halo kurwa, widzisz mnie?");
+            GenerateDataTables($("#accounts-table"));
+            $("#productName").trigger("change");
+
+
+            //function updateCart() {
+
+            //    function genCartProductItem(record){
+            //        console.log(record);
+            //        let $container = $(document.createElement('div'));
+            //        $container.attr("class", "cart-product");
+            //        $container.attr("id", record.product.iD_Produktu);
+            //        $container.html(`${record.product.nazwa}</br>x${record.amount}`);
+            //        return $container[0];
+            //    }
+
+            //    $.ajax({
+            //        url: '@cartApiUrl' + "?handler=GetCart",
+            //        method: "POST",
+            //        contentType: 'application/json',
+            //    }).done(function(data, status, xhr) {
+            //            let $cartList = $("#cart-products");
+            //        $cartList.html('');
+            //            data.products.forEach(productRecord => {
+            //                $cartList.append(genCartProductItem(productRecord));
+            //            });
+            //        });
+            //}
+            //updateCart();
+
+
+            $(document).on('click', '[product-id]', e => {
+                console.log(e.currentTarget);
+                let $btn = $(e.currentTarget);
+                let productId = $btn.attr('product-id');
+                console.log(productId);
+                $.ajax({
+                    url: '@cartApiUrl' + "?handler=AddProductToCart",
+                    method: 'POST',
+                    //contentType: 'application/json',
+                    dataType: 'json',
+                    data: {
+                        productId: productId
+                    },
+                }).done(function(data, status, xhr) {
+                        updateCart();
+                    })
+            });
+            
+        });
+    </script>
+    }

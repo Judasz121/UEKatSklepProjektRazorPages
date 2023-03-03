@@ -1,0 +1,93 @@
+﻿@page
+@using SklepProjektRazorPages.DbModels
+@model SklepProjektRazorPages.Pages.AdminPanel.Product.ListModel
+@{
+}
+@*Product list*@
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="container admin-panel-settings bg-white text-ce" style="width:min(36rem)">
+        <div>
+            <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
+            <div class="admin-button-container">
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Index">
+                    Strona główna
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="cont admin-accounts-container text-center" style="background-color:white;color:black;">
+        <a class="btn btn-primary" style="margin:0.4rem 0" asp-page="Add">Dodaj Produkt</a>
+        <table id="accounts-table">
+            <thead>
+                <tr>
+                    <th>
+                        @{
+                            string displayName = null;
+                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Nazwa);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Cena_jednostkowa);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
+                            displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().usuniety);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        Opcje
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Produkt product in Model.products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => product.Nazwa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => product.Cena_jednostkowa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => product.usuniety)
+                        </td>
+                        <td>
+                            <div id="options">
+                                <a class="btn btn-primary" asp-page="/AdminPanel/Product/View" asp-route-id="@product.ID_Produktu">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                <a class="btn btn-warning" asp-page="/AdminPanel/Product/Edit" asp-route-id="@product.ID_Produktu">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Product/Delete" asp-route-id="@product.ID_Produktu" asp-route-redirect="List">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            GenerateDataTables($("#accounts-table"));
+        });
+    </script>
+}

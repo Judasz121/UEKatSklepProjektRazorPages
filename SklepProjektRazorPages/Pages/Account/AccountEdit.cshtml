@@ -1,0 +1,51 @@
+﻿@page
+@using SklepProjektRazorPages.DbModels;
+@model SklepProjektRazorPages.Pages.Account.AccountEditModel
+@{
+}
+@if(!AccountHelper.loggedInVerified || Model.accountNotFound)
+{
+        <div class="text-container">
+            <h3>Nie masz uprawnień do tej strony.</h3>
+        </div>
+}
+else{
+    <form method="post">
+        <input type="hidden" value="@Model.account.ID_Konta" asp-for="account.ID_Konta" />
+        <div class="container edit-account-container bg-white">
+            <div>
+                <h3 style="text-align:center">Ustawienia ogólne:</h3>
+                <div class="account-information-content">
+                    <span style="width:11rem">Login użytkownika: </span>
+                    <input id="input-settings" class="input-settings"  asp-for="account.LoginUzytkownika">
+                </div>
+                <div class="account-information-content">
+                    <span style="width:11rem">Adres E-mail:</span>
+                    <input id="input-settings" class="input-settings" asp-for="account.Email">
+                </div>
+                <div style="display:flex;justify-content:center">
+                    <div class="button-container">
+                        <button type="submit" class="button-animation" >
+                            Zapisz zmiany
+                            <div class="btn_horizontal"></div>
+                            <div class="btn_vertical"></div>
+                        </button>
+                        <br />
+                        <a class="button-animation" asp-page="/Account/AccountIndex" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">
+                            Anuluj zmiany
+                            <div class="btn_horizontal"></div>
+                            <div class="btn_vertical"></div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.accountAlertValue))
+        {
+            <div class="alert @Model.accountAlertClass" role="alert">
+                @Model.accountAlertValue
+            </div>
+        }
+    </form>
+}

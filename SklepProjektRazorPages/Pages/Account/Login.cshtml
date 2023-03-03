@@ -1,0 +1,41 @@
+﻿@page
+@using Dapper
+@using System.Data
+@using SklepProjektRazorPages.DbModels
+@model SklepProjektRazorPages.Pages.Account.LoginModel
+@{
+
+}
+
+<form method="post">
+    <div class="login-container bg-white">
+        <i class="fa-solid fa-users" style="transform:scale(2);padding-bottom:1.5rem;padding-top:1.5rem"></i>
+        <div class="input-container" >
+            <label for="userMailOrName" class="fst-normal">Nazwa użytkownika lub E-mail</label>
+            <input type="text" class="form-control login-input" id="userMailOrName"  aria-describedby="emailHelp" asp-for="userNameOrMail">
+        </div>
+        <div class="input-container">
+            <label class="fst-normal">Hasło</label>
+            <input type="password" class="form-control login-input" asp-for="password" >
+        </div>
+        <div class="button-container">
+            <button type="submit" class="button-animation">
+                Zaloguj się
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+            </button>
+            <br />
+            <a class="reg-button-animation" asp-page="/Account/Register">
+                Zarejestruj się
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+            </a>
+            <div class="errors">
+                @if (string.IsNullOrEmpty(Model.alertValue) == false)
+                {
+                    <div class="alert @Model.alertClass" role="alert">@Model.alertValue</div>
+                }
+            </div>
+        </div>
+    </div>
+</form>

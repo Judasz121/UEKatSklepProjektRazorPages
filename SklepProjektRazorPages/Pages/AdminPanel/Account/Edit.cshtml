@@ -1,0 +1,152 @@
+﻿@page
+@using SklepProjektRazorPages.Helpers;
+@model SklepProjektRazorPages.Pages.AdminPanel.Account.EditModel
+@{
+}
+@if (Model.accountNotFound)
+{
+    <div class="text-center">
+        <h3>Nimo takiego konta.</h3>
+    </div>
+}else if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="center accounts-container">
+        <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item bg-grey" role="presentation">
+                <button class="nav-link active" id="account-tab" style="color:black" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="true">Konto</button>
+            </li>
+            <li class="nav-item bg-grey" role="presentation">
+                <button class="nav-link" id="client-tab" style="color:black" data-bs-toggle="tab" data-bs-target="#client" type="button" role="tab" aria-controls="client" aria-selected="false">Klient</button>
+            </li>
+            <li class="nav-item bg-grey" role="presentation">
+                <button class="nav-link" id="supplier-tab" style="color:black" data-bs-toggle="tab" data-bs-target="#supplier" type="button" role="tab" aria-controls="supplier" aria-selected="false">Dostawca</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <form method="post">
+                <div class="tab-pane bg-white fade show active" id="account" role="tabpanel" aria-labelledby="account-tab" style="color:black">
+                    @*Konto*@
+                    <input type="hidden" value="@Model.account.ID_Konta" asp-for="account.ID_Konta" />
+                    <input type="hidden" value="@Model.account.ID_Dostawcy" asp-for="account.ID_Dostawcy" />
+                    <input type="hidden" value="@Model.account.ID_Klienta" asp-for="account.ID_Klienta" />
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.account.LoginUzytkownika)</label>
+                        <input class="form-control" style="border:1.5px solid black" value="@Model.account.LoginUzytkownika" asp-for="account.LoginUzytkownika" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.account.Email)</label>
+                        <input class="form-control" style="border:1.5px solid black" value="@Model.account.Email" asp-for="account.Email" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nowe hasło</label>
+                        <input class="form-control" style="border:1.5px solid black" value="" asp-for="account.HashHasla" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.account.JestAdminem)</label>
+                        <input class="form-check-input" value="true" asp-for="account.JestAdminem" />
+                    </div>
+                    <button class="btn btn-success">Zapisz Dane Konta</button>
+
+                </div>
+
+                <div class="tab-pane fade" id="client" role="tabpanel" aria-labelledby="client-tab">
+                    @*Klient*@
+                    @if (Model.client == null || Model.client.ID_Klienta == null)
+                    {
+                        <button type="submit" name="createClient" class="btn btn-success" value="true">Utwórz klienta</button>
+                    }
+                    else
+                    {
+                        <input type="hidden" value="@Model.client.ID_Klienta" asp-for="client.ID_Klienta" />
+                        <div class="mb-3">
+                            <label class="form-label">@Html.DisplayNameFor(model => model.client.Imie)</label>
+                            <input class="form-control" style="border:1.5px solid black" value="@Model.client.Imie" asp-for="client.Imie" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">@Html.DisplayNameFor(model => model.client.Nazwisko)</label>
+                            <input class="form-control" style="border:1.5px solid black" value="@Model.client.Nazwisko" asp-for="client.Nazwisko" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">@Html.DisplayNameFor(model => model.client.Telefon)</label>
+                            <input class="form-control" style="border:1.5px solid black" value="@Model.client.Telefon" asp-for="client.Telefon" />
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(Model.clientAlertValue))
+                        {
+                            <div class="alert @Model.clientAlertClass" role="alert">
+                                @Model.clientAlertValue
+                            </div>
+                        }
+
+
+                        <button class="btn btn-success">Zapisz Dane Konta</button>
+                    }
+                </div>
+
+                <div class="tab-pane fade" id="supplier" role="tabpanel" aria-labelledby="supplier-tab">
+                    @*Dostawca*@
+                    @if (Model.supplier == null || Model.supplier.ID_Dostawcy == null)
+                    {
+                        <button type="submit" name="createSupplier" class="btn btn-success" value="true">Utwórz dostawce</button>
+                    }
+                    else
+                    {
+                        <input type="hidden" value="@Model.supplier.ID_Dostawcy" asp-for="supplier.ID_Dostawcy" />
+                        <div class="mb-3">
+                            <label class="form-label">@Html.DisplayNameFor(model => model.supplier.Nazwa)</label>
+                            <input class="form-control" style="border:1.5px solid black" value="@Model.supplier.Nazwa" asp-for="supplier.Nazwa" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">@Html.DisplayNameFor(model => model.supplier.Numer_telefonu)</label>
+                            <input class="form-control" style="border:1.5px solid black" value="@Model.supplier.Numer_telefonu" asp-for="supplier.Numer_telefonu" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">@Html.DisplayNameFor(model => model.supplier.Email)</label>
+                            <input class="form-control" style="border:1.5px solid black" value="@Model.supplier.Email" asp-for="supplier.Email" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">@Html.DisplayNameFor(model => model.supplier.NIP)</label>
+                            <input class="form-control klasunia" style="border:1.5px solid black" value="@Model.supplier.NIP" asp-for="supplier.NIP" />
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(Model.supplierAlertValue))
+                        {
+                            <div class="alert @Model.supplierAlertClass" role="alert">
+                                @Model.supplierAlertValue
+                            </div>
+                        }
+
+                        <button class="btn btn-success">Zapisz Dane Dostawcy</button>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+@*
+        document.addEventListener('DOMContentLoaded ', e => {
+            let btnId = "@Model.nav_tab_id";
+            $("#" + btnId).click();
+
+
+
+
+            $(".auschwitz").on('click', e => {
+                let $btn = $(e.currentTarget);
+                let $inputs = $btn.parent().find("input");
+                if ($inputs[0].hasAttribute("disabled"))
+                    e.originalEvent.preventDefault();
+                $inputs.removeAttr("disabled");
+                $btn.html("Zapisz");
+            });
+        });*@
+
+
+    </script>
+
+}

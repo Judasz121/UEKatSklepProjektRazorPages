@@ -1,0 +1,52 @@
+﻿@page
+@model SklepProjektRazorPages.Pages.AdminPanel.IndexModel
+@using SklepProjektRazorPages.DbModels;
+@using SklepProjektRazorPages.Helpers;
+@{
+}
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )
+{
+    <div class="text-center">
+        <h3>Nie mosz uprawnień do tej strony.</h3>
+    </div>
+}
+else
+{
+    <div class="container admin-panel-settings bg-white" style="width:min(73rem)">
+        <div>
+            <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
+            <div class="admin-button-container">
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Account/List">
+                    Konta
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Product/List">
+                    Produkty
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Delivery/List">
+                    Dostawy
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Supplier/List">
+                    Dostawcy
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Warehouse/List">
+                    Magazyny
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+                <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Employee/List">
+                    Pracownicy
+                    <div class="btn_horizontal"></div>
+                    <div class="btn_vertical"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+}

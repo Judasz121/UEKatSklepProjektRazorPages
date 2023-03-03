@@ -1,0 +1,22 @@
+﻿@page
+@model SklepProjektRazorPages.Pages.Product.ViewModel
+@{
+}
+
+@if(Model.product == null){
+    <div class="alert @Model.alertClass">
+        @if (string.IsNullOrWhiteSpace(Model.alertMessage))
+        {
+            @Html.Raw("Nie znaleziono se produkta z takim id")
+        }
+        else
+        {
+            @Model.alertMessage
+        }
+    </div>
+}
+else{
+    <div class="align-content-center center text-center wszystko-center-kurwa">
+
+    </div>
+}

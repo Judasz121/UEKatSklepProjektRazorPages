@@ -1,0 +1,63 @@
+﻿@page
+@using SklepProjektRazorPages.Helpers
+@using System.Data
+@using SklepProjektRazorPages.DbModels
+@using Dapper
+@model IndexModel
+@{
+
+    ViewData["Title"] = "Home page";
+    HttpContext.Session.SetString("testString1", "Centurion mk. XII");
+    IDbConnection conn = DbHelper.GetDbConnection();
+    conn.Dispose();
+}
+
+<div class="container bg-white border-container">
+    <h3 style="text-align:center;">Polecane dla Ciebie</h3>
+    <div id="cards-container" class="cards-container snaps-inline">
+        @{
+            foreach(Produkt p in @Model.ProductList)
+            {
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="@p.sciezkaZdjecia"/>
+                            </div>
+                            <div class="card-price">@p.Cena_jednostkowa zł</div>
+                            <div class="card-shopping">
+                                <div class="card-item-name">@p.Nazwa</div>
+                                <button product-id="@p.ID_Produktu" class="card-add-cart fa-solid fa-cart-shopping"></button>
+                            </div>
+                        </div>
+            }
+        }
+
+        
+    </div>
+</div>
+@{
+    //ajax
+    string pre = "http" + new string(HttpContext.Request.IsHttps ? "s" : "");
+    pre = pre + "://";
+    string cartApiUrl = pre + HttpContext.Request.Host + @Url.Page("/Cart/api");
+}
+<script>
+    document.addEventListener('DOMContentLoaded', e => {
+        $(document).on('click', '[product-id]', e => {
+            console.log(e.currentTarget);
+            let $btn = $(e.currentTarget);
+            let productId = $btn.attr('product-id');
+            $.ajax({
+                url: '@cartApiUrl' + "?handler=AddProductToCart",
+                method: 'POST',
+                //contentType: 'application/json',
+                dataType: 'json',
+                data: {
+                    productId: productId
+                },
+            }).done(function(data, status, xhr) {
+                updateCart();
+            })
+        });
+    });
+</script>
+
