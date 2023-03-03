@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "BasiaProjektRazorPages": {
+    "SklepProjektRazorPages": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
