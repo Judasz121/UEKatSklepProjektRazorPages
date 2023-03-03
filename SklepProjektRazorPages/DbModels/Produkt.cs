@@ -25,12 +25,22 @@ namespace SklepProjektRazorPages.DbModels
 
             // price
             float result;
-            if(price != null && (price < 0))
+            if (price != null)
             {
-                ok = false;
-                if (!string.IsNullOrEmpty(msg))
-                    msg += "\n";
-                msg += "Cena nie może być ujemna";
+                if (price < 0)
+                {
+                    ok = false;
+                    if (!string.IsNullOrEmpty(msg))
+                        msg += "\n";
+                    msg += "Cena nie może być ujemna";
+                }
+                else if(price == default)
+                {
+                    ok = false;
+                    if (!string.IsNullOrEmpty(msg))
+                        msg += "\n";
+                    msg += "Cena nie może być pusta";
+                }
             }
 
             return new Tuple<bool, string>(ok, msg);

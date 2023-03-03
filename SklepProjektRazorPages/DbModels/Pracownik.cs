@@ -9,7 +9,7 @@ namespace SklepProjektRazorPages.DbModels
     {
         public int ID_Pracownika { get; set; }
 
-        public string Imie { get; set; }    
+        public string Imie { get; set; }
 
         public string Nazwisko { get; set; }
 

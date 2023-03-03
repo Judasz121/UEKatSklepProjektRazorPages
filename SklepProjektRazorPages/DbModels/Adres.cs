@@ -10,7 +10,7 @@ namespace SklepProjektRazorPages.DbModels
         public string Miasto { get; set; }
         public string  Ulica { get; set; }
         public string Kod_pocztowy { get; set; }
-        public  string Numer_budynku { get; set; }
+        public string Numer_budynku { get; set; }
         public string Numer_mieszkania { get; set; }
 
         public static Tuple<bool, string> verifyAddress(string? Kraj, string? Miasto, string? Ulica, string? Kod_pocztowy, string? Numer_budynku, string? Numer_mieszkania)
