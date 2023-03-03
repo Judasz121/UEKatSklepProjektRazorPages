@@ -50,7 +50,6 @@ function GenerateDataTables($tableEl) {
 
 
 function updateCart() {
-
     function genCartProductItem(record) {
         //console.log(record);
         let $container = $(document.createElement('tr'));
@@ -74,3 +73,15 @@ function updateCart() {
 }
 updateCart();
 
+let $shopCart = document.getElementById('shop-cart');
+let $productCarts = document.querySelectorAll('.product-cart');
+
+$productCarts.forEach(productCart => {
+    productCart.addEventListener('click', () => {
+        $shopCart.classList.toggle("addedClass");
+        setTimeout(() => {
+            $shopCart.style.transition = "color 1.5s";
+            $shopCart.classList.toggle("addedClass");
+        },1500)
+    });
+});

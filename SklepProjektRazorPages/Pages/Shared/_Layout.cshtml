@@ -17,7 +17,6 @@
     <div class="container navbar-container" style="display:flex;margin-left:auto;margin-right:auto;">
         <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="/Images/logo-ok.png" style="width:4rem;"></a>
         <div class="container-searching-bar">
-            @*Dodac strone do po kliknieciu szukaj*@
             <form method="get" style="margin-top:5px">
                 <button type="submit" class="fa-solid fa-magnifying-glass search-glass" asp-area="" asp-page="/Product/List" style="border:none !important;background-color:white"></button>
                 <input id="searching-bar" type="text" name="searching_bar" class="searching-bar d-inline-block" list="datalistOptions" placeholder="Wyszukaj produkt...">
@@ -48,15 +47,14 @@
                 }
             }
             @*Unlogged - /login, Logged - /AccountInformation + Drop menu*@
-            @*<a class="fa-solid fa-cart-shopping" asp-area="" asp-page="/Account/Account" style="color:#aab0b0;padding-right:1rem;opacity:@opacity;pointer-events:@pointer_events;line-height:1;padding-top:0.2rem"></a>*@
             @if (AccountHelper.loggedInVerified)
             {
                 <div class="dropdown" style="margin-left:0.5rem">
-                    <a class="fa-solid fa-cart-shopping" asp-page="/Order/Summary" style="color:#aab0b0"></a>
+                    <a class="fa-solid fa-cart-shopping shop-cart" id="shop-cart" asp-page="/Order/Summary" style="color:#aab0b0"></a>
                     <div class="cart-dropdown-content">
                         <div aria-labelledby="dropdownMenuButton1">
                             <table id="cart-products"></table>
-                            <div><a class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="/Order/Summary">Finalizuj zamówienie</a></div>
+                            <div><a id="summary-button" class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="/Order/Summary"></a></div>
                         </div>
                     </div>
                 </div>
@@ -74,7 +72,6 @@
                     {
                             <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex">Konto</a>
                     }
-                        @*Dodac hiperlink do podkategorii zamowienia*@
                         <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id" asp-route-tabId="nav_orders_tab">Zamówienia</a>
                         <a class="dropdown-Item Logoutitem" style="text-decoration:none;" asp-page="/Account/Logout">Wyloguj</a>
                     </div>
@@ -105,7 +102,34 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/datatables/datatables.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        let $paragraph = document.getElementById('summary-button');
+        let $tab_products = document.getElementById('cart-products');
+        console.log($tab_products)
+        let mutObs = new MutationObserver((mutation) =>{
+            changeText();
+        });
+        let mutObsOptions = {
+            childList: true
+        }
+        mutObs.observe($tab_products,mutObsOptions);
+        function changeText(){
+            if ($tab_products.hasChildNodes()){
+                $paragraph.innerText = "Finalizuj zamówienie";
+                $paragraph.style.pointerEvents = "all";
+                $paragraph.style.color = "#0d6efd";
+            }  
+            else {
+                $paragraph.innerText = "Brak produktów";
+                $paragraph.style.pointerEvents = "none";
+                $paragraph.style.color = "black";
+            }
+        }
+        changeText();
 
+
+
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -18,6 +18,7 @@ body {
     }
     to{
         transform: scale(1.2);
+       
     }
 }
 @keyframes cart-animation-out{
@@ -26,6 +27,25 @@ body {
     }
     to{
         transform: scale(1.0);
+    }
+}
+@keyframes shop-cart-in{
+    from{
+        transform:scale(1.0);
+    }
+    to {
+        transform: scale(1.5);
+        color: rgb(36, 124, 23);
+    }
+}
+@keyframes shop-cart-out{
+    from {
+        transform: scale(1.5);
+        color: rgb(36, 124, 23);
+    }
+    to {
+        transform: scale(1.0);
+        color: #aab0b0;
     }
 }
 @keyframes card-loading-animation{
@@ -559,4 +579,12 @@ ul {
 }
 #options{
     width:min(10rem) !important;
+}
+.shop-cart {
+    transform: scale(1.0);
+    
+}
+.shop-cart.addedClass {
+    transition: color 1.5s;
+    color: rgb(36, 124, 23) !important;
 }
