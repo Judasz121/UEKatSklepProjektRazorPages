@@ -51,11 +51,11 @@ function GenerateDataTables($tableEl) {
 
 function updateCart() {
     function genCartProductItem(record) {
-        //console.log(record);
+        console.log(record);
         let $container = $(document.createElement('tr'));
         $container.attr("class", "cart-product");
         $container.attr("id", record.product.iD_Produktu);
-        $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}</td>`);
+        $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}szt.(${record.amount * record.product.cena_jednostkowa}zł)</td>`);
         return $container[0];
     }
 

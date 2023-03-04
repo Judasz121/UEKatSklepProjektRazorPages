@@ -54,7 +54,11 @@
                     <div class="cart-dropdown-content">
                         <div aria-labelledby="dropdownMenuButton1">
                             <table id="cart-products"></table>
-                            <div><a id="summary-button" class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="/Order/Summary"></a></div>
+                            <div id="summary-container">
+                                @*<p style="border-bottom:1px solid black;width:100%"> </p>*@
+                                <a id="summary-button" class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="/Order/Summary"></a>
+                                
+                                </div>
                         </div>
                     </div>
                 </div>
