@@ -472,8 +472,8 @@ tr.cart-product > *:first-child {
     border-right: 1px solid black;
     padding-right:0.2rem;
 }
-tr.cart-product > *:nth-child(2){
-    padding-left:0.2rem;
+tr.cart-product > *:nth-child(2) {
+    padding-left: 0.2rem;
 }
 #cart-products{
     text-align:center;
@@ -491,9 +491,14 @@ tr.cart-product > *:nth-child(2){
     
 }
 #summary-cart-products img{
-    width:max(10vh);
+    width:100px;
+    height:72px;
+    object-fit:contain;
     display:block;
     margin:auto;
+}
+#summary-cart-products td:nth-child(2){
+    padding-left:1rem;
 }
 #summary-cart-products td:nth-child(3) > *{
     border: 1px solid black;

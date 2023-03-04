@@ -56,7 +56,7 @@ function updateCart() {
         let $container = $(document.createElement('tr'));
         $container.attr("class", "cart-product");
         $container.attr("id", record.product.iD_Produktu);
-        $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}szt.(${record.amount * record.product.cena_jednostkowa}zł)</td>`);
+        $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}szt.<br>(${record.amount * record.product.cena_jednostkowa}zł)</td>`);
         //Amount of products in summary page
         if ($cart_counter)
             $cart_counter.textContent = `Koszyk (${counter += record.amount})`;
