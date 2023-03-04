@@ -58,7 +58,8 @@ function updateCart() {
         $container.attr("id", record.product.iD_Produktu);
         $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}szt.(${record.amount * record.product.cena_jednostkowa}zł)</td>`);
         //Amount of products in summary page
-        $cart_counter.innerHTML = `Koszyk (${counter += record.amount})`;
+        if ($cart_counter)
+            $cart_counter.textContent = `Koszyk (${counter += record.amount})`;
         return $container[0];
     }
     $.ajax({
