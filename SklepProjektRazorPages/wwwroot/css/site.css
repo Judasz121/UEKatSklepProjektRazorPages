@@ -12,21 +12,21 @@ body {
     -webkit-animation-duration: 0s !important;
     transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
 }*/
-@keyframes cart-animation-in{
+@keyframes nav-image-animation-in{
     from{
-        transform: scale(1.0);
+        text-shadow: 0;
     }
-    to{
-        transform: scale(1.2);
-       
+    to {
+        text-shadow: 2px 2px 2px black;
     }
 }
-@keyframes cart-animation-out{
-    from{
-        transform: scale(1.2);
+@keyframes nav-image-animation-in {
+    from {
+        text-shadow: 2px 2px 2px black;
     }
-    to{
-        transform: scale(1.0);
+
+    to {
+        text-shadow: 0;
     }
 }
 @keyframes shop-cart-in{
@@ -131,14 +131,6 @@ body {
         padding: 1.5rem 2.5rem !important;
     }
 }
-@keyframes nav-load{
-    0%{
-        transform : translateY(-200%);
-
-    }
-    100%{
-        transform : translateY(0);
-    }
 }@keyframes nav-img-load{
     0%{
         transform : scale(0);
@@ -160,13 +152,7 @@ body {
     max-width: 1920px;
     font-family: 'Poppins', sans-serif;
 }
-.navbar-container img, .navbar-container a, .container-searching-bar {
-    animation: nav-load var(--nav-load-time) ease-in;
-}
-.navbar-container a {
-    animation: nav-img-load var(--nav-load-time) ease-in;
-    animation-fill-mode: forwards;
-}
+
 .navbar-container {
     font-family: 'Poppins', sans-serif;
 }
@@ -525,6 +511,10 @@ tr.cart-product > *:nth-child(2) {
     text-align:center;
 
 }
+#summary-button:hover {
+    color: #0a58ca !important;
+    transition: 0.2s color;
+}
 .address td {
     text-align: center;
 }
@@ -622,6 +612,9 @@ ul {
 .dropdown:hover .dropdown-content,.dropdown:hover .cart-dropdown-content{
     display:block;
 }
+.notransition {
+    transition: none !important;
+}
 .datatable-container{
     display:flex;
     gap:1rem;
@@ -637,4 +630,7 @@ ul {
 .shop-cart.addedClass {
     transition: color 1.5s;
     color: rgb(36, 124, 23) !important;
+}
+.navImgClass{
+    text-shadow:2px 2px 2px black;
 }

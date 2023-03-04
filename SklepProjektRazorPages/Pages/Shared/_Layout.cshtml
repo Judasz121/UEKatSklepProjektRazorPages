@@ -49,7 +49,7 @@
             @*Unlogged - /login, Logged - /AccountInformation + Drop menu*@
             @if (AccountHelper.loggedInVerified)
             {
-                <div class="dropdown" style="margin-left:0.5rem">
+                <div id="cart-dropdown" class="dropdown" style="margin-left:0.5rem">
                     <a class="fa-solid fa-cart-shopping shop-cart" id="shop-cart" asp-page="/Order/Summary" style="color:#aab0b0"></a>
                     <div class="cart-dropdown-content">
                         <div aria-labelledby="dropdownMenuButton1">
@@ -64,7 +64,7 @@
                 </div>
             }
             <div class="dropdown">
-                <a class="fa-solid fa-user drop-a" asp-page="@loggedpath" style="color:#aab0b0" asp-route-id="@route_id"></a>
+                <a class="fa-solid fa-user drop-a" id="account-img" asp-page="@loggedpath" style="color:#aab0b0" asp-route-id="@route_id"></a>
                 @{
                 if (AccountHelper.loggedInVerified)
                 {

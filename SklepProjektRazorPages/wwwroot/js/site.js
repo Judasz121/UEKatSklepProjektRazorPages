@@ -3,6 +3,26 @@
 
 // Write your JavaScript code.
 
+
+let $CartContainer = document.getElementById("cart-dropdown");
+let $account_img = document.getElementById("account-img");
+let $CartImg = document.getElementById("shop-cart");
+$CartContainer.addEventListener("mouseover", () => {
+    $CartImg.classList.add("notransition");
+    $CartImg.classList.add("navImgClass");
+})
+$CartContainer.addEventListener("mouseout", () => {
+    $CartImg.classList.remove("notransition");
+    $CartImg.classList.remove("navImgClass");
+})
+
+$account_img.addEventListener("mouseover", () => {
+    $account_img.classList.add("navImgClass");
+})
+$account_img.addEventListener("mouseout", () => {
+    $account_img.classList.remove("navImgClass");
+})
+
 function Dropdown() {
     document.getElementById("PopupMenu").classList.toggle("show");
 }
