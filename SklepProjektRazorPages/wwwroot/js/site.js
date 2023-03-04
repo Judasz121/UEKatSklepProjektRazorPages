@@ -48,7 +48,8 @@ function GenerateDataTables($tableEl) {
     return $tableEl.DataTable(dataTableOptions);
 };
 
-
+let $cart_counter = document.getElementById('cart-counter');
+let counter = 0;
 function updateCart() {
     function genCartProductItem(record) {
         console.log(record);
@@ -56,9 +57,10 @@ function updateCart() {
         $container.attr("class", "cart-product");
         $container.attr("id", record.product.iD_Produktu);
         $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}szt.(${record.amount * record.product.cena_jednostkowa}zł)</td>`);
+        //Amount of products in summary page
+        $cart_counter.innerHTML = `Koszyk (${counter += record.amount})`;
         return $container[0];
     }
-
     $.ajax({
         url: '/Cart/api' + "?handler=GetCart",
         method: "POST",

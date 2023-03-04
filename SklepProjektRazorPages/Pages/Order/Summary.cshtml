@@ -3,27 +3,30 @@
 @using SklepProjektRazorPages.ViewModels
 @model SklepProjektRazorPages.Pages.Order.SummaryModel
 @{
+ 
 }
     <div class="container accounts-container bg-white">
-        <div  class="admin-button-container">
-        <a class="button-animation" style="padding: 1rem 1em;" onclick="history.back()">Powrót na listę</a>
-        </div>
-        
+        <h2 id="cart-counter" style="text-align:center;border-bottom:1px solid grey;margin-bottom:2rem;padding: 0.5rem 0"></h2>
         <form method="post" enctype="multipart/form-data">
             <input type="hidden" value="@Model.orderView.ID_Zamowienia" asp-for="orderDb.ID_Zamowienia" />
 @*            <input type="hidden" asp-for="orderView" />*@
-            <table id="cart-products" style="margin-top:0.5rem;">
-                <tr>
-                    <th>Nazwa produktu</th>
-                    <th>Ilość</th>
-                </tr>
+            <table id="summary-cart-products" style="margin-top:0.5rem;">
+            @{
+                int suma = 0;
                 @foreach(CartRecord cr in @Model.orderView.cart)
                 {
                     <tr class="product" id="@cr.product.ID_Produktu">
+                        <td><img src="@cr.product.sciezkaZdjecia" /></td>
                         <td>@Html.DisplayFor(model => cr.product.Nazwa)</td>
-                        <td>@cr.amount</td>
+                        <td><p>@cr.amount</p></td>
+                        <td>@(cr.amount * cr.product.Cena_jednostkowa + "zł")</td>
                     </tr>
+                    suma += cr.amount * cr.product.Cena_jednostkowa.Value;
+                }    
                 }
+                <tr>
+                <th colspan="4"><p style="text-align:right;margin: .5rem .5rem auto auto">Łączna kwota: @suma zł</p></th>
+            </tr>
             </table>
             <div class="address-select-container">
                 <h5 style="margin:0 !important">Adres:</h5>
@@ -36,10 +39,11 @@
                     @Html.Raw(@Model.alertMessage.Replace("\n", "</br>"))
                 </div>
             }
-            <div class="admin-button-container">
+            <div class="admin-button-container summary-container" style="flex-direction:column;">
                 @*Po co ten button?*@
                 @*<button type="submit" class="button-animation">Zmień Adres</button>*@
                 <button type="submit" class="button-animation">Złóż zamówienie</button>
+                <a class="button-animation" onclick="history.back()">Powrót</a>
             </div>
 
         </form>
