@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 
-
+// Text-shadow for navbar images
 let $CartContainer = document.getElementById("cart-dropdown");
 let $account_img = document.getElementById("account-img");
 let $CartImg = document.getElementById("shop-cart");
@@ -15,6 +15,20 @@ $CartContainer.addEventListener("mouseout", () => {
     $CartImg.classList.remove("notransition");
     $CartImg.classList.remove("navImgClass");
 })
+
+//Sticky navbar
+window.onscroll = function () { scrollingFunction() };
+
+let navbar = document.getElementById("navbar");
+let sticky = navbar.offsetTop;
+
+function scrollingFunction() {
+    if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky")
+    } else {
+        navbar.classList.remove("sticky");
+    }
+}
 
 $account_img.addEventListener("mouseover", () => {
     $account_img.classList.add("navImgClass");

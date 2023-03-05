@@ -133,7 +133,7 @@ body {
         padding: 1.5rem 2.5rem !important;
     }
 }
-}@keyframes nav-img-load{
+@keyframes nav-img-load{
     0%{
         transform : scale(0);
 
@@ -144,6 +144,18 @@ body {
     100%{
         transform : scale(1);
     }
+}
+.sticky{
+    position:fixed;
+    top:0;
+    width:100%;
+   
+}
+.content {
+    padding:16px
+}
+.sticky + .content{
+    padding-top:60px
 }
 .container {
     align-content: center;
