@@ -132,7 +132,6 @@ $account_img.addEventListener("mouseout", () => {
 let $Card = document.querySelectorAll(".card");
 let $CardButton = document.querySelectorAll(".product-cart");
 for (let i = 0; $Card.length; i++) {
-    $CardButton[i].style.display = "none";
     $Card[i].addEventListener("mouseover", () => {
         $Card[i].classList.add("BoxShadowClass");
         $CardButton[i].style.display = "initial";
