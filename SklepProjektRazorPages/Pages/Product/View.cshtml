@@ -1,6 +1,10 @@
 ﻿@page
 @model SklepProjektRazorPages.Pages.Product.ViewModel
 @{
+    //ajax
+    string pre = "http" + new string(HttpContext.Request.IsHttps ? "s" : "");
+    pre = pre + "://";
+    string cartApiUrl = pre + HttpContext.Request.Host + @Url.Page("/Cart/api");
 }
 
 @if(Model.product == null){
@@ -16,7 +20,59 @@
     </div>
 }
 else{
-    <div class="align-content-center center text-center wszystko-center-kurwa">
+    <div style="width:min(60rem,75rem);margin:auto" class="datatable-container border-container bg-white">
 
+        <form class="datatable-container" method="get" style="padding-right:1rem">
+            <input type="hidden" asp-for="product.ID_Produktu" />
+            <div  class="view-container">
+                <h2 style="border-bottom: 1px solid grey">@Model.product.Nazwa</h2>
+                <img style="margin:auto;width:max(15rem);height:max(15rem);object-fit:contain;" src="@Url.Content(Model.product.sciezkaZdjecia)" />
+            </div>
+            <div style="width:min(25rem)" class="view-container view-specification">
+                @*Statycznie ustawiona specyfikacaj*@
+                <h3 style="border-bottom: 1px solid grey">Specyfikacja</h3>
+                <p>Gniazdo procesora: Socket AM5</p>
+                <p>Taktowanie:4.5 GHz</p>
+                <p>Liczba rdzeni:16 rdzeni</p>
+                <p>Pamięć cache:80 MB</p>
+            </div>
+            <div class="view-container view-price">
+                <p>@Model.product.Cena_jednostkowa zł</p>
+                @*Dodac funkcjonalnosc wybrania ilosci produktu do koszyka*@
+                <div style="display:flex;flex-direction:row;gap:1rem;">
+                    <select style="border-radius:10px;padding:.3rem">
+                    @{
+                        for(int i = 1; i<= 9; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                    </select>
+                    <button type="button" product-id="@Model.product.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"><p>Dodaj do koszyka</p></button>
+                </div>
+                
+            </div>
+        </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            $(document).on('click', '[product-id]', e => {
+                console.log(e.currentTarget);
+                let $btn = $(e.currentTarget);
+                let productId = $btn.attr('product-id');
+                $.ajax({
+                    url: '@cartApiUrl' + "?handler=AddProductToCart",
+                    method: 'POST',
+                    //contentType: 'application/json',
+                    dataType: 'json',
+                    data: {
+                        productId: productId
+                    },
+                }).done(function (data, status, xhr) {
+                    updateCart();
+                })
+            });
+        });
+    </script>
 }

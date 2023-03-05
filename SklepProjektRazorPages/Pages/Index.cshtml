@@ -18,16 +18,21 @@
         @{
             foreach(Produkt p in @Model.ProductList)
             {
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="@p.sciezkaZdjecia"/>
-                            </div>
-                            <div class="card-price">@p.Cena_jednostkowa zł</div>
-                            <div class="card-shopping">
-                                <div class="card-item-name">@p.Nazwa</div>
-                                <button product-id="@p.ID_Produktu" class="card-add-cart fa-solid fa-cart-shopping"></button>
-                            </div>
-                        </div>
+                <div class="card">
+                    <a style="text-decoration:none;color: inherit !important;" asp-page="/Product/View" asp-route-id="@p.ID_Produktu">
+                    <div class="card-image">
+                        <img src="@p.sciezkaZdjecia"/>
+                    </div>
+                    <div class="card-price">@p.Cena_jednostkowa zł</div>
+                    <div class="card-shopping">
+                        <div class="card-item-name">@p.Nazwa</div>
+                    </div>
+                    </a>
+                    <div style="display:flex;justify-content:flex-end">
+                        <button product-id="@p.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"></button>
+                    </div>
+                    
+                </div>
             }
         }
 

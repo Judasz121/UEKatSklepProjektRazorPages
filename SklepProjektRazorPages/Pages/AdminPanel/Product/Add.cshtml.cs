@@ -59,9 +59,9 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Product
                 var verification = Produkt.VerifyValues(product.Nazwa, product.Cena_jednostkowa);
                 if (verification.Item1)
                 {
-                    conn.Execute($"INSERT INTO Produkt VALUES(@Nazwa,@Cena_jednostkowa,Null,@sciezkaZdjecia,0)", product);
                     product.sciezkaZdjecia = this.MoveToDbImageStorageFolder(productCoverPhoto).Split("wwwroot")[1];
                     product.sciezkaZdjecia = DbHelper.ReplacePolishChars(product.sciezkaZdjecia);
+                    conn.Execute($"INSERT INTO Produkt VALUES(@Nazwa,@Cena_jednostkowa,Null,@sciezkaZdjecia,0)", product);
                     accountAlertClass = "alert-success";
                     accountAlertValue = "Pomyœlnie dodano";
                 }
