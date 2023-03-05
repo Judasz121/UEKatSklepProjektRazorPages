@@ -61,14 +61,14 @@
                     </div>
                 </div>
             }
-            <div class="dropdown">
+            <div id="cart-dropdown" class="dropdown">
                 <a class="fa-solid fa-user drop-a" id="account-img" asp-page="@loggedpath" style="color:#aab0b0" asp-route-id="@route_id"></a>
                 @{
                 if (AccountHelper.loggedInVerified)
                 {
                     <div class="dropdown-content">
                     @if (AccountHelper.loggedInVerified){
-                                <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id">Konto</a>
+                                <a class="dropdown-Item"  style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id">Konto</a>
                     }
                     else
                     {
