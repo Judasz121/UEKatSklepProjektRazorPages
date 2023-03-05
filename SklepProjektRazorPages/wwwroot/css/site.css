@@ -601,7 +601,7 @@ ul {
     animation: cart-animation-out 0.5s;
     transition: border-color 0.2s ease-in;
     padding:5px;
-    transform:translateY(-100%)
+    transform:translateY(-100%);
 }
 .product-cart:hover {
     border-image: none !important;

@@ -1,7 +1,10 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
+
+
 let $cart_counter = document.getElementById('cart-counter');
 let counter = 0;
+
 function updateCart() {
     function genCartProductItem(record) {
         console.log(record);
@@ -27,6 +30,8 @@ function updateCart() {
     });
 }
 updateCart();
+
+//Adding product animation
 
 let $shopCart = document.getElementById('shop-cart');
 let $productCarts = document.querySelectorAll('.product-cart');
@@ -100,6 +105,9 @@ function GenerateDataTables($tableEl) {
     return $tableEl.DataTable(dataTableOptions);
 };
 
+
+
+
 // Text-shadow for navbar images
 let $CartContainer = document.getElementById("cart-dropdown");
 let $account_img = document.getElementById("account-img");
@@ -120,13 +128,17 @@ $account_img.addEventListener("mouseout", () => {
     $account_img.classList.remove("TextShadowClass");
 })
 
-//Text-shadow for index products
+//Text-shadow for index products + Button display:visible
 let $Card = document.querySelectorAll(".card");
+let $CardButton = document.querySelectorAll(".product-cart");
 for (let i = 0; $Card.length; i++) {
+    $CardButton[i].style.display = "none";
     $Card[i].addEventListener("mouseover", () => {
         $Card[i].classList.add("BoxShadowClass");
+        $CardButton[i].style.display = "initial";
     });
     $Card[i].addEventListener("mouseout", () => {
         $Card[i].classList.remove("BoxShadowClass");
+        $CardButton[i].style.display = "none";
     });
 }
