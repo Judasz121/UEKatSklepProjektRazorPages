@@ -12,7 +12,7 @@
 else{
     <div class="container admin-accounts-container bg-white" style="width:min(60rem) !important">
         <span style="display:table;margin:0 auto;font-size:max(2rem);">Witaj! @Model.account.LoginUzytkownika</span>
-        <div class="nav nav-tabs border-container" id="nav-tab" role="tablist">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Ogólne</button>
             <button class="nav-link" id="nav_orders_tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Zamówienia</button>
             <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Adresy</button>
@@ -28,13 +28,20 @@ else{
                     <span style="width:11rem">Adres E-mail:</span>
                     <input id="input-settings" class="input-settings" disabled value="@Model.account.Email">
                 </div>
-                <div style="display:flex;justify-content:center;margin-top:0.5rem">
-                    <a class="reg-button-animation" id="button-account-settings" asp-page="/Account/AccountEdit" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">
-                        Zmień dane
+                <div class="button-container" style="display:flex;justify-content:center;margin:auto;gap:.5rem;flex-direction:row">
+                    <a class="button-animation" id="button-account-settings" asp-page="/Account/AccountEdit" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">Zmień dane
                         <div class="btn_horizontal"></div>
                         <div class="btn_vertical"></div>
                     </a>
-                    @*Ewentualnie dodać dezaktywacje konta *@
+                    @*Dodać funkcjonalność buttona*@
+                    <form method="post">
+                        <button class="delete-button-animation" id="delete-account">
+                            Dezaktywuj konto
+                            <div class="btn_horizontal"></div>
+                            <div class="btn_vertical"></div>
+                        </button>
+                    </form>
+                    
                 </div>
 
             </div>

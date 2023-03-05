@@ -128,6 +128,9 @@ body {
     font-family: var(--popins-font-family);
     border-image: var(--border-image-patern) repeat;
     border-bottom: 3px solid black;
+    display:flex;
+    margin: auto auto 2rem auto;
+    position:sticky;
 }
 @media (max-width:1500px){
     .searching-bar{
@@ -152,7 +155,7 @@ footer{
     padding-top: 2rem;
     white-space: nowrap;
     display: flex;
-    flex-direction: column;
+    flex-direction:column;
 }
 .admin-button-container {
     white-space: nowrap;
@@ -162,15 +165,19 @@ footer{
     gap:0.5rem;
     justify-content:space-evenly;
 }
+.delete-button-animation:hover{
+    color:black;
+    background-color: rgb(216, 51, 51);
+}
 .button-animation:hover,.reg-button-animation:hover {
     color: white;
     background-color: rgba(2, 80, 181, 1);
 }
-.button-animation, .reg-button-animation {
+.button-animation, .reg-button-animation,.delete-button-animation {
     --offset: .1rem;
     --border-size: .1rem;
     display: block;
-    position: relative;
+    /*position: relative;*/
     padding: 1.5em 3em;
     appearance: none;
     border: 0;
@@ -377,8 +384,11 @@ footer{
     border-radius: var(--border-radius-patern);
     box-shadow: var(--box-shadow-pattern-1px-black);
 }
-.nav-tabs{
-    justify-content:space-between;
+.nav-tabs {
+    justify-content: space-between;
+    padding-bottom: 1px;
+    border-bottom: 0.2rem outset;
+    border-image: var(--border-image-patern);
 }
 .accounts-settings-container {
     display: flex;
