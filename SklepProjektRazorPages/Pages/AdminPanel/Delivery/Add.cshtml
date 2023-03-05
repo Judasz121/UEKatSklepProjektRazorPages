@@ -14,10 +14,10 @@ else
 {
     <div class="container accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
-        <form method="post" >
+        <form method="post">
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.ID_Dostawcy)</label>
-                <select type="text" asp-items="Model.Suppliers" asp-for="Delivery.ID_Dostawcy" ></select>
+                <select type="text" asp-items="Model.Suppliers" asp-for="Delivery.ID_Dostawcy"></select>
             </div>
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.Data_zamowienia)</label>
@@ -35,7 +35,6 @@ else
                     <select asp-items="Model.Warehouses"></select>
                 </div>
                 <div class="warehouses">
-
                 </div>
             </div>
             <button type="submit" class="btn btn-success">Zapisz</button>
@@ -47,9 +46,9 @@ else
             }
         </form>
     </div>
-    <script>
-    document.addEventListener("DOMContentLoaded", e => {
-
+    @section jsSyntaxHighlighting{
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", e => {
             function setupWarehousesProductsSelectionList() {
                 let self = this;
                 this.$el = $("#warehouse-product-delivery-selection-container");
@@ -195,14 +194,14 @@ else
                                 return;
                             }
                             //$warehouseProducts.append(genHiddenProducts_warehouses_deliveryFormItem(productId, warehouseId, deliveryId, productAmount));
-                            $warehouseProducts.append(genProductElement(productId, productName, warehouseId, productAmount));                            
+                            $warehouseProducts.append(genProductElement(productId, productName, warehouseId, productAmount));
                         });
 
                         return $addProductSection;
                     }
                     $container.append(genAddProductSection());
 
-                    
+
                     let $productsContainer = $(document.createElement("div"));
                     $productsContainer.attr("class", "ps-2 warehouse-products");
                     $container.append($productsContainer);
@@ -212,7 +211,9 @@ else
 
             }
             setupWarehousesProductsSelectionList()
-        });
-
+        });        
     </script>
+    }
+
+
 }
