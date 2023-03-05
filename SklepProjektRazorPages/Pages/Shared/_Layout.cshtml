@@ -55,10 +55,8 @@
                         <div aria-labelledby="dropdownMenuButton1">
                             <table id="cart-products"></table>
                             <div id="summary-container">
-                                @*<p style="border-bottom:1px solid black;width:100%"> </p>*@
                                 <a id="summary-button" class="dropdown-Item" style="text-decoration:none;animation:none !important" asp-page="/Order/Summary"></a>
-                                
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,15 +116,18 @@
         }
         mutObs.observe($tab_products,mutObsOptions);
         function changeText(){
+            let $summaryContainer = document.getElementById("summary-container");
             if ($tab_products.hasChildNodes()){
                 $paragraph.innerText = "Finalizuj zamówienie";
                 $paragraph.style.pointerEvents = "all";
                 $paragraph.style.color = "#0d6efd";
+                $summaryContainer.style.borderTop = "0.1rem solid black";
             }  
             else {
                 $paragraph.innerText = "Brak produktów";
                 $paragraph.style.pointerEvents = "none";
                 $paragraph.style.color = "black";
+                $summaryContainer.style.borderTop = "none";
             }
         }
         changeText();
