@@ -1,20 +1,45 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
+let $cart_counter = document.getElementById('cart-counter');
+let counter = 0;
+function updateCart() {
+    function genCartProductItem(record) {
+        console.log(record);
+        let $container = $(document.createElement('tr'));
+        $container.attr("class", "cart-product");
+        $container.attr("id", record.product.iD_Produktu);
+        $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}szt.<br>(${record.amount * record.product.cena_jednostkowa}zł)</td>`);
+        //Amount of products in summary page
+        if ($cart_counter)
+            $cart_counter.textContent = `Koszyk (${counter += record.amount})`;
+        return $container[0];
+    }
+    $.ajax({
+        url: '/Cart/api' + "?handler=GetCart",
+        method: "POST",
+        contentType: 'application/json',
+    }).done(function (data, status, xhr) {
+        let $cartList = $("#cart-products");
+        $cartList.html('');
+        data.products.forEach(productRecord => {
+            $cartList.append(genCartProductItem(productRecord));
+        });
+    });
+}
+updateCart();
 
-// Write your JavaScript code.
+let $shopCart = document.getElementById('shop-cart');
+let $productCarts = document.querySelectorAll('.product-cart');
 
-// Text-shadow for navbar images
-let $CartContainer = document.getElementById("cart-dropdown");
-let $account_img = document.getElementById("account-img");
-let $CartImg = document.getElementById("shop-cart");
-$CartContainer.addEventListener("mouseover", () => {
-    $CartImg.classList.add("notransition");
-    $CartImg.classList.add("navImgClass");
-})
-$CartContainer.addEventListener("mouseout", () => {
-    $CartImg.classList.remove("notransition");
-    $CartImg.classList.remove("navImgClass");
-})
+$productCarts.forEach(productCart => {
+    productCart.addEventListener('click', () => {
+        $shopCart.classList.toggle("addedClass");
+        setTimeout(() => {
+            $shopCart.style.transition = "color 1.5s";
+            $shopCart.classList.toggle("addedClass");
+        }, 1500)
+    });
+});
 
 //Sticky navbar
 window.onscroll = function () { scrollingFunction() };
@@ -29,13 +54,6 @@ function scrollingFunction() {
         navbar.classList.remove("sticky");
     }
 }
-
-$account_img.addEventListener("mouseover", () => {
-    $account_img.classList.add("navImgClass");
-})
-$account_img.addEventListener("mouseout", () => {
-    $account_img.classList.remove("navImgClass");
-})
 
 function Dropdown() {
     document.getElementById("PopupMenu").classList.toggle("show");
@@ -82,43 +100,33 @@ function GenerateDataTables($tableEl) {
     return $tableEl.DataTable(dataTableOptions);
 };
 
-let $cart_counter = document.getElementById('cart-counter');
-let counter = 0;
-function updateCart() {
-    function genCartProductItem(record) {
-        console.log(record);
-        let $container = $(document.createElement('tr'));
-        $container.attr("class", "cart-product");
-        $container.attr("id", record.product.iD_Produktu);
-        $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}szt.<br>(${record.amount * record.product.cena_jednostkowa}zł)</td>`);
-        //Amount of products in summary page
-        if ($cart_counter)
-            $cart_counter.textContent = `Koszyk (${counter += record.amount})`;
-        return $container[0];
-    }
-    $.ajax({
-        url: '/Cart/api' + "?handler=GetCart",
-        method: "POST",
-        contentType: 'application/json',
-    }).done(function (data, status, xhr) {
-        let $cartList = $("#cart-products");
-        $cartList.html('');
-        data.products.forEach(productRecord => {
-            $cartList.append(genCartProductItem(productRecord));
-        });
+// Text-shadow for navbar images
+let $CartContainer = document.getElementById("cart-dropdown");
+let $account_img = document.getElementById("account-img");
+let $CartImg = document.getElementById("shop-cart");
+$CartContainer.addEventListener("mouseover", () => {
+    $CartImg.classList.add("notransition");
+    $CartImg.classList.add("TextShadowClass");
+});
+$CartContainer.addEventListener("mouseout", () => {
+    $CartImg.classList.remove("notransition");
+    $CartImg.classList.remove("TextShadowClass");
+});
+
+$account_img.addEventListener("mouseover", () => {
+    $account_img.classList.add("TextShadowClass");
+})
+$account_img.addEventListener("mouseout", () => {
+    $account_img.classList.remove("TextShadowClass");
+})
+
+//Text-shadow for index products
+let $Card = document.querySelectorAll(".card");
+for (let i = 0; $Card.length; i++) {
+    $Card[i].addEventListener("mouseover", () => {
+        $Card[i].classList.add("BoxShadowClass");
+    });
+    $Card[i].addEventListener("mouseout", () => {
+        $Card[i].classList.remove("BoxShadowClass");
     });
 }
-updateCart();
-
-let $shopCart = document.getElementById('shop-cart');
-let $productCarts = document.querySelectorAll('.product-cart');
-
-$productCarts.forEach(productCart => {
-    productCart.addEventListener('click', () => {
-        $shopCart.classList.toggle("addedClass");
-        setTimeout(() => {
-            $shopCart.style.transition = "color 1.5s";
-            $shopCart.classList.toggle("addedClass");
-        },1500)
-    });
-});

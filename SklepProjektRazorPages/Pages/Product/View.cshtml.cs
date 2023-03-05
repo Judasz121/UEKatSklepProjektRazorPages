@@ -5,6 +5,8 @@ using System.Data;
 using SklepProjektRazorPages.DbModels;
 using SklepProjektRazorPages.Helpers;
 using SklepProjektRazorPages.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace SklepProjektRazorPages.Pages.Product
 {
@@ -15,6 +17,9 @@ namespace SklepProjektRazorPages.Pages.Product
         public ProductViewModel product { get; set; }
         public string alertClass { get; set; }
         public string alertMessage { get; set; }
+        public List<SelectListItem> categories { get; set; } = new List<SelectListItem>();
+        [BindProperty, DataType(DataType.Upload)]
+        public IFormFile productCoverPhoto { get; set; }
         public void OnGet()
         {
             using (IDbConnection conn = DbHelper.GetDbConnection())
@@ -29,6 +34,30 @@ namespace SklepProjektRazorPages.Pages.Product
                     alertMessage = exc.Message;
                     alertClass = "alert-danger";
                 }
+                this.FetchCategoriesSelectItems();
+            }
+        }
+        public void FetchCategoriesSelectItems()
+        {
+            try
+            {
+                using (IDbConnection conn = DbHelper.GetDbConnection())
+                {
+                    var dbCats = conn.Query<Kategoria>("SELECT * FROM Kategoria");
+                    foreach (Kategoria cat in dbCats)
+                    {
+                        this.categories.Add(new SelectListItem()
+                        {
+                            Value = cat.ID_Kategorii.ToString(),
+                            Text = cat.Nazwa
+                        });
+                    }
+                }
+            }
+            catch (InvalidOperationException exc)
+            {
+                alertClass = "alert-danger";
+                alertMessage += "Server Error: \n" + exc.Message;
             }
         }
     }
