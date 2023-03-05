@@ -287,7 +287,7 @@ footer{
     min-height:20rem;
     text-align: center;
 }
-.login-container .input-container:nth-child(2){
+.login-container .input-container:nth-child(2), .reg-container .input-container:nth-child(2){
     border-top:1px solid grey;
 }
 .reg-container {
@@ -710,6 +710,5 @@ ul {
     margin: auto auto auto 10px;
 }
 #shop-cart, #account-img {
-    /*color:#aab0b0;*/
     color:black;
 }
