@@ -3,6 +3,7 @@
 @using SklepProjektRazorPages.ViewModels
 @model SklepProjektRazorPages.Pages.AdminPanel.Delivery.ViewModel
 @{
+    ViewData["Title"] = $"Admin Panel - {@Model.Delivery.ID_Dostawy}";
 }
 
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)

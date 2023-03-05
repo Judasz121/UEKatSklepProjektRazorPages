@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.Helpers;
 @model SklepProjektRazorPages.Pages.AdminPanel.Account.EditModel
 @{
+    ViewData["Title"] = $"Admin Panel - {@Model.account.ID_Konta}";
 }
 @if (Model.accountNotFound)
 {

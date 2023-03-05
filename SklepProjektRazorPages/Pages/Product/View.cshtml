@@ -1,6 +1,7 @@
 ﻿@page
 @model SklepProjektRazorPages.Pages.Product.ViewModel
 @{
+    ViewData["Title"] = Model.product.Nazwa;
     //ajax
     string pre = "http" + new string(HttpContext.Request.IsHttps ? "s" : "");
     pre = pre + "://";

@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels;
 @model SklepProjektRazorPages.Pages.AdminPanel.Warehouse.EditModel
 @{
+    ViewData["Title"] = $"Admin Panel - Edit - {@Model.warehouse.Nazwa}";
 }
 @if (Model.warehouseNotFound)
 {

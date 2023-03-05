@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels
 @model SklepProjektRazorPages.Pages.AdminPanel.Employee.ViewModel
 @{
+    ViewData["Title"] = $"Admin Panel - {@Model.employee.ID_Pracownika}";
 }
 @if (Model.employeeNotFound)
 {

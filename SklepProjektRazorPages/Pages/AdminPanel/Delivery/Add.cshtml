@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels
 @model SklepProjektRazorPages.Pages.AdminPanel.Delivery.AddModel
 @{
+    ViewData["Title"] = $"Admin Panel - Dodanie Dostawy";
 }
 
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)

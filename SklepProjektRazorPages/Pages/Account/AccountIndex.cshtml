@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels;
 @model SklepProjektRazorPages.Pages.Account.AccountIndexModel
 @{
+    ViewData["Title"] = "Konto - Strona główna";
 }
 @if(!AccountHelper.loggedInVerified || Model.accountNotFound){
     <div class="text-container">

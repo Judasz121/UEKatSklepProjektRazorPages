@@ -6,7 +6,7 @@
 @model IndexModel
 @{
 
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Strona główna";
     HttpContext.Session.SetString("testString1", "Centurion mk. XII");
     IDbConnection conn = DbHelper.GetDbConnection();
     conn.Dispose();

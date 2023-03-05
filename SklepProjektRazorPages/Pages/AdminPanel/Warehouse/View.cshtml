@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels;
 @model SklepProjektRazorPages.Pages.AdminPanel.Warehouse.ViewModel
 @{
+    ViewData["Title"] = $"Admin Panel - {@Model.warehouse.Nazwa}";
 }
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
 {

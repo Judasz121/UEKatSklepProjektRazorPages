@@ -3,6 +3,7 @@
 @using SklepProjektRazorPages.ViewModels
 @model SklepProjektRazorPages.Pages.AdminPanel.Supplier.ViewModel
 @{
+    ViewData["Title"] = $"Admin Panel - {@Model.supplier.Nazwa}";
 }
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
 {

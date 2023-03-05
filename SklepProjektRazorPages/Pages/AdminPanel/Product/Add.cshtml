@@ -1,6 +1,7 @@
 ﻿@page
 @model SklepProjektRazorPages.Pages.AdminPanel.Product.AddModel
 @{
+    ViewData["Title"] = $"Admin Panel - Dodanie Produktu";
 }
 @if(!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem){
     <div class="text-center">

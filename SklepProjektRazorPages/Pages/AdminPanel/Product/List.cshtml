@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels
 @model SklepProjektRazorPages.Pages.AdminPanel.Product.ListModel
 @{
+    ViewData["Title"] = $"Admin Panel - Lista Produktów";
 }
 @*Product list*@
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )

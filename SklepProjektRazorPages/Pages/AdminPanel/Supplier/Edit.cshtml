@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels
 @model SklepProjektRazorPages.Pages.AdminPanel.Supplier.EditModel
 @{
+    ViewData["Title"] = $"Admin Panel - Edit - {@Model.supplier.Nazwa}";
 }
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
 {

@@ -3,6 +3,7 @@
 @using SklepProjektRazorPages.DbModels;
 @using SklepProjektRazorPages.Helpers;
 @{
+    ViewData["Title"] = $"Admin Panel - {@Model.product.Nazwa}";
 }
 @if (Model.productNotFound)
 {
