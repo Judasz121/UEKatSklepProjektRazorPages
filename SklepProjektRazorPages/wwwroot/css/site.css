@@ -166,9 +166,10 @@ body {
     max-width: 1920px;
     font-family: 'Poppins', sans-serif;
 }
-
 .navbar-container {
     font-family: 'Poppins', sans-serif;
+    border-image: var(--border-image-patern) repeat;
+    border-bottom: 3px solid black;
 }
 @media (max-width:1500px){
     .searching-bar{
@@ -250,6 +251,7 @@ footer{
     height:2.5rem;
     padding-left:10px;
     padding-right:10px;
+    border:2px solid black;
 }
 .container-searching-bar a, .container-searching-bar a :focus, .container-searching-bar a :focus {
    text-decoration:none;
@@ -274,7 +276,7 @@ footer{
 .login-container {
     border: 0.5rem outset;
     border-image: var(--border-image-patern);
-    var(--border-radius-patern);
+    border-radius: var(--border-radius-patern);
     font-family: 'Poppins', sans-serif;
     margin: 2rem;
     padding: 1rem;
@@ -600,17 +602,16 @@ ul {
     border: 2.5px solid;
     border-color: black;
     border-radius: 100px;
-    animation: cart-animation-out 0.5s;
-    transition: border-color 0.2s ease-in;
+    transition: border-color 0.2s ease-in, color 0.2s ease-in;
     padding:5px;
     transform:translateY(-100%);
 }
 .product-cart:hover {
     border-image: none !important;
     border-color:rgb(36, 124, 23);
-    transition: border-color 0.2s ease-in;
-    animation: cart-animation-in 0.5s;
+    transition: border-color 0.2s ease-in, color 0.2s ease-in;
     animation-fill-mode: forwards;
+    color:green;
 }
 .card-item-name{
     font-size:13px;
@@ -665,7 +666,7 @@ ul {
     color: rgb(36, 124, 23) !important;
 }
 .TextShadowClass{
-    text-shadow:2px 2px 2px black;
+    text-shadow:2px 2px 2px grey;
 }
 .BoxShadowClass{
     box-shadow: 2px 2px 2px grey;
@@ -707,4 +708,8 @@ ul {
     font-size:11px;
     line-height:12px;
     margin: auto auto auto 10px;
+}
+#shop-cart, #account-img {
+    /*color:#aab0b0;*/
+    color:black;
 }

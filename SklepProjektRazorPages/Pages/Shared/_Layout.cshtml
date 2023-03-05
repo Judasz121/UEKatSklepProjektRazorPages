@@ -14,8 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
 </head>
 <body class="preload">
-    <div id="navbar" class="container navbar-container" style="display:flex;margin-left:auto;margin-right:auto;position:sticky">
-        <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="/Images/logo-ok.png" style="width:4rem;"></a>
+    <div id="navbar" class="container navbar-container bg-white" style="display:flex;margin-left:auto;margin-right:auto;position:sticky">
+        <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="/Images/logo.png" style="width:4rem;"></a>
         <div class="container-searching-bar">
             <form method="get" style="margin-top:5px">
                 <button type="submit" class="fa-solid fa-magnifying-glass search-glass" asp-area="" asp-page="/Product/List" style="border:none !important;background-color:white"></button>
@@ -50,7 +50,7 @@
             @if (AccountHelper.loggedInVerified)
             {
                 <div id="cart-dropdown" class="dropdown" style="margin-left:0.5rem">
-                    <a class="fa-solid fa-cart-shopping shop-cart" id="shop-cart" asp-page="/Order/Summary" style="color:#aab0b0"></a>
+                    <a class="fa-solid fa-cart-shopping shop-cart" id="shop-cart" asp-page="/Order/Summary" ></a>
                     <div class="cart-dropdown-content">
                         <div aria-labelledby="dropdownMenuButton1">
                             <table id="cart-products"></table>
@@ -64,7 +64,7 @@
             @if (AccountHelper.loggedInVerified)
             {
                 <div id="cart-dropdown" class="dropdown">
-                <a class="fa-solid fa-user drop-a" id="account-img" asp-page="@loggedpath" style="color:#aab0b0" asp-route-id="@route_id"></a>
+                <a class="fa-solid fa-user drop-a" id="account-img" asp-page="@loggedpath"  asp-route-id="@route_id"></a>
                     <div class="dropdown-content">
                         <a class="dropdown-Item"  style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id">Konto</a>
                         <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/AccountIndex" asp-route-id="@route_id" asp-route-tabId="nav_orders_tab">Zamówienia</a>
@@ -75,7 +75,7 @@
             else
             {
                 <div id="cart-dropdown" class="dropdown">
-                <a class="fa-solid fa-user drop-a" id="account-img" asp-page="@loggedpath" style="color:#aab0b0"></a>
+                <a class="fa-solid fa-user drop-a" id="account-img" asp-page="@loggedpath" ></a>
                     <div class="dropdown-content">
                         <a class="dropdown-Item"  style="text-decoration:none;" asp-page="/Account/Login">Zaloguj</a>
                         <a class="dropdown-Item" style="text-decoration:none;" asp-page="/Account/Register" >Zarejestruj</a>
