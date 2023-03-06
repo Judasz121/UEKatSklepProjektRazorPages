@@ -1,14 +1,12 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
-
-
 let $cart_counter = document.getElementById('cart-counter');
 let $counter = 0;
 let $cart_layout = document.getElementById("item-counter");
 function updateCart() {
     $counter = 0;
     function genCartProductItem(record) {
-        console.log(record);
+        //console.log(record);
         let $container = $(document.createElement('tr'));
         $container.attr("class", "cart-product");
         $container.attr("id", record.product.iD_Produktu);
@@ -112,7 +110,6 @@ function GenerateDataTables($tableEl) {
 
     return $tableEl.DataTable(dataTableOptions);
 };
-
 
 
 

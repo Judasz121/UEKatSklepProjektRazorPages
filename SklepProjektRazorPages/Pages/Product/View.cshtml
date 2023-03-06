@@ -41,11 +41,11 @@ else{
                 <p>@Model.product.Cena_jednostkowa zł</p>
                 @*Dodac funkcjonalnosc wybrania ilosci produktu do koszyka*@
                 <div style="display:flex;flex-direction:row;gap:1rem;">
-                    <select style="border-radius:10px;padding:.3rem">
+                    <select id="select-value" style="border-radius:10px;padding:.3rem">
                     @{
                         for(int i = 1; i<= 9; i++)
                         {
-                            <option value="@i">@i</option>
+                            <option class="select-value" value="@i">@i</option>
                         }
                     }
                     </select>
@@ -56,24 +56,24 @@ else{
         </form>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', e => {
-            $(document).on('click', '[product-id]', e => {
-                console.log(e.currentTarget);
-                let $btn = $(e.currentTarget);
-                let productId = $btn.attr('product-id');
-                $.ajax({
-                    url: '@cartApiUrl' + "?handler=AddProductToCart",
-                    method: 'POST',
-                    //contentType: 'application/json',
-                    dataType: 'json',
-                    data: {
-                        productId: productId
-                    },
-                }).done(function (data, status, xhr) {
-                    updateCart();
-                })
-            });
-        });
-    </script>
 }
+<script>
+    document.addEventListener('DOMContentLoaded', e => {
+        $(document).on('click', '[product-id]', e => {
+            console.log(e.currentTarget);
+            let $btn = $(e.currentTarget);
+            let productId = $btn.attr('product-id');
+            $.ajax({
+                url: '@cartApiUrl' + "?handler=AddProductToCart",
+                method: 'POST',
+                //contentType: 'application/json',
+                dataType: 'json',
+                data: {
+                    productId: productId
+                },
+            }).done(function (data, status, xhr) {
+                updateCart();
+            })
+        });
+    });
+</script>

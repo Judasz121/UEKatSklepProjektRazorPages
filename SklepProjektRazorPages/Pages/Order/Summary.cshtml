@@ -19,7 +19,21 @@
                         <tr class="product" id="@cr.product.ID_Produktu">
                             <td><img src="@cr.product.sciezkaZdjecia" /></td>
                             <td>@Html.DisplayFor(model => cr.product.Nazwa)</td>
-                            <td><p>@cr.amount</p></td>
+                            <td>
+                                <select cart-id="@cr.cartID" product-id="@cr.product.ID_Produktu" id="select-value" class="select-values" style="border-radius:10px;padding:.3rem">
+                                    @{
+                                        for (int i = 1; i <= 9; i++)
+                                        {
+                                            if(i == cr.amount)
+                                            {   
+                                                <option selected class="select-value" value="@cr.amount">@cr.amount</option>
+                                                continue;
+                                            }
+                                            <option class="select-value" value="@i">@i</option>
+                                        }
+                                    }
+                                </select>
+                            </td>
                             <td>@(cr.amount * cr.product.Cena_jednostkowa + "zł")</td>
                         </tr>
                         suma += cr.amount * cr.product.Cena_jednostkowa.Value;
@@ -53,3 +67,44 @@
         </div>
     </div>
 </form>
+<script>
+    // Summary change option handler
+    let $select_value = document.querySelectorAll(".select-values");
+    for (let i = 0; $select_value.length; i++) {
+        $select_value[i].addEventListener("change", (event) => {
+            let $cartId = $(event.currentTarget).attr("cart-id");
+            let $productId = $(event.currentTarget).attr("product-id");
+            let $productsAmount = event.currentTarget.value;
+            console.log(event.target);
+            console.log($cartId);
+            console.log($productId);
+            console.log($productsAmount);
+            $.ajax({
+                url: '/Cart/api' + "?handler=UpdateCart",
+                type: "POST",
+                data: {
+                    "cartId": $cartId,
+                    "productId": $productId,
+                    "productsAmount": $productsAmount
+                },
+                //Pokazuje i tak błąd w konsoli
+                success: function (result) {
+                    if (result.success) {
+                        updateCart();
+                    }
+                    else {
+                        alert('Error: +' + result.message);
+                    }
+                }
+            }).done(function (data, status, xhr) {
+                let $cartList = $("#cart-products");
+                //console.log("pod tym");
+                //console.log(`${data.products[i].amount} ${data.products[i].product.nazwa}`);
+
+                //Tu zmienia wartość wybranego produktu
+                data.products[i].amount = $productsAmount;
+                console.log(data.products[i]);
+            });
+        })
+    }
+</script>

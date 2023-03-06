@@ -6,6 +6,7 @@ using System.Data;
 using Dapper;
 using System.Text.Json;
 using System.Dynamic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SklepProjektRazorPages.Pages.Cart
 {
@@ -22,6 +23,8 @@ namespace SklepProjektRazorPages.Pages.Cart
         public string productId { get; set; }
         [BindProperty]
         public string productsAmount { get; set; }
+        [BindProperty]
+        public string cartId { get; set; } 
         public IActionResult OnPostAddProductToCart()
         {
             dynamic resp = new ExpandoObject();
@@ -37,7 +40,7 @@ namespace SklepProjektRazorPages.Pages.Cart
                 return new JsonResult(resp);
             }
             Zamowienie order = this.EnsureEmptyOrderExists();
-            productsAmount = String.IsNullOrWhiteSpace(productsAmount) ? "1" : productsAmount;
+            productsAmount = string.IsNullOrWhiteSpace(productsAmount) ? "1" : productsAmount;
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
                 // check if already in cart
@@ -87,7 +90,39 @@ namespace SklepProjektRazorPages.Pages.Cart
             resp.success = true;
             return new JsonResult(resp);
         }
-
+        public IActionResult OnPostUpdateCart()
+        {
+            
+            dynamic resp = new ExpandoObject();
+            resp.success = false;
+            resp.errors = new List<Error>();
+            resp.products = new List<CartRecord>();
+            if (AccountHelper.loggedInVerified == false)
+            {
+                resp.errors.Add(new Error
+                {
+                    title = "You are not logged in",
+                    message = "in order to add to cart you need to be logged in"
+                });
+                return new JsonResult(resp);
+            }
+            Zamowienie order = this.EnsureEmptyOrderExists();
+            using (IDbConnection conn = DbHelper.GetDbConnection())
+            {
+                var oldcart = conn.Query<Koszyk>("SELECT * FROM Koszyk WHERE ID_Zamowienia = @ID_Zamowienia", order);
+                foreach (Koszyk c in oldcart)
+                { 
+                    Produkt p = conn.QueryFirst<Produkt>("SELECT * FROM Produkt WHERE ID_Produktu = @ID_Produktu", c);
+                    if(p.ID_Produktu == int.Parse(productId))
+                    {
+                        conn.Execute($"UPDATE Koszyk  SET Ilosc_produktow = {productsAmount} WHERE ID_Koszyka = {cartId} AND ID_Produktu = {productId}");
+                    }
+                    resp.products.Add(new CartRecord() { amount = (int)c.Ilosc_produktow, product = p});
+                }
+            }
+            resp.success = true;
+            return new JsonResult(resp);
+        }
         public IActionResult OnPost()
         {            
 
