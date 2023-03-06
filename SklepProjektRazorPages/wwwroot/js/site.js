@@ -3,18 +3,26 @@
 
 
 let $cart_counter = document.getElementById('cart-counter');
-let counter = 0;
-
+let $counter = 0;
+let $cart_layout = document.getElementById("item-counter");
 function updateCart() {
+    $counter = 0;
     function genCartProductItem(record) {
         console.log(record);
         let $container = $(document.createElement('tr'));
         $container.attr("class", "cart-product");
         $container.attr("id", record.product.iD_Produktu);
         $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}szt.<br>(${record.amount * record.product.cena_jednostkowa}zł)</td>`);
+        $counter += record.amount;
         //Amount of products in summary page
-        if ($cart_counter)
-            $cart_counter.textContent = `Koszyk (${counter += record.amount})`;
+        if ($cart_counter) {
+            $cart_counter.textContent = `Koszyk (${$counter})`;
+        }
+        if ($counter >=1) {
+            $cart_layout.style.display = "block";
+            $cart_layout.textContent = `${$counter}`;
+        }
+        
         return $container[0];
     }
     $.ajax({

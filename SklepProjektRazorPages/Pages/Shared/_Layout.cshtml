@@ -53,6 +53,7 @@
             @if (AccountHelper.loggedInVerified)
             {
                 <div id="cart-dropdown" class="dropdown" style="margin-left:0.5rem">
+                    <div id="item-counter" ></div>
                     <a class="fa-solid fa-cart-shopping shop-cart" id="shop-cart" asp-page="/Order/Summary" ></a>
                     <div class="cart-dropdown-content">
                         <div aria-labelledby="dropdownMenuButton1">
