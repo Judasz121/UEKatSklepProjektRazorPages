@@ -1,4 +1,6 @@
-﻿- rozbudowanie listy produktów (zaznacznie kategorii, budowa własnej wyszukarki, opcje sortowania produktów)
+﻿- (mało istotne) fetchowanie w view, edit, delete powinno odróżniać pomiędzy nieznaliezionym rekordem a błędem w sql
+- wzajemne linkowanie w view np. w polu "dostawca" w delivery/view jest link do strony supplier/view
+- rozbudowanie listy produktów (zaznacznie kategorii, budowa własnej wyszukarki, opcje sortowania produktów)
 - wgląd w kliknięty produkt
 - RWD index top 5 produktow
 - "gorąca przecena"  - 1 produkt ktory przez 24h ma promocje np. 10% mniej ceny (dodatkowa tabela w bazie "promotion")
