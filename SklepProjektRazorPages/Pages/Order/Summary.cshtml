@@ -31,10 +31,11 @@
                                             }
                                             <option class="select-value" value="@i">@i</option>
                                         }
+                                        <option class="select-value" value="9+">9+</option>
                                     }
                                 </select>
                             </td>
-                            <td>@(cr.amount * cr.product.Cena_jednostkowa + "zł")</td>
+                            <td class="price" price="@cr.amount">@(cr.amount * cr.product.Cena_jednostkowa + "zł")</td>
                         </tr>
                         suma += cr.amount * cr.product.Cena_jednostkowa.Value;
                     }
@@ -69,6 +70,7 @@
 </form>
 <script>
     // Summary change option handler
+    //let $price = document.querySelectorAll(".price");
     let $select_value = document.querySelectorAll(".select-values");
     for (let i = 0; $select_value.length; i++) {
         $select_value[i].addEventListener("change", (event) => {
@@ -91,6 +93,7 @@
                 success: function (result) {
                     if (result.success) {
                         updateCart();
+                        //window.location.reload();
                     }
                     else {
                         alert('Error: +' + result.message);
@@ -98,6 +101,17 @@
                 }
             }).done(function (data, status, xhr) {
                 let $cartList = $("#cart-products");
+
+                //Dodać odswiezanie ceny przy zmianie liczby produktu
+                
+                //function CalcPrice() {
+                //    for(let j =0;$price.length;j++){
+                //        let $suma = $pricee * $productsAmount;
+                //        $price[j].innerHTML = $suma;
+                //    }
+
+                //}
+                //CalcPrice();
                 //console.log("pod tym");
                 //console.log(`${data.products[i].amount} ${data.products[i].product.nazwa}`);
 

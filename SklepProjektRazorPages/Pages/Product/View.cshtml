@@ -49,7 +49,7 @@ else{
                         }
                     }
                     </select>
-                    <button type="button" style="position:initial;transform:none;transition:none;color:white" product-id="@Model.product.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"><p>Dodaj do koszyka</p></button>
+                    <button id="submit-button" type="button" style="position:initial;transform:none;transition:none;color:white" product-id="@Model.product.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"><p>Dodaj do koszyka</p></button>
                 </div>
                 
             </div>
@@ -63,17 +63,59 @@ else{
             console.log(e.currentTarget);
             let $btn = $(e.currentTarget);
             let productId = $btn.attr('product-id');
+            let $select_value = document.getElementById("select-value").value;
             $.ajax({
                 url: '@cartApiUrl' + "?handler=AddProductToCart",
                 method: 'POST',
                 //contentType: 'application/json',
                 dataType: 'json',
                 data: {
-                    productId: productId
+                    "productId": productId,
+                    "productsAmount": $select_value,
                 },
+                success: function (result) {
+                    if (result.success) {
+                        updateCart();
+                    }
+                    else {
+                        alert('Error: +' + result.message);
+                    }
+                }
             }).done(function (data, status, xhr) {
-                updateCart();
+                console.log(data.products);
+                //data.products.amount = $select_value;
+                
             })
         });
     });
+    //View page change number of product handler
+    //let $select_value = document.querySelectorAll(".select-values");
+    //for (let i = 0; $select_value.length; i++) {
+    //    $select_value[i].addEventListener("change", (event) => {
+    //        let $productId = $(event.currentTarget).attr("product-id");
+    //        let $productsAmount = event.currentTarget.value;
+    //        let $submit_button = document.getElementById("submit-button");
+    //        $.ajax({
+    //            url: '/Cart/api' + "?handler=AddProductToCart",
+    //            type: "POST",
+    //            data: {
+    //                "productId": $productId,
+    //                "productsAmount": $productsAmount
+    //            },
+    //            success: function (result) {
+    //                if (result.success) {
+    //                    data.products[i].amount = $productsAmount;
+    //                }
+    //                else {
+    //                    alert('Error: +' + result.message);
+    //                }
+    //            }
+    //        }).done(function (data, status, xhr) {
+    //            let $cartList = $("#cart-products");
+    //            //console.log("pod tym");
+    //            //console.log(`${data.products[i].amount} ${data.products[i].product.nazwa}`);
+    //            //console.log(data.products[i]);
+    //        });
+    //    })
+    //}
 </script>
