@@ -6,3 +6,4 @@
 - "gorąca przecena"  - 1 produkt ktory przez 24h ma promocje np. 10% mniej ceny (dodatkowa tabela w bazie "promotion")
 - usuniecie dostawcy z konta (z bazy i z admin panelu)
 - Dodanie "brak produktów" w koszyku (zamiast finalizacja zamówienia)
+- add iziToast
