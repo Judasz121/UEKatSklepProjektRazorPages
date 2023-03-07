@@ -109,6 +109,7 @@ namespace SklepProjektRazorPages.Pages.Cart
             Zamowienie order = this.EnsureEmptyOrderExists();
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
+                int result = 0;
                 var oldcart = conn.Query<Koszyk>("SELECT * FROM Koszyk WHERE ID_Zamowienia = @ID_Zamowienia", order);
                 foreach (Koszyk c in oldcart)
                 { 
@@ -116,8 +117,16 @@ namespace SklepProjektRazorPages.Pages.Cart
                     if(p.ID_Produktu == int.Parse(productId))
                     {
                         conn.Execute($"UPDATE Koszyk  SET Ilosc_produktow = {productsAmount} WHERE ID_Koszyka = {cartId} AND ID_Produktu = {productId}");
+                        
                     }
                     resp.products.Add(new CartRecord() { amount = (int)c.Ilosc_produktow, product = p});
+                }
+                var newcart = conn.Query<Koszyk>("SELECT * FROM Koszyk WHERE ID_Zamowienia = @ID_Zamowienia", order);
+                foreach (Koszyk c in newcart)
+                {
+                    Produkt p = conn.QueryFirst<Produkt>("SELECT * FROM Produkt WHERE ID_Produktu = @ID_Produktu", c);
+                    result += (int)p.Cena_jednostkowa * (int)c.Ilosc_produktow;
+                    resp.totalprice = result;
                 }
             }
             resp.success = true;
