@@ -117,12 +117,11 @@ function GenerateDataTables($tableEl) {
 let $CartContainer = document.getElementById("cart-dropdown");
 let $account_img = document.getElementById("account-img");
 let $CartImg = document.getElementById("shop-cart");
-$CartContainer.addEventListener("mouseover", () => {
-    $CartImg.classList.add("notransition");
+$CartContainer.addEventListener("mouseover", () => {;
     $CartImg.classList.add("TextShadowClass");
 });
 $CartContainer.addEventListener("mouseout", () => {
-    $CartImg.classList.remove("notransition");
+    
     $CartImg.classList.remove("TextShadowClass");
 });
 
@@ -136,13 +135,17 @@ $account_img.addEventListener("mouseout", () => {
 //Text-shadow for index products + Button display:visible
 let $Card = document.querySelectorAll(".card");
 let $CardButton = document.querySelectorAll(".product-cart");
-for (let i = 0; $Card.length; i++) {
-    $Card[i].addEventListener("mouseover", () => {
-        $Card[i].classList.add("BoxShadowClass");
-        $CardButton[i].style.display = "initial";
-    });
-    $Card[i].addEventListener("mouseout", () => {
-        $Card[i].classList.remove("BoxShadowClass");
-        $CardButton[i].style.display = "none";
-    });
+if ($Card) {
+    for (let i = 0; i < $Card.length; i++) {
+        $Card[i].addEventListener("mouseover", () => {
+            $Card[i].classList.add("BoxShadowClass");
+            $CardButton[i].style.display = "initial";
+        });
+        $Card[i].addEventListener("mouseout", () => {
+            $Card[i].classList.remove("BoxShadowClass");
+            $CardButton[i].style.display = "none";
+        });
+    }
+
+    
 }
