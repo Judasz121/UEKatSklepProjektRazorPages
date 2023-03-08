@@ -115,7 +115,7 @@ function GenerateDataTables($tableEl) {
 // Validate if user is logged
 function CheckifLogged(argument) {
     if(argument == null)
-        return window.location.replace("./Account/Login");
+        return window.location.href = "/Account/Login";
 }
 
 // Text-shadow for navbar images

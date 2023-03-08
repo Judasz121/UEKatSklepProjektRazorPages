@@ -72,7 +72,7 @@
     // Summary change option handler
     let $price = document.querySelectorAll(".price");
     let $select_value = document.querySelectorAll(".select-values");
-    for (let i = 0; $select_value.length; i++) {
+    for (let i = 0; i < $select_value.length; i++) {
         $select_value[i].addEventListener("change", (event) => {
             let $cartId = $(event.currentTarget).attr("cart-id");
             let $productId = $(event.currentTarget).attr("product-id");
@@ -101,8 +101,6 @@
             }).done(function (data, status, xhr) {
                 let $cartList = $("#cart-products");
                 let $productprice = $price[i].getAttribute("price");
-                
-                //Dodać odswiezanie ceny przy zmianie liczby produktu
                 function CalcPrice() {
                     
                     let $newproductprice = $productprice * $productsAmount;
@@ -111,13 +109,9 @@
                 CalcPrice();
                 let $totalSum = document.getElementById("totalSum");
                 $totalSum.innerHTML = data.totalprice + " zł";
-                //console.log("pod tym");
-                //console.log(`${data.products[i].amount} ${data.products[i].product.nazwa}`);
-
-                //Tu zmienia wartość wybranego produktu
                 data.products[i].amount = $productsAmount;
-                //console.log(data.products[i]);
             });
         })
     }
+    
 </script>

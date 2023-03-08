@@ -79,12 +79,6 @@ else{
                     if (result.success) {
                         updateCart();
                     }
-                    else {
-                        alert('Error: +' + result.message);
-                    }
-                },
-                error: function () {
-                    window.location.replace("/Account/Login.cshtml");
                 }
             }).done(function (data, status, xhr) {
                 console.log(data.products);
