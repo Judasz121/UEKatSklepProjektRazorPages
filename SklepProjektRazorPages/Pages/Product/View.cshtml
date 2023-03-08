@@ -49,7 +49,7 @@ else{
                         }
                     }
                     </select>
-                    <button id="submit-button" type="button" style="position:initial;transform:none;transition:none;color:white" product-id="@Model.product.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"><p>Dodaj do koszyka</p></button>
+                    <button id="submit-button" type="button" islogged="@AccountHelper.loggedInAccount" style="position:initial;transform:none;transition:none;color:white" product-id="@Model.product.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"><p>Dodaj do koszyka</p></button>
                 </div>
                 
             </div>
@@ -64,6 +64,8 @@ else{
             let $btn = $(e.currentTarget);
             let productId = $btn.attr('product-id');
             let $select_value = document.getElementById("select-value").value;
+            let sessionToken = $btn.attr('islogged');
+            CheckifLogged(sessionToken);  
             $.ajax({
                 url: '@cartApiUrl' + "?handler=AddProductToCart",
                 method: 'POST',
@@ -80,6 +82,9 @@ else{
                     else {
                         alert('Error: +' + result.message);
                     }
+                },
+                error: function () {
+                    window.location.replace("/Account/Login.cshtml");
                 }
             }).done(function (data, status, xhr) {
                 console.log(data.products);

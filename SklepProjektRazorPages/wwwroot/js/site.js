@@ -39,11 +39,10 @@ updateCart();
 
 //Adding product animation
 
-let $shopCart = document.getElementById('shop-cart');
 let $productCarts = document.querySelectorAll('.product-cart');
-
 $productCarts.forEach(productCart => {
     productCart.addEventListener('click', () => {
+        let $shopCart = document.getElementById('shop-cart');
         $shopCart.classList.toggle("addedClass");
         setTimeout(() => {
             $shopCart.style.transition = "color 1.5s";
@@ -51,6 +50,8 @@ $productCarts.forEach(productCart => {
         }, 1500)
     });
 });
+
+
 
 //Sticky navbar
 window.onscroll = function () { scrollingFunction() };
@@ -111,7 +112,11 @@ function GenerateDataTables($tableEl) {
     return $tableEl.DataTable(dataTableOptions);
 };
 
-
+// Validate if user is logged
+function CheckifLogged(argument) {
+    if(argument == null)
+        return window.location.replace("./Account/Login");
+}
 
 // Text-shadow for navbar images
 let $CartContainer = document.getElementById("cart-dropdown");
