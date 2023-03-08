@@ -154,3 +154,33 @@ if ($Card) {
 
     
 }
+
+
+let $accountid = document.getElementById("delete-account").getAttribute('accountid');
+let $button = document.getElementById("delete-account")
+$('#delete-account').confirm({
+    title: "Czy na pewno chcesz usunąć konto?",
+    content: 'Potwierdzenie spowoduje usunięcie konta, do którego nie będziesz się mógł już zalogować.',
+    buttons: {
+        deleteUser: {
+            text: 'Usuń konto',
+            action: function () {
+                $.ajax({
+                    url: "/AccountIndex" + "?handler=DeleteAccount",
+                    type: "POST",
+                    data: {
+                        "id": $accountID
+                    }
+                }).done(function (data, status, xhr) {
+                    window.location.replace("/Index");
+                });
+            }
+        },
+        cancelAction: {
+            text: "Cofnij",
+            action: function () {
+
+            }
+        }
+    }
+});
