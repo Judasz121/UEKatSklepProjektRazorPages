@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 
 namespace SklepProjektRazorPages.Pages.Account
 {
+    [IgnoreAntiforgeryToken]
     public class AccountIndexModel : PageModel
     {
         [BindProperty(SupportsGet =true)]
@@ -22,7 +23,7 @@ namespace SklepProjektRazorPages.Pages.Account
         public bool addressNotFound { get; set; }
         public bool ordersNotFound { get; set; }
         [BindProperty]
-        public List<Adres> adres { get; set; }
+        public List<Adres>? adres { get; set; }
         [BindProperty]
         public List<Zamowienie> zamowienie { get; set; }
         public void OnGet()
@@ -66,7 +67,20 @@ namespace SklepProjektRazorPages.Pages.Account
                 ordersNotFound = true;
             }
         }
-        
-        
+        public void OnPostDeleteAccount()
+        {
+            using (IDbConnection conn = DbHelper.GetDbConnection())
+            {
+                conn.Execute($"UPDATE Konto SET Aktywny = 0 WHERE ID_Konta = '{id}'");
+                bool logout = false;
+                if (AccountHelper.checkForLoggedInSession(HttpContext).Item1)
+                {
+                    AccountHelper.Logout(HttpContext);
+                    logout = true;
+
+                }
+            }
+
+        }
     }
 }

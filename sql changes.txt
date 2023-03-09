@@ -4,3 +4,8 @@ Dostawa
 	- dodano "Data_zrealizowania"
 Produkt_magazyn_dostawa
 	- dodano "ID_Produktu"
+
+
+09.03 Konto
+alter table Konto
+add column Aktywny bit NOT NULL default 0;

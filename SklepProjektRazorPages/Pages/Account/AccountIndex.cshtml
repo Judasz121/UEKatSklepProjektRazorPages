@@ -34,13 +34,11 @@ else{
                         <div class="btn_vertical"></div>
                     </a>
                     @*Dodać funkcjonalność buttona*@
-                    <form method="post">
-                        <button class="delete-button-animation" id="delete-account">
-                            Dezaktywuj konto
-                            <div class="btn_horizontal"></div>
-                            <div class="btn_vertical"></div>
-                        </button>
-                    </form>
+                    <button class="delete-button-animation" id="delete-account" accountid="@Model.account.ID_Konta">
+                        Dezaktywuj konto
+                        <div class="btn_horizontal"></div>
+                        <div class="btn_vertical"></div>
+                    </button>
                     
                 </div>
 
@@ -150,14 +148,8 @@ else{
         </div>
 
     </div>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', (event) => {
-            let btnId = "@Model.tabId";
-            let $btn = $("#" + btnId);
-            console.log($btn);
-            $btn.click();
-            });
-        
-    </script>
+    
     
 }
+<script>
+</script>

@@ -84,7 +84,7 @@ namespace SklepProjektRazorPages.Pages.Account
                     DateTime creation = DateTime.Now;
                     string passwordHash = AccountHelper.hashPassword(password, creation.ToString("s"));
                     int clientId = this.createEmptyClientDbEntry(); // <- not finished
-                    var result = conn.Query($"INSERT INTO Konto (ID_Klienta, LoginUzytkownika, Email, HashHasla, DataUtworzenia, JestAdminem) VALUES({clientId}, '{userName}', '{email}', '{passwordHash}', '{creation.ToString("s")}', 1)");
+                    var result = conn.Query($"INSERT INTO Konto (ID_Klienta, LoginUzytkownika, Email, HashHasla, DataUtworzenia, JestAdminem, Aktywny) VALUES({clientId}, '{userName}', '{email}', '{passwordHash}', '{creation.ToString("s")}', 1, 1)");
                     alertClass = "alert-success";
                     alertValue = "Pomyślnie utworzono!\nNa podany email został posłany link aktywacyjny.";
                     accountCreated = true;

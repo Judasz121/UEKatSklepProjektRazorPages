@@ -3,6 +3,7 @@ using Dapper;
 using System.Data;
 using SklepProjektRazorPages.Helpers;
 using System.Reflection;
+using System.Diagnostics.Eventing.Reader;
 
 namespace SklepProjektRazorPages.DbModels
 {
@@ -15,6 +16,8 @@ namespace SklepProjektRazorPages.DbModels
         public string Email { get; set; }
         public string HashHasla { get; set; }
         public bool JestAdminem { get; set; }
+
+        public bool Aktywny { get; set; }
         public DateTime DataUtworzenia { get; set; }
 
         public static Tuple<bool, string> verifyValues(string? login, string? password, string? email)
@@ -58,8 +61,6 @@ namespace SklepProjektRazorPages.DbModels
                     msg += "\n";
                 msg += "E-mail jest nieprawidłowy. 😡";
             }
-
-
             return new Tuple<bool, string>(ok, msg);
         }
         public Tuple<bool, string> VerifyInstanceValues(bool ignoreNullProps = false)

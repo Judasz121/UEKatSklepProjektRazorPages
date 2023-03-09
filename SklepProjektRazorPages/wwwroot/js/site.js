@@ -154,10 +154,7 @@ if ($Card) {
 
     
 }
-
-
-let $accountid = document.getElementById("delete-account").getAttribute('accountid');
-let $button = document.getElementById("delete-account")
+//Deactive account
 $('#delete-account').confirm({
     title: "Czy na pewno chcesz usunąć konto?",
     content: 'Potwierdzenie spowoduje usunięcie konta, do którego nie będziesz się mógł już zalogować.',
@@ -165,11 +162,21 @@ $('#delete-account').confirm({
         deleteUser: {
             text: 'Usuń konto',
             action: function () {
+                let $accountID = document.getElementById("delete-account").getAttribute('accountid');
                 $.ajax({
-                    url: "/AccountIndex" + "?handler=DeleteAccount",
+                    //url: "/Account/AccountIndex"+`?id=${$accountID}`+"?handler=OnPostDeleteAccount",
+                    url: "/Account/AccountIndex?handler=DeleteAccount",
                     type: "POST",
+                    datatype:"json",
                     data: {
                         "id": $accountID
+                    },
+                    success: function() {
+                        //alert("udało się");
+                    },
+                    error: function (status, ex) {
+                        alert("Error Code: Status: " + status + " Ex: " + ex);
+                        
                     }
                 }).done(function (data, status, xhr) {
                     window.location.replace("/Index");
