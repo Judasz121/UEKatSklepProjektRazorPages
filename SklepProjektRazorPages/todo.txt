@@ -7,3 +7,4 @@
 - usuniecie dostawcy z konta (z bazy i z admin panelu)
 - Dodanie "brak produktów" w koszyku (zamiast finalizacja zamówienia)
 - add iziToast
+- partial view on admin panel navigation
