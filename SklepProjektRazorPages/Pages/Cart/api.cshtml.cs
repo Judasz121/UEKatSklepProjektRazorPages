@@ -24,7 +24,10 @@ namespace SklepProjektRazorPages.Pages.Cart
         [BindProperty]
         public string productsAmount { get; set; }
         [BindProperty]
-        public string cartId { get; set; } 
+        public string cartId { get; set; }
+        [BindProperty]
+        public string orderId {get; set; }  
+
         public IActionResult OnPostAddProductToCart()
         {
             dynamic resp = new ExpandoObject();
@@ -132,6 +135,16 @@ namespace SklepProjektRazorPages.Pages.Cart
             resp.success = true;
             return new JsonResult(resp);
         }
+
+        public void OnPostDeleteProduct()
+        {
+            Koszyk koszyk = null;
+            using (IDbConnection conn = DbHelper.GetDbConnection())
+            {
+                koszyk = conn.ExecuteScalar<Koszyk>($"DELETE FROM Koszyk WHERE ID_Zamowienia = {orderId} AND ID_Produktu = {productId}");
+            }
+        }
+
         public IActionResult OnPost()
         {            
 

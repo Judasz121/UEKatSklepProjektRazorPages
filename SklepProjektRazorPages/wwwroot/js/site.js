@@ -1,9 +1,25 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 let $cart_counter = document.getElementById('cart-counter');
-let $counter = 0;
+$counter = 0;
 let $cart_layout = document.getElementById("item-counter");
+let $DivNoProducts = document.getElementById('display-no-products');
+
+function displayNoProducts(counter) {
+    if (counter > 0) {
+        if ($DivNoProducts)
+            $DivNoProducts.style.display = "none";
+    }
+}
 function updateCart() {
+    if ($DivNoProducts) {
+        $DivNoProducts.style.display = "block";
+        $DivNoProducts.style.visibility = "revert";
+        let $OrderSubmit = document.getElementById("order-submit");
+        $OrderSubmit.classList.add("prevent-submit");
+        $cart_counter.innerHTML = "Koszyk (0)";
+        $cart_layout.style.display = "none";
+    }
     $counter = 0;
     function genCartProductItem(record) {
         //console.log(record);
@@ -12,13 +28,19 @@ function updateCart() {
         $container.attr("id", record.product.iD_Produktu);
         $container.html(`<td>${record.product.nazwa}</td><td>${record.amount}szt.<br>(${record.amount * record.product.cena_jednostkowa}zł)</td>`);
         $counter += record.amount;
+        let $OrderSubmit = document.getElementById("order-submit");
+        displayNoProducts($counter);
         //Amount of products in summary page
         if ($cart_counter) {
+            $cart_counter.style.display = "block";
             $cart_counter.textContent = `Koszyk (${$counter})`;
+            
         }
-        if ($counter >=1) {
+        if ($counter >= 1) {
             $cart_layout.style.display = "block";
             $cart_layout.textContent = `${$counter}`;
+            if ($OrderSubmit)
+                $OrderSubmit.classList.remove("prevent-submit");
         }
         
         return $container[0];

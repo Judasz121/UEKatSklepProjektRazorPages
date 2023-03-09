@@ -60,7 +60,7 @@ else{
 <script>
     document.addEventListener('DOMContentLoaded', e => {
         $(document).on('click', '[product-id]', e => {
-            console.log(e.currentTarget);
+            //console.log(e.currentTarget);
             let $btn = $(e.currentTarget);
             let productId = $btn.attr('product-id');
             let $select_value = document.getElementById("select-value").value;

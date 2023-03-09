@@ -9,14 +9,15 @@
 <form method="post" enctype="multipart/form-data">
     <div class="datatable-container">
         <div class="container products-container bg-white">
-            <h2 id="cart-counter" style="text-align:center;border-bottom:1px solid grey;margin-bottom:2rem;padding: 0.5rem 0"></h2>
+            <h2 id="cart-counter"></h2>
         
-                <input type="hidden" value="@Model.orderView.ID_Zamowienia" asp-for="orderDb.ID_Zamowienia" />
+            <input type="hidden" value="@Model.orderView.ID_Zamowienia" asp-for="orderDb.ID_Zamowienia" />
+            <div id="display-no-products">Koszyk jest pusty.</div>
                 <table id="summary-cart-products" style="margin-top:0.5rem;">
                 @{
                     @foreach(CartRecord cr in @Model.orderView.cart)
                     {
-                        <tr class="product" id="@cr.product.ID_Produktu">
+                        <tr class="product" id="@cr.product.ID_Produktu" price="@cr.product.Cena_jednostkowa" startproductamount="@cr.amount">
                             <td><img src="@cr.product.sciezkaZdjecia" /></td>
                             <td>@Html.DisplayFor(model => cr.product.Nazwa)</td>
                             <td>
@@ -36,10 +37,13 @@
                                 </select>
                             </td>
                             <td class="price" price="@cr.product.Cena_jednostkowa" startproductamount="@cr.amount">@(cr.amount * cr.product.Cena_jednostkowa + "zł")</td>
+                            <td>
+                                <button class="delete-product fa-solid fa-trash" type="button" style="border: none;background: none;transform:scale(1.4);"></button>
+                            </td>
                         </tr>
                         suma += cr.amount * cr.product.Cena_jednostkowa.Value;
                     }
-                    }
+                }
                 </table>
         
         </div>
@@ -62,13 +66,13 @@
             <div class="admin-button-container summary-container" style="flex-direction:column;position:sticky">
                 @*Po co ten button?*@
                 @*<button type="submit" class="button-animation">Zmień Adres</button>*@
-                <button type="submit" class="button-animation">Złóż zamówienie</button>
+                <button id="order-submit" type="submit" class="button-animation">Złóż zamówienie</button>
                 <a class="button-animation" onclick="history.back()">Powrót</a>
             </div>
         </div>
     </div>
 </form>
-<script>
+<script >
     // Summary change option handler
     let $price = document.querySelectorAll(".price");
     let $select_value = document.querySelectorAll(".select-values");
@@ -77,10 +81,6 @@
             let $cartId = $(event.currentTarget).attr("cart-id");
             let $productId = $(event.currentTarget).attr("product-id");
             let $productsAmount = event.currentTarget.value;
-            //console.log(event.target);
-            //console.log($cartId);
-            //console.log($productId);
-            //console.log($productsAmount);
             $.ajax({
                 url: '/Cart/api' + "?handler=UpdateCart",
                 type: "POST",
@@ -114,4 +114,44 @@
         })
     }
     
+    let $deleteItemButton = document.querySelectorAll(".delete-product");
+    let $totalSum = document.getElementById("totalSum");
+    let $totalSumValue = $totalSum.getAttribute("price-sum");
+    let $productsId = document.querySelectorAll('.product');
+    for(let i =0; i< $deleteItemButton.length;i++){
+        $deleteItemButton[i].addEventListener("click",()=>{
+            let $productId = $productsId[i].getAttribute("id");
+            console.log($productId);
+            $.ajax({
+                url: "/Cart/api?handler=DeleteProduct",
+                type: "POST",
+                datatype: "json",
+                data:{
+                "productId": $productId,
+                "orderId": @Model.orderView.ID_Zamowienia
+                    },
+                success: function () {
+                    updateCart();
+                    let $htmlElement = $productsId[i];
+                    let $productAmount = $productsId[i].getAttribute('startproductAmount');
+                    let $productPrice = $productsId[i].getAttribute("price");
+                    console.log(`Totalpricebefore-${$totalSumValue}`);
+                    $totalSumValue = parseInt($totalSumValue) + (parseInt(-1*$productAmount) * parseInt($productPrice));
+                    console.log(`ItemPrice-${$productPrice},Amount-${$productAmount},TotalPrice-${$totalSumValue}`);
+                    $totalSum.innerHTML = $totalSumValue + " zł";
+                    $htmlElement.remove();
+                },
+                error: function (status, ex) {
+                    alert("Error Code: Status: " + status + " Ex: " + ex);
+
+                }
+            }).done(function(data,status,xhr){
+                
+            });
+        });
+    }
+
+
+
+
 </script>

@@ -69,7 +69,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', e => {
         $(document).on('click', '[product-id]', e => {
-            console.log(e.currentTarget);
+            //console.log(e.currentTarget);
             let $btn = $(e.currentTarget);
             let productId = $btn.attr('product-id');
             let sessionToken = $btn.attr('islogged');
