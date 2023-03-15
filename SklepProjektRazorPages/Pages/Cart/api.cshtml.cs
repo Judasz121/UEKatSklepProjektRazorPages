@@ -32,10 +32,11 @@ namespace SklepProjektRazorPages.Pages.Cart
         {
             dynamic resp = new ExpandoObject();
             resp.success = false;
-            resp.errros = new List<Error>();
+            resp.errors = new List<Error>();
+            resp.message = "";
             if (AccountHelper.loggedInVerified == false)
             {
-                resp.errros.Add(new Error
+                resp.errors.Add(new Error
                 {
                     title = "You are not logged in",
                     message = "in order to add to cart you need to be logged in"
@@ -47,12 +48,22 @@ namespace SklepProjektRazorPages.Pages.Cart
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
                 // check if already in cart
-                List<Koszyk> dbCart = conn.Query<Koszyk>("SELECT * FROM Koszyk WHERE ID_Produktu = @ID_Produktu AND ID_Zamowienia = @ID_Zamowienia "
+                var dbCart = conn.Query<Koszyk>("SELECT * FROM Koszyk WHERE ID_Produktu = @ID_Produktu AND ID_Zamowienia = @ID_Zamowienia "
                     , new {ID_Produktu = productId, ID_Zamowienia = order.ID_Zamowienia}).ToList();
                 if (dbCart.Count > 0)
                 {
-                    conn.Execute("UPDATE Koszyk SET Ilosc_produktow = Ilosc_produktow + @ilosc WHERE ID_Zamowienia = @ID_Zamowienia AND ID_Produktu = @ID_Produktu",
+                    if (dbCart.First().Ilosc_produktow < 9)
+                    {
+                        conn.Execute("UPDATE Koszyk SET Ilosc_produktow = Ilosc_produktow + @ilosc WHERE ID_Zamowienia = @ID_Zamowienia AND ID_Produktu = @ID_Produktu",
                         new { ilosc = productsAmount, ID_Zamowienia = order.ID_Zamowienia, ID_Produktu = this.productId });
+
+                    }
+                    else
+                    {
+                        resp.message = "Error";
+                        resp.success = false;
+                        return new JsonResult(resp);
+                    }
                 }
                 else
                 {

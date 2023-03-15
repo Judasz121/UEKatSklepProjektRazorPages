@@ -32,7 +32,6 @@
                                             }
                                             <option class="select-value" value="@i">@i</option>
                                         }
-                                        <option class="select-value" value="9+">9+</option>
                                     }
                                 </select>
                             </td>
@@ -89,7 +88,6 @@
                     "productId": $productId,
                     "productsAmount": $productsAmount
                 },
-                //Pokazuje i tak błąd w konsoli
                 success: function (result) {
                     if (result.success) {
                         updateCart();

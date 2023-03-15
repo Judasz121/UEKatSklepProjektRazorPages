@@ -56,7 +56,7 @@
             </div>
         </a>
         <div style="display:flex;justify-content:flex-end">
-            <button style="display:none" islogged="@AccountHelper.loggedInAccount" product-id="" class="product-cart fa-solid fa-cart-shopping"></button>
+            <button id="error" style="display:none" islogged="@AccountHelper.loggedInAccount" product-id="" class="product-cart fa-solid fa-cart-shopping"></button>
         </div>
     </div>
 </div>
@@ -81,9 +81,15 @@
                 dataType: 'json',
                 data: {
                     productId: productId
-                }
+                },
             }).done(function(data, status, xhr) {
                 updateCart();
+                if (data.message == "Error") {
+                    alert('Nie można dodać więcej niż 9 produtków danego rodzaju!');
+                }
+                else{
+                    AddCartAnimation();
+                }
             })
         });
     });

@@ -21,15 +21,15 @@
     </div>
 }
 else{
-    <div style="width:min(60rem,75rem);margin:auto" class="datatable-container border-container bg-white">
+    <div style="width:max-content;margin:auto" class="datatable-container border-container bg-white">
 
         <form class="datatable-container" method="get" style="padding-right:1rem">
             <input type="hidden" asp-for="product.ID_Produktu" />
             <div  class="view-container">
-                <h2 style="border-bottom: 1px solid grey">@Model.product.Nazwa</h2>
+                <h2 style="border-bottom: 1px solid grey;width: max-content;">@Model.product.Nazwa</h2>
                 <img style="margin:auto;width:max(15rem);height:max(15rem);object-fit:contain;" src="@Url.Content(Model.product.sciezkaZdjecia)" />
             </div>
-            <div style="width:min(25rem)" class="view-container view-specification">
+            <div style="width:max-content" class="view-container view-specification">
                 @*Statycznie ustawiona specyfikacaj*@
                 <h3 style="border-bottom: 1px solid grey">Specyfikacja</h3>
                 <p>Gniazdo procesora: Socket AM5</p>
@@ -75,14 +75,16 @@ else{
                     "productId": productId,
                     "productsAmount": $select_value,
                 },
-                success: function (result) {
-                    if (result.success) {
-                        updateCart();
-                    }
+                success: function () {
+                    updateCart();
                 }
             }).done(function (data, status, xhr) {
-                console.log(data.products);
-                
+                if (data.message == "Error") {
+                    alert('Nie można dodać więcej niż 9 produtków danego rodzaju!');
+                }
+                else {
+                    AddCartAnimation();
+                }
             })
         });
     });

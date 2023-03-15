@@ -48,7 +48,7 @@ function updateCart() {
     $.ajax({
         url: '/Cart/api' + "?handler=GetCart",
         method: "POST",
-        contentType: 'application/json',
+        contentType: 'application/json'
     }).done(function (data, status, xhr) {
         let $cartList = $("#cart-products");
         $cartList.html('');
@@ -60,18 +60,16 @@ function updateCart() {
 updateCart();
 
 //Adding product animation
+function AddCartAnimation() { 
+    let $shopCart = document.getElementById('shop-cart');
 
-let $productCarts = document.querySelectorAll('.product-cart');
-$productCarts.forEach(productCart => {
-    productCart.addEventListener('click', () => {
-        let $shopCart = document.getElementById('shop-cart');
+    $shopCart.classList.toggle("addedClass");
+    setTimeout(() => {
+        $shopCart.style.transition = "color 1.5s";
         $shopCart.classList.toggle("addedClass");
-        setTimeout(() => {
-            $shopCart.style.transition = "color 1.5s";
-            $shopCart.classList.toggle("addedClass");
-        }, 1500)
-    });
-});
+    }, 1500)
+}
+
 
 
 
