@@ -8,3 +8,5 @@
 - Dodanie "brak produktów" w koszyku (zamiast finalizacja zamówienia)
 - add iziToast
 - partial view on admin panel navigation
+- expandoObject test error list ( podobno nie działo dodawańsko )
+- force browser to not cache on history.back
