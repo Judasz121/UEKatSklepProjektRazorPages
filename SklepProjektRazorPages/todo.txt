@@ -1,19 +1,12 @@
-﻿- rozbudowanie listy produktów (zaznacznie kategorii, budowa własnej wyszukarki, opcje sortowania produktów)
+﻿- (mało istotne) fetchowanie w view, edit, delete powinno odróżniać pomiędzy nieznaliezionym rekordem a błędem w sql
+- wzajemne linkowanie w view np. w polu "dostawca" w delivery/view jest link do strony supplier/view
+- rozbudowanie listy produktów (zaznacznie kategorii, budowa własnej wyszukarki, opcje sortowania produktów)
 - wgląd w kliknięty produkt
 - RWD index top 5 produktow
 - "gorąca przecena"  - 1 produkt ktory przez 24h ma promocje np. 10% mniej ceny (dodatkowa tabela w bazie "promotion")
 - usuniecie dostawcy z konta (z bazy i z admin panelu)
 - Dodanie "brak produktów" w koszyku (zamiast finalizacja zamówienia)
-
-
---schemat bazy do dodawania promocji
---Promocja
---id_promocji
---czas_promocji
---mnoznik_ceny
-
-
---Promocja_produkty
---id_promocja_produkty
---id_promocji
---id_produktu
+- add iziToast
+- partial view on admin panel navigation
+- expandoObject test error list ( podobno nie działo dodawańsko )
+- force browser to not cache on history.back

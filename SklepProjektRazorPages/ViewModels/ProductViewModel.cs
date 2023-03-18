@@ -2,11 +2,25 @@
 using SklepProjektRazorPages.Helpers;
 using System.Data;
 using Dapper;
+using System.ComponentModel.DataAnnotations;
 
 namespace SklepProjektRazorPages.ViewModels
 {
-    public class ProductViewModel
+    public class ProductViewModel : Produkt
     {
+        public ProductViewModel(int productId, bool fetchAssociations = false)
+        {
+            ID_Produktu = productId;
+            using(IDbConnection conn = DbHelper.GetDbConnection())
+            {
+                Produkt product = conn.QueryFirst<Produkt>("SELECT * FROM Produkt WHERE ID_Produktu = @ID_Produktu", this);
+                Nazwa = product.Nazwa;
+                sciezkaZdjecia = product.sciezkaZdjecia;
+                Cena_jednostkowa = product.Cena_jednostkowa;
+                usuniety = product.usuniety;
+            }
+
+        }
         public ProductViewModel(Produkt product, bool fetchAssociations = false)
         {
             ID_Produktu = product.ID_Produktu;
@@ -46,11 +60,12 @@ namespace SklepProjektRazorPages.ViewModels
         {
             Tagi = tags.ToList();
         }
-        public int? ID_Produktu { get; set; }
-        public string Nazwa { get; set; }
-        public int? Cena_jednostkowa { get; set; }
-        public int? ID_Kategorii { get; set; }
-        public string sciezkaZdjecia { get; set; }
+        //public int? ID_Produktu { get; set; }
+        //public string Nazwa { get; set; }
+        [Display(Name = "Cena jednostkowa")]
+        public new int? Cena_jednostkowa { get; set; }
+        //public int? ID_Kategorii { get; set; }
+        //public string sciezkaZdjecia { get; set; }
         public Kategoria Kategoria { get; set; }
         public List<Tag> Tagi { get; set; } = new List<Tag>();
     }

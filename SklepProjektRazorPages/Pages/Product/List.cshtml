@@ -81,7 +81,7 @@
 @section scripts {
     <script>
         document.addEventListener('DOMContentLoaded', e => {
-            GenerateDataTables($("#accounts-table"));
+            GenerateDataTable($("#accounts-table"));
             $("#productName").trigger("change");
             $(document).on('click', '[product-id]', e => {
                 console.log(e.currentTarget);
