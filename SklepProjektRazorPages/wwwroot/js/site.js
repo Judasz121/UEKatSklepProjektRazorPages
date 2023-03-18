@@ -48,7 +48,7 @@ function updateCart() {
     $.ajax({
         url: '/Cart/api' + "?handler=GetCart",
         method: "POST",
-        contentType: 'application/json'
+        //contentType: 'application/json'
     }).done(function (data, status, xhr) {
         let $cartList = $("#cart-products");
         $cartList.html('');
