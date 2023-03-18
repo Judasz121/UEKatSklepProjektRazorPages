@@ -1,0 +1,70 @@
+﻿@*@model Tuple<List<SelectListItem>, int>*@
+@model (List<SelectListItem> allProducts, int warehouseId)
+
+@Html.AntiForgeryToken()
+<div class="modal" id="add-warehouse-product-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nowy produkt w magazynie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Produkt</label>
+                    <select class="form-control" name="product-id">
+                        @foreach(SelectListItem productItem in Model.allProducts)
+                        {
+                            <option value="@productItem.Value">@productItem.Text</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ilość</label>
+                    <input class="form-control" type="number" min="1" value="1" name="product-amount"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="add-warehouse-product" class="btn btn-success">Zapisz</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#add-warehouse-product-modal">
+    Dodaj Produkt
+</button>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', e => {
+        let antiForgeryToken = $(`[name="__RequestVerificationToken"]`).val();
+        let $modal = $("#add-warehouse-product-modal")
+        let $saveBtn = $modal.find("button#add-warehouse-product");
+        let thisPagePath = "@ViewContext.HttpContext.Request.Path";
+        console.log(thisPagePath); 
+
+        $saveBtn.on('click', e => {
+            let productAmount = $modal.find(`input[name="product-amount"]`).val();
+            let productId = $modal.find(`select[name="product-id"]`).val();
+            console.log(productAmount); console.log(productId);
+            $.ajax({
+                url: thisPagePath + "?handler=AddWarehouseProduct",
+                method: "POST",
+                //contentType: "application/json", jebać tą skurwiałą linijke kodu po chuj ja ją tu wkleiłem, zamawiam wpierdol na wynos dla mojego mózgu
+                headers: {
+                    'RequestVerificationToken': antiForgeryToken
+                },
+                data: {
+                    productId: productId,
+                    productAmount: productAmount,
+                    warehouseId: @Model.warehouseId
+                },
+            }).done(function(data, status, xhr) {
+                console.log("add response"); console.log(data); console.log(status); console.log(xhr);
+            })
+        });
+    });
+</script>

@@ -75,6 +75,9 @@ else
                 </form>
             </div>
             <div class="tab-pane fade" id="warehouse-products" role="tabpanel" aria-labelledby="nav-profile-tab">
+                @*@Html.Partial("AddWarehouseProductModalPartial")*@
+                @*<partial name="_AddWarehouseProductModalPartial" model="Model.allProducts" />*@
+                <partial name="_AddWarehouseProductModalPartial" model="(@Model.allProducts, int.Parse(@Model.id))" />
                 <table id="warehouse-products-table">
                     <thead>
                         <tr>
@@ -85,15 +88,21 @@ else
                                 }
                                 <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                             </th>
-                                                        <th>
+                            <th>
                                 @{
                                     displayName = @Html.DisplayNameFor(model => model.warehouseProducts.FirstOrDefault().Cena_jednostkowa);
                                 }
                                 <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                             </th>
-                                                        <th>
+                            <th>
                                 @{
                                     displayName = @Html.DisplayNameFor(model => model.warehouseProducts.FirstOrDefault().Kategoria.Nazwa) + " Kategorii";
+                                }
+                                <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                            </th>
+                            <th>
+                                @{
+                                    displayName = "Ilość";
                                 }
                                 <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
                             </th>
@@ -117,6 +126,9 @@ else
                                     @Html.DisplayFor(model => p.Kategoria.Nazwa)
                                 </th>
                                 <th>
+                                    @Html.DisplayFor(model => p_m.Ilosc_produktu)
+                                </th>
+                                <th>
                                     <a class="btn btn-sm btn-primary" asp-page="/AdminPanel/Product/View/" asp-route-id="@p.ID_Produktu" >
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
@@ -124,7 +136,7 @@ else
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                     <div class="dropdown">
-                                        <button class="btn btn-sm btn-warning" data-toggle="dropdown" title="Edytuj ilość w magazynie">
+                                        <button class="btn btn-sm btn-warning" data-bs-toggle="dropdown" title="Edytuj ilość w magazynie">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
                                         <div class="dropdown-menu">

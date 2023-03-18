@@ -10,3 +10,4 @@
 - partial view on admin panel navigation
 - expandoObject test error list ( podobno nie działo dodawańsko )
 - force browser to not cache on history.back
+- localise site.css ( .dropdown na przykład )

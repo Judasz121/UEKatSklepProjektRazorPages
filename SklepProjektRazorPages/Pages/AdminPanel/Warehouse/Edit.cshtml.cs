@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SklepProjektRazorPages.ViewModels;
+using System.Dynamic;
 
 namespace SklepProjektRazorPages.Pages.AdminPanel.Warehouse
 {
+    
     public class EditModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
@@ -24,7 +26,7 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Warehouse
         public string alertClass { get; set; }
         public string alertValue { get; set; }
         public bool warehouseNotFound { get; set; }
-        public void OnGet()
+        public void OnGet(string niggaId)
         {            
             this.FillProductsSelectListItem();
 
@@ -47,14 +49,13 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Warehouse
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     this.product_warehouse = conn.Query<Produkt_magazyn>("SELECT * FROM Produkt_magazyn WHERE ID_Magazynu = @ID_Magazynu ", this.warehouse).ToList();
-                    if (this.product_warehouse.Count == 0)
-                        this.warehouseProducts = new List<ProductViewModel>();
-                    else
-                        foreach (Produkt_magazyn p_m in product_warehouse)
-                        {
-                            this.warehouseProducts.Add(new ProductViewModel(p_m.ID_Produktu, true));
-                        }
+                    this.warehouseProducts = new List<ProductViewModel>();
+                    foreach (Produkt_magazyn p_m in product_warehouse)
+                    {
+                        this.warehouseProducts.Add(new ProductViewModel(p_m.ID_Produktu, true));
+                    }
                 }
+
             }
             catch (InvalidOperationException exc)
             {
@@ -96,6 +97,59 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Warehouse
             return Page();
         }
 
+        [HttpPost]
+        public IActionResult OnPostAddWarehouseProduct(string productId, int? productAmount, int? warehouseId)
+        {
+            dynamic resp = new ExpandoObject();
+            resp.success = true;
+            resp.errors = new List<Error>();
+
+            if(productId == null || productAmount == null || warehouseId == null)
+            {
+                resp.success = false;
+                resp.errors.Add(new Error
+                {
+                    title = "Insufficient Parameters",
+                    message = "one of the 3 required parameters is null"
+                });
+            }
+            else
+            {
+                using (IDbConnection conn = DbHelper.GetDbConnection())
+                {
+                    try
+                    {
+                        int affectedRows = conn.Execute("INSERT INTO Produkt_magazyn (ID_Magazynu, ID_Produktu, Ilosc_produktu)" +
+                            "VALUES (@ID_Magazynu, @ID_Produktu, @Ilosc_produktu)", new
+                            {
+                                ID_Magazynu = warehouseId,
+                                ID_Produktu = productId,
+                                Ilosc_produktu = productAmount
+                            });
+                        if (affectedRows == 0)
+                        {
+                            resp.success = false;
+                            resp.errors.Add(new Error
+                            {
+                                title = "Server SQL Error",
+                                message = "0 rows affected"
+                            });
+                        }
+                    }
+                    catch(InvalidOperationException exc)
+                    {
+                        resp.success = false;
+                        resp.erros.Add(new Error
+                        {
+                            title = "Server SQL Error",
+                            message = exc.Message
+                        });
+                    }
+                }
+            }
+            return new JsonResult(resp);
+        }
+
         public void FillProductsSelectListItem()
         {
             try
@@ -119,5 +173,10 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Warehouse
                 }
             }
         }
+    }
+    public struct Error
+    {
+        public string title { get; set; }
+        public string message { get; set; }
     }
 }
