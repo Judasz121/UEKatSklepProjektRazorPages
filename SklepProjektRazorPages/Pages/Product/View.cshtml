@@ -39,7 +39,6 @@ else{
             </div>
             <div class="view-container view-price">
                 <p>@Model.product.Cena_jednostkowa zł</p>
-                @*Dodac funkcjonalnosc wybrania ilosci produktu do koszyka*@
                 <div style="display:flex;flex-direction:row;gap:1rem;">
                     <select id="select-value" style="border-radius:10px;padding:.3rem">
                     @{
@@ -60,7 +59,6 @@ else{
 <script>
     document.addEventListener('DOMContentLoaded', e => {
         $(document).on('click', '[product-id]', e => {
-            //console.log(e.currentTarget);
             let $btn = $(e.currentTarget);
             let productId = $btn.attr('product-id');
             let $select_value = document.getElementById("select-value").value;

@@ -8,23 +8,25 @@
         AccountHelper.Logout(HttpContext);
         loggedOut = true;
     }
+    else if (AccountHelper.loggedInAccount == null || !loggedOut)
+    {
+        Response.Redirect("/Index");
+    }
 }
 
-<div class="container">
+
     @if (loggedOut)
     {
-        <h2 style="text-align:center">Pomyślnie wylogowano</h2>
+        <div class="container edit-account-container bg-white " style="display:flex;flex-direction:column;justify-content:center;">
+            <h2 style="text-align:center">Pomyślnie wylogowano</h2>
+            <a asp-page="/Index">
+                Strona główna
+            </a>
+            <a asp-page="/Account/Login">
+                Zaloguj
+            </a>
+            
+        </div>
+    loggedOut = true;
     }
-    else
-    {
-        <h2 style="text-align:center">Nie byłeś zalogowany polaku</h2>
-    }
-</div>
-<div class="container edit-account-container bg-white " style="display:flex;flex-direction:column;justify-content:center;">
-        <a asp-page="/Index">
-            Strona główna
-        </a>
-        <a asp-page="/Account/Login">
-            Zaloguj
-        </a>
-</div>
+    

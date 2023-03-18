@@ -138,11 +138,11 @@ body {
         width:25vw;
     }
     
-    .searching-bar:focus {
+    /*.searching-bar:focus {
         transition: none !important;
         max-width: 25vw;
         width: 25vw;
-    }
+    }*/
 }
 .bg-grey {
     opacity: 1;
@@ -222,13 +222,13 @@ footer{
     height:100%;
     margin:auto;
 }
-.searching-bar:focus {
+/*.searching-bar:focus {
 
     width: 35vw;
     transition: width 1.2s;
     outline:none !important;
     border:none;
-}
+}*/
 .login-container {
     border: 0.5rem outset;
     border-image: var(--border-image-patern);
@@ -567,7 +567,7 @@ ul {
     font-size:13px;
 }
 #warehouse-product-delivery-selection-container{
-    width:max(30rem);
+    width:max-content   ;
     margin-left:auto;
     margin-right:auto;
 }
@@ -575,7 +575,7 @@ ul {
     display:flex;
     flex-direction:column;
     justify-content:center;
-    width:min(15rem);
+    width:max-content;
 
 }
 .dropMenu-Item {
