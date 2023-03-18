@@ -11,7 +11,6 @@
             this.api()
                 .columns()
                 .every(function () {
-                    $("selector").click(false);
                     var that = this;
                     let $input = $("input", this.header());
 
@@ -21,6 +20,12 @@
                             that.search(this.value).draw();
                         }
                     });
+
+                    $input.on('keydown', e => { // ctrl+a fix
+                        if (e.keyCode == 65 && e.ctrlKey) {
+                            e.currentTarget.select();
+                        }
+                    })
                 });
 
         },
