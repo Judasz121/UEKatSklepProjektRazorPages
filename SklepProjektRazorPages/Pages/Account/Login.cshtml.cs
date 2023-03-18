@@ -59,10 +59,18 @@ namespace SklepProjektRazorPages.Pages.Account
                         if (AccountHelper.mailRegex.IsMatch(userNameOrMail))
                         {
                             account = conn.QueryFirst<Konto>($"SELECT TOP 1 * FROM Konto WHERE Email = '{userNameOrMail}'");
+                            
                         }
                         else
                         {
                             account = conn.QueryFirst<Konto>($"SELECT TOP 1 * FROM Konto WHERE LoginUzytkownika = '{userNameOrMail}'");
+                        }
+                        //Checks if account is active
+                        if (!account.Aktywny)
+                        {
+                            ok = false;
+                            alertClass = "alert-danger";
+                            alertValue += "Takie konto nie istnieje.";
                         }
                     }
                     catch(InvalidOperationException exc)
@@ -71,7 +79,7 @@ namespace SklepProjektRazorPages.Pages.Account
                         alertClass = "alert-danger";
                         if (!string.IsNullOrWhiteSpace(alertValue) != false)
                             alertValue += "\n";
-                        alertValue += "Nimo takiego konta, wy pikne ślonzoki.";
+                        alertValue += "Takie konto nie istnieje.";
                     }
                     if (ok)
                     {

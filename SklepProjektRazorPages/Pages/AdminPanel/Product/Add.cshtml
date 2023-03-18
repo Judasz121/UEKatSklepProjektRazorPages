@@ -1,6 +1,7 @@
 ﻿@page
 @model SklepProjektRazorPages.Pages.AdminPanel.Product.AddModel
 @{
+    ViewData["Title"] = $"Admin Panel - Dodanie Produktu";
 }
 @if(!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem){
     <div class="text-center">
@@ -8,7 +9,7 @@
     </div>
 }
 else{
-    <div class="container accounts-container bg-white">
+    <div class="container text-center accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót na listę</a>
         <form method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="product.ID_Produktu" />

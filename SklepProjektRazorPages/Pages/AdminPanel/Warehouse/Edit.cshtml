@@ -3,6 +3,7 @@
 @using SklepProjektRazorPages.ViewModels;
 @model SklepProjektRazorPages.Pages.AdminPanel.Warehouse.EditModel
 @{
+    ViewData["Title"] = $"Admin Panel - Edit - {@Model.warehouse.Nazwa}";
 }
 @if (Model.warehouseNotFound)
 {
@@ -18,7 +19,7 @@ else if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestA
 }
 else
 {
-    <div class="center accounts-container bg-white">
+    <div class="container text-center accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="warehouse-props-tab" data-bs-toggle="tab" data-bs-target="#warehouse-props" type="button" role="tab" aria-controls="warehouse-props" aria-selected="true">

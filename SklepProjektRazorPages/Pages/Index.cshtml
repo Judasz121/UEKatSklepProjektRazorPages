@@ -6,7 +6,7 @@
 @model IndexModel
 @{
 
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Strona główna";
     HttpContext.Session.SetString("testString1", "Centurion mk. XII");
     IDbConnection conn = DbHelper.GetDbConnection();
     conn.Dispose();
@@ -14,7 +14,7 @@
 
 <div class="container bg-white border-container">
     <h3 style="text-align:center;">Polecane dla Ciebie</h3>
-    <div id="cards-container" class="cards-container snaps-inline">
+    <div id="cards-container" class="cards-container">
         @{
             foreach(Produkt p in @Model.ProductList)
             {
@@ -29,7 +29,7 @@
                     </div>
                     </a>
                     <div style="display:flex;justify-content:flex-end">
-                        <button product-id="@p.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"></button>
+                        <button style="display:none" islogged="@AccountHelper.loggedInAccount" product-id="@p.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"></button>
                     </div>
                     
                 </div>
@@ -37,6 +37,27 @@
         }
 
         
+    </div>
+</div>
+@*Future Bargain Item container*@
+<div class="container bg-white border-container" style="width:max(20rem);margin: unset;margin-top: 10px;">
+    <h3 style="text-align:center;">Gorący strzał</h3>
+    <div class="card">
+        <a style="text-decoration:none;color: inherit !important;" asp-page="/Product/View" asp-route-id="">
+            <div class="card-image">
+                <img src="" />
+            </div>
+            <div class="card-price" style="display:flex;gap:10px">
+                <p style="text-decoration: line-through;color:grey;opacity:0.5">Stara cena</p>
+                <p style="color:red">Nowa cena</p>
+            </div>
+            <div class="card-shopping">
+                <div class="card-item-name">nazwa</div>
+            </div>
+        </a>
+        <div style="display:flex;justify-content:flex-end">
+            <button id="error" style="display:none" islogged="@AccountHelper.loggedInAccount" product-id="" class="product-cart fa-solid fa-cart-shopping"></button>
+        </div>
     </div>
 </div>
 @{
@@ -48,9 +69,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', e => {
         $(document).on('click', '[product-id]', e => {
-            console.log(e.currentTarget);
+            //console.log(e.currentTarget);
             let $btn = $(e.currentTarget);
             let productId = $btn.attr('product-id');
+            let sessionToken = $btn.attr('islogged');
+            CheckifLogged(sessionToken);
             $.ajax({
                 url: '@cartApiUrl' + "?handler=AddProductToCart",
                 method: 'POST',
@@ -61,6 +84,12 @@
                 },
             }).done(function(data, status, xhr) {
                 updateCart();
+                if (data.message == "Error") {
+                    alert('Nie można dodać więcej niż 9 produtków danego rodzaju!');
+                }
+                else{
+                    AddCartAnimation();
+                }
             })
         });
     });

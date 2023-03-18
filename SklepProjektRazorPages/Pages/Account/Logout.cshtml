@@ -1,6 +1,7 @@
 ﻿@page
 @model SklepProjektRazorPages.Pages.Account.LogoutModel
 @{
+    ViewData["Title"] = "Wylogowano";
     bool loggedOut = false;
     if (AccountHelper.checkForLoggedInSession(HttpContext).Item1)
     {

@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels
 @model SklepProjektRazorPages.Pages.AdminPanel.Supplier.AddModel
 @{
+    ViewData["Title"] = $"Admin Panel - Dodanie Dostawcy";
 }
 
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
@@ -12,7 +13,7 @@
 }
 else
 {
-    <div class="container accounts-container bg-white">
+    <div class="container text-center accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
         <form method="post" enctype="multipart/form-data">
             <div class="mb-3">

@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels
 @model SklepProjektRazorPages.Pages.AdminPanel.Product.EditModel
 @{
+    ViewData["Title"] = $"Admin Panel - {@Model.product.Nazwa}";
 }
 @if (Model.productNotFound)
 {
@@ -16,7 +17,7 @@
 }
 else
 {
-    <div class="center accounts-container bg-white">
+    <div class="container text-center accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót na listę</a>
         <form method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="product.ID_Produktu" />
@@ -38,7 +39,7 @@ else
             <div>
                 <label class="form-label">Zdjęcie</label>
                 <br>
-                <img src="@Url.Content(Model.product.sciezkaZdjecia)" style="max-width:50%"/>
+                <img style="width:max(108px);height:max(72px);object-fit:contain;margin:auto" src="@Url.Content(Model.product.sciezkaZdjecia)"/>
                 <br><br>
                 <input class="form-control" type="file" asp-for="productCoverPhoto" />
                 <div class="form-text">Wgraj nowe</div>

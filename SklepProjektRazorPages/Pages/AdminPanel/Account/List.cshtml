@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels
 @model SklepProjektRazorPages.Pages.AdminPanel.AccountsModel
 @{
+    ViewData["Title"] = $"Admin Panel - Lista Kont";
 }
 @*Accounts list*@
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )

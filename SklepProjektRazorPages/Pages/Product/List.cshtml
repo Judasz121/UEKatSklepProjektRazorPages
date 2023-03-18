@@ -4,9 +4,10 @@
 @using SklepProjektRazorPages.DbModels;
 @model SklepProjektRazorPages.Pages.Product.ListModel
 @{
+    ViewData["Title"] = "Produkty";
 }
     <br />
-    <div class="cont admin-accounts-container text-center" style="background-color:white;color:black;width:min(40rem) !important">
+    <div class="container admin-accounts-container text-center" style="background-color:white;color:black;width:min(40rem) !important">
         <h3 style="text-align:center;padding-top:0.5rem">Wyszukanie dla: " @Model.searching_bar" </h3>
     <table id="accounts-table">
         <thead>
@@ -80,37 +81,8 @@
 @section scripts {
     <script>
         document.addEventListener('DOMContentLoaded', e => {
-            console.log("halo kurwa, widzisz mnie?");
             GenerateDataTables($("#accounts-table"));
             $("#productName").trigger("change");
-
-
-            //function updateCart() {
-
-            //    function genCartProductItem(record){
-            //        console.log(record);
-            //        let $container = $(document.createElement('div'));
-            //        $container.attr("class", "cart-product");
-            //        $container.attr("id", record.product.iD_Produktu);
-            //        $container.html(`${record.product.nazwa}</br>x${record.amount}`);
-            //        return $container[0];
-            //    }
-
-            //    $.ajax({
-            //        url: '@cartApiUrl' + "?handler=GetCart",
-            //        method: "POST",
-            //        contentType: 'application/json',
-            //    }).done(function(data, status, xhr) {
-            //            let $cartList = $("#cart-products");
-            //        $cartList.html('');
-            //            data.products.forEach(productRecord => {
-            //                $cartList.append(genCartProductItem(productRecord));
-            //            });
-            //        });
-            //}
-            //updateCart();
-
-
             $(document).on('click', '[product-id]', e => {
                 console.log(e.currentTarget);
                 let $btn = $(e.currentTarget);

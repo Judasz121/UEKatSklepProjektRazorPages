@@ -30,7 +30,7 @@ namespace SklepProjektRazorPages.ViewModels
                         Produkt p = conn.QueryFirst<Produkt>("SELECT * FROM PRODUKT WHERE ID_Produktu = @ID_Produktu", c);
                         this.cart.Add(new CartRecord
                         {
-                            cartId = (int)c.ID_Koszyka,
+                            cartID = (int)c.ID_Koszyka,
                             amount = (int)c.Ilosc_produktow,
                             product = p
                         });
@@ -50,6 +50,6 @@ namespace SklepProjektRazorPages.ViewModels
     {
         public Produkt product { get; set; }
         public int amount { get; set; }
-        public int cartId { get; set; }
+        public int cartID { get; set; }
     }
 }

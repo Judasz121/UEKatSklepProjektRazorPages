@@ -2,6 +2,7 @@
 @model SklepProjektRazorPages.Pages.AdminPanel.Warehouse.AddModel
 @using SklepProjektRazorPages.DbModels;
 @{
+    ViewData["Title"] = $"Admin Panel - Dodaj Magazyn";
 }
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
 {
@@ -11,7 +12,7 @@
 }
 else
 {
-    <div class="container accounts-container bg-white">
+    <div class="container text-center accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
         <form method="post" enctype="multipart/form-data">
             <input type="hidden" value="@Model.id" asp-for="warehouse.ID_Magazynu" />

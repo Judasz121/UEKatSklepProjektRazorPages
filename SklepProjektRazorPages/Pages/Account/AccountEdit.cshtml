@@ -2,6 +2,7 @@
 @using SklepProjektRazorPages.DbModels;
 @model SklepProjektRazorPages.Pages.Account.AccountEditModel
 @{
+    ViewData["Title"] = "Konto - Zmiana Danych";
 }
 @if(!AccountHelper.loggedInVerified || Model.accountNotFound)
 {

@@ -1,6 +1,7 @@
 ﻿@page
 @model SklepProjektRazorPages.Pages.Product.ViewModel
 @{
+    ViewData["Title"] = Model.product.Nazwa;
     //ajax
     string pre = "http" + new string(HttpContext.Request.IsHttps ? "s" : "");
     pre = pre + "://";
@@ -20,15 +21,15 @@
     </div>
 }
 else{
-    <div style="width:min(60rem,75rem);margin:auto" class="datatable-container border-container bg-white">
+    <div style="width:max-content;margin:auto" class="datatable-container border-container bg-white">
 
         <form class="datatable-container" method="get" style="padding-right:1rem">
             <input type="hidden" asp-for="product.ID_Produktu" />
             <div  class="view-container">
-                <h2 style="border-bottom: 1px solid grey">@Model.product.Nazwa</h2>
+                <h2 style="border-bottom: 1px solid grey;width: max-content;">@Model.product.Nazwa</h2>
                 <img style="margin:auto;width:max(15rem);height:max(15rem);object-fit:contain;" src="@Url.Content(Model.product.sciezkaZdjecia)" />
             </div>
-            <div style="width:min(25rem)" class="view-container view-specification">
+            <div style="width:max-content" class="view-container view-specification">
                 @*Statycznie ustawiona specyfikacaj*@
                 <h3 style="border-bottom: 1px solid grey">Specyfikacja</h3>
                 <p>Gniazdo procesora: Socket AM5</p>
@@ -40,39 +41,51 @@ else{
                 <p>@Model.product.Cena_jednostkowa zł</p>
                 @*Dodac funkcjonalnosc wybrania ilosci produktu do koszyka*@
                 <div style="display:flex;flex-direction:row;gap:1rem;">
-                    <select style="border-radius:10px;padding:.3rem">
+                    <select id="select-value" style="border-radius:10px;padding:.3rem">
                     @{
                         for(int i = 1; i<= 9; i++)
                         {
-                            <option value="@i">@i</option>
+                            <option class="select-value" value="@i">@i</option>
                         }
                     }
                     </select>
-                    <button type="button" product-id="@Model.product.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"><p>Dodaj do koszyka</p></button>
+                    <button id="submit-button" type="button" islogged="@AccountHelper.loggedInAccount" style="position:initial;transform:none;transition:none;color:white" product-id="@Model.product.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"><p>Dodaj do koszyka</p></button>
                 </div>
                 
             </div>
         </form>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', e => {
-            $(document).on('click', '[product-id]', e => {
-                console.log(e.currentTarget);
-                let $btn = $(e.currentTarget);
-                let productId = $btn.attr('product-id');
-                $.ajax({
-                    url: '@cartApiUrl' + "?handler=AddProductToCart",
-                    method: 'POST',
-                    //contentType: 'application/json',
-                    dataType: 'json',
-                    data: {
-                        productId: productId
-                    },
-                }).done(function (data, status, xhr) {
-                    updateCart();
-                })
-            });
-        });
-    </script>
 }
+<script>
+    document.addEventListener('DOMContentLoaded', e => {
+        $(document).on('click', '[product-id]', e => {
+            //console.log(e.currentTarget);
+            let $btn = $(e.currentTarget);
+            let productId = $btn.attr('product-id');
+            let $select_value = document.getElementById("select-value").value;
+            let sessionToken = $btn.attr('islogged');
+            CheckifLogged(sessionToken);  
+            $.ajax({
+                url: '@cartApiUrl' + "?handler=AddProductToCart",
+                method: 'POST',
+                //contentType: 'application/json',
+                dataType: 'json',
+                data: {
+                    "productId": productId,
+                    "productsAmount": $select_value,
+                },
+                success: function () {
+                    updateCart();
+                }
+            }).done(function (data, status, xhr) {
+                if (data.message == "Error") {
+                    alert('Nie można dodać więcej niż 9 produtków danego rodzaju!');
+                }
+                else {
+                    AddCartAnimation();
+                }
+            })
+        });
+    });
+</script>

@@ -2,6 +2,7 @@
 @model SklepProjektRazorPages.Pages.AdminPanel.Account.ViewModel
 @using SklepProjektRazorPages.DbModels;
 @{
+    ViewData["Title"] = $"Admin Panel - {@Model.account.ID_Konta}";
 }
 @if (Model.accountNotFound)
 {
@@ -17,7 +18,7 @@ else if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestA
 }
 else
 {
-    <div class="center accounts-container bg-white" style="width:max(50rem) !important">
+    <div class="container text-center accounts-container bg-white" style="width:max(50rem) !important">
         <form method="get" enctype="multipart/form-data">
             <input type="hidden" asp-for="account.ID_Konta" />
 

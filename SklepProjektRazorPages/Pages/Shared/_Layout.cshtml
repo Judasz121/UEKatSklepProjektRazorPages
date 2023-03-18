@@ -9,17 +9,21 @@
     <link rel="stylesheet" href="~/SklepProjektRazorPages.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/datatables/datatables.css" />
+    <link rel="stylesheet" href="~/lib/jquery-confirm/jquery-confirm.min.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
 </head>
 <body class="preload">
-    <div id="navbar" class="container navbar-container bg-white" style="display:flex;margin-left:auto;margin-right:auto;position:sticky">
+    <div id="navbar" class="container navbar-container bg-white">
+        @*Hamburger for future category selection*@
         <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="/Images/logo.png" style="width:4rem;"></a>
+        
         <div class="container-searching-bar">
+            <div style="position: absolute;padding-top: 7px;transform: scale(1.5) translateX(-40px); text-decoration:none;color:black" class="fa-solid fa-bars"></div>
             <form method="get" style="margin-top:5px">
                 <button type="submit" class="fa-solid fa-magnifying-glass search-glass" asp-area="" asp-page="/Product/List" style="border:none !important;background-color:white"></button>
-                <input id="searching-bar" type="text" name="searching_bar" class="searching-bar d-inline-block" list="datalistOptions" placeholder="Wyszukaj produkt...">
+                <input id="searching-bar" type="text" autocomplete="off" name="search" class="searching-bar d-inline-block" list="datalistOptions" placeholder="Wyszukaj produkt...">
                 <button class="fa-solid fa-x clear-button" type="button" onclick="document.getElementById('searching-bar').value = ''"></button>
             </form>
             
@@ -50,6 +54,7 @@
             @if (AccountHelper.loggedInVerified)
             {
                 <div id="cart-dropdown" class="dropdown" style="margin-left:0.5rem">
+                    <div id="item-counter" ></div>
                     <a class="fa-solid fa-cart-shopping shop-cart" id="shop-cart" asp-page="/Order/Summary" ></a>
                     <div class="cart-dropdown-content">
                         <div aria-labelledby="dropdownMenuButton1">
@@ -104,23 +109,35 @@
             </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/datatables/datatables.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
         let $paragraph = document.getElementById('summary-button');
         let $tab_products = document.getElementById('cart-products');
-        console.log($tab_products)
-        let mutObs = new MutationObserver((mutation) =>{
+        //console.log($tab_products)
+        function addObserver(){
+            let mutObs = new MutationObserver((mutation) =>{
             changeText();
         });
         let mutObsOptions = {
             childList: true
         }
+        if(!$tab_products){
+            window.setTimeout(addObserver,500);
+            return;
+        }
         mutObs.observe($tab_products,mutObsOptions);
+        } 
+        addObserver();
         function changeText(){
             let $summaryContainer = document.getElementById("summary-container");
+            if (!$tab_products) {
+                window.setTimeout(addObserver, 500);
+                return;
+            }
             if ($tab_products.hasChildNodes()){
                 $paragraph.innerText = "Finalizuj zamówienie";
                 $paragraph.style.pointerEvents = "all";

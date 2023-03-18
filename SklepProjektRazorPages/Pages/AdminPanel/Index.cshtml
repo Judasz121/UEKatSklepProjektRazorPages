@@ -3,6 +3,7 @@
 @using SklepProjektRazorPages.DbModels;
 @using SklepProjektRazorPages.Helpers;
 @{
+    ViewData["Title"] = "Admin Panel - Strona główna";
 }
 @if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem )
 {
