@@ -1,5 +1,6 @@
 ﻿@page
 @using SklepProjektRazorPages.DbModels;
+@using SklepProjektRazorPages.ViewModels;
 @model SklepProjektRazorPages.Pages.AdminPanel.Warehouse.EditModel
 @{
 }
@@ -19,40 +20,233 @@ else
 {
     <div class="center accounts-container bg-white">
         <a class="btn btn-secondary" asp-page="List">Powrót do listy</a>
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" asp-for="warehouse.ID_Magazynu" />
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="warehouse-props-tab" data-bs-toggle="tab" data-bs-target="#warehouse-props" type="button" role="tab" aria-controls="warehouse-props" aria-selected="true">
+                Dane Magazynu
+            </button>
+            <button class="nav-link" id="warehouse-products-tab" data-bs-toggle="tab" data-bs-target="#warehouse-products" type="button" role="tab" aria-controls="warehouse-products" aria-selected="false">
+                Produkty w magazynie
+            </button>
+        </div>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="warehouse-props" role="tabpanel" aria-labelledby="nav-home-tab">
+                <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="warehouse.ID_Magazynu" />
 
-            <div class="mb-3">
-                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Nazwa)</label>
-                <input type="text" asp-for="warehouse.Nazwa" />
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Nazwa)</label>
+                        <input type="text" asp-for="warehouse.Nazwa" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Kraj)</label>
+                        <input type="text" asp-for="warehouse.Kraj" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Miasto)</label>
+                        <input type="text" asp-for="warehouse.Miasto" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Kod_pocztowy)</label>
+                        <input type="text" asp-for="warehouse.Kod_pocztowy" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Ulica)</label>
+                        <input type="text" asp-for="warehouse.Ulica" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Numer_budynku)</label>
+                        <input type="text" asp-for="warehouse.Numer_budynku" />
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.alertValue))
+                    {
+                        <div class="alert @Model.alertClass" role="alert">
+                            @Model.alertValue
+                        </div>
+                    }
+
+                    <hr />
+                    @*            <h4>Nowe Produkty</h4>
+
+                <div id="warehouse-products-edit"></div>*@
+
+                    <button class="btn btn-success">Zapisz</button>
+                </form>
             </div>
-            <div class="mb-3">
-                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Kraj)</label>
-                <input type="text" asp-for="warehouse.Kraj" />
+            <div class="tab-pane fade" id="warehouse-products" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <table id="warehouse-products-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @{
+                                    string displayName = null;
+                                    displayName = @Html.DisplayNameFor(model => model.warehouseProducts.FirstOrDefault().Nazwa);
+                                }
+                                <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                            </th>
+                                                        <th>
+                                @{
+                                    displayName = @Html.DisplayNameFor(model => model.warehouseProducts.FirstOrDefault().Cena_jednostkowa);
+                                }
+                                <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                            </th>
+                                                        <th>
+                                @{
+                                    displayName = @Html.DisplayNameFor(model => model.warehouseProducts.FirstOrDefault().Kategoria.Nazwa) + " Kategorii";
+                                }
+                                <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                            </th>
+                            <th>
+                                Opcje
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ProductViewModel p in Model.warehouseProducts)
+                        {
+                            Produkt_magazyn p_m = Model.product_warehouse.Find(pred => pred.ID_Produktu == p.ID_Produktu);
+                            <tr>
+                                <th>
+                                    @Html.DisplayFor(model => p.Nazwa)
+                                </th>
+                                <th>
+                                    @Html.DisplayFor(model => p.Cena_jednostkowa)
+                                </th>
+                                <th>
+                                    @Html.DisplayFor(model => p.Kategoria.Nazwa)
+                                </th>
+                                <th>
+                                    <a class="btn btn-sm btn-primary" asp-page="/AdminPanel/Product/View/" asp-route-id="@p.ID_Produktu" >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <button class="remove-product btn btn-danger btn-sm" product-id="@p.ID_Produktu">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-warning" data-toggle="dropdown" title="Edytuj ilość w magazynie">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            Edytuj ilość w magazynie
+                                            <input name="product-amount" value="@p_m.Ilosc_produktu" product-id="@p.ID_Produktu" />
+                                            <br>
+                                            <button class="update-product-amount btn btn-sm btn-success">Zapisz</button> 
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="mb-3">
-                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Miasto)</label>
-                <input type="text" asp-for="warehouse.Miasto" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Kod_pocztowy)</label>
-                <input type="text" asp-for="warehouse.Kod_pocztowy" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Ulica)</label>
-                <input type="text" asp-for="warehouse.Ulica" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">@Html.DisplayNameFor(model => model.warehouse.Numer_budynku)</label>
-                <input type="text" asp-for="warehouse.Numer_budynku" />
-            </div>
-            <button class="btn btn-success">Zapisz Dane Magazynu</button>
-            @if (!string.IsNullOrWhiteSpace(Model.alertValue))
-            {
-                <div class="alert @Model.alertClass" role="alert">
-                    @Model.alertValue
-                </div>
-            }
-        </form>
+        </div>
+
+
     </div>
+
+    @section jsSyntaxHighlighting{
+    <script>
+        document.addEventListener("DOMContentLoaded", e => {
+            function setupProductsDatatable() {
+                let $table = $("#warehouse-products-table");
+                console.log($table);
+                let datatable = GenerateDataTables($table);
+            }
+            setupProductsDatatable();
+
+
+            function setupProductsEdit() {
+                let self = this;
+                this.$el = $("#warehouse-products-edit");
+                this.$productList = null;
+                this.allProducts = @Html.Raw(Json.Serialize(Model.allProducts));
+                this.newProductsIndex = 0;
+                this.warehouseId = '@Html.Raw(Model.warehouse.ID_Magazynu)';
+
+                this.genProductElement = function(productId, productName, productAmount) {
+                    let $container = $(document.createElement("div"));
+                    $container.attr("style", "");
+                    $container.attr("product-id", productId);
+                    $container.attr("product-amount", productAmount);
+                    $container.attr("id", self.newProductsIndex);
+
+                    let $displayName = $(document.createElement("div"));
+                    $displayName.attr("class", "fs-5");
+                    $displayName.html(productName);
+                    $container.append($displayName);
+
+                    let $product = $(document.createElement("input"));
+                    $product.attr("type", "hidden");
+                    $product.attr("value", productId);
+                    $product.attr("name", `newProducts[${self.newProductsIndex}].ID_Produktu`);
+                    $container.append($product);
+
+                    let $amount = $(document.createElement('input'));
+                    $amount.attr("name", `newProducts[${self.newProductsIndex}].Ilosc_produktu`);
+                    $amount.attr('type', 'number');
+                    $amount.attr("class", "border-0");
+                    $amount.val(productAmount);
+                    $container.append(" x");
+                    $container.append($amount);
+
+                    self.newProductsIndex++;
+                    return $container;
+                }
+
+                this.genAddProductSection = function() {
+
+                    let $addProductSection = $(document.createElement("div"));
+                    $addProductSection.attr("class", "add-warehouse-product-section");
+                    let $addProductBtn = $(document.createElement("button"));
+                    $addProductBtn.attr("class", "btn btn-primary");
+                    $addProductBtn.html(`<i class="fa-solid fa-plus"></i> Dodaj`);
+                    $addProductSection.append($addProductBtn);
+
+                    let $product = $(document.createElement('select'));
+                    $product.attr("class", "product-id");
+                    self.allProducts.forEach(product => {
+                        let $option = $(document.createElement('option'));
+                        $option.attr("value", product.value);
+                        $option.html(product.text);
+                        $product.append($option);
+                    });
+                    $addProductSection.append($product);
+
+                    $addProductSection.append(" w ilości: ")
+                    let $amount = $(document.createElement('input'));
+                    $amount.attr("class", "border-0 product-amount");
+                    $amount.attr("type", "number");
+                    $amount.attr("value", "1");
+                    $addProductSection.append($amount);
+
+                    $addProductBtn.on('click', e => {
+                        e.preventDefault();
+                        let productId = $product.val();
+                        let productAmount = $amount.val();
+                        let productName = $product.find("option:selected").text();
+
+                        if (self.$productList.find(`[product-id="${productId}"]`).length > 0) {
+                            alert("W magazynie jest już rekord tego produktu ");
+                            return;
+                        }
+                        self.$productList.append(genProductElement(productId, productName, productAmount));
+                    });
+
+                    return $addProductSection;
+                }
+
+
+                this.$el.append(genAddProductSection());
+
+                this.$productList = $(document.createElement("div"));
+                this.$productList.attr("class", "ps-2 product-list");
+                // add existing products to list
+                let products_warehouse = @Html.Raw(Json.Serialize(Model.allProducts));
+                // todo
+                this.$el.append(this.$productList);
+            }
+            // setupProductsEdit()
+        });
+    </script>
+    }
 }

@@ -7,7 +7,7 @@ let counter = 0;
 
 function updateCart() {
     function genCartProductItem(record) {
-        console.log(record);
+        //console.log(record);
         let $container = $(document.createElement('tr'));
         $container.attr("class", "cart-product");
         $container.attr("id", record.product.iD_Produktu);
