@@ -11,3 +11,4 @@
 - expandoObject test error list ( podobno nie działo dodawańsko )
 - force browser to not cache on history.back
 - localise site.css ( .dropdown na przykład )
+- refresh adminPanel/warehouse/edit product list on databaase change

@@ -132,16 +132,22 @@ else
                                     <a class="btn btn-sm btn-primary" asp-page="/AdminPanel/Product/View/" asp-route-id="@p.ID_Produktu" >
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
-                                    <button class="remove-product btn btn-danger btn-sm" product-id="@p.ID_Produktu">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-danger" data-bs-toggle="dropdown" title="Usuń z magazynu">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            Usunąć produkt z magazynu?
+                                            <button class="remove-product btn btn-sm btn-primary" product_warehouse-id="@p_m.ID_Produkt_magazyn">Tak</button> 
+                                        </div>
+                                    </div>
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-warning" data-bs-toggle="dropdown" title="Edytuj ilość w magazynie">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
                                         <div class="dropdown-menu">
                                             Edytuj ilość w magazynie
-                                            <input name="product-amount" value="@p_m.Ilosc_produktu" product-id="@p.ID_Produktu" />
+                                            <input name="product-amount" value="@p_m.Ilosc_produktu" product_warehouse-id="@p_m.ID_Produkt_magazyn" />
                                             <br>
                                             <button class="update-product-amount btn btn-sm btn-success">Zapisz</button> 
                                         </div>
@@ -156,7 +162,7 @@ else
 
 
     </div>
-
+    @Html.AntiForgeryToken()
     @section jsSyntaxHighlighting{
     <script>
         document.addEventListener("DOMContentLoaded", e => {
@@ -164,6 +170,67 @@ else
                 let $table = $("#warehouse-products-table");
                 console.log($table);
                 let datatable = GenerateDataTable($table);
+                let thisPagePath = "@ViewContext.HttpContext.Request.Path";
+                let antiForgeryToken = $(`[name="__RequestVerificationToken"]`).val();
+
+
+                // options column
+                // product amount update
+                $(document).on('click', "#warehouse-products-table button.update-product-amount", e => {
+                    let $target = $(e.currentTarget);
+                    let $input = $target.parent().children(`input[name="product-amount"]`);
+                    $.ajax({
+                        url: thisPagePath + "?handler=UpdateProductWarehouse",
+                        method: "POST",
+                        headers: {
+                            'RequestVerificationToken': antiForgeryToken
+                        },
+                        data: {
+                            productWarehouseId: $input.attr("product_warehouse-id"),
+                            productAmount: $input.val(),
+                        },
+                    }).done(function(response, status, xhr) {
+                        if (Boolean(response.success) === false) {
+                            if (Boolean(response.errors) === false || response.errors.length == 0) {
+                                showToast("Server Error", "", "danger");
+                            }
+                            else {
+                                response.errors.forEach(err => {
+                                    showToast(err.title, err.message, "danger");
+                                });
+                            }
+                        } else {
+                            showToast("Pomyślnie", "zaktualizowano ilość produktu w magazynie", "success");
+                        }
+                    });
+                })
+                // product removal
+                $(document).on('click', 'button.remove-product[product_warehouse-id]', e => {
+                    let $target = $(e.currentTarget);
+                    $.ajax({
+                        url: thisPagePath + "?handler=DeleteWarehouseProduct",
+                        method: "POST",
+                        headers: {
+                            'RequestVerificationToken': antiForgeryToken
+                        },
+                        data: {
+                            warehouseProductId: $target.attr("product_warehouse-id"),
+                        },
+                    }).done(function(response, status, xhr) {
+                        if (Boolean(response.success) === false) {
+                            if (Boolean(response.errors) === false || response.errors.length == 0) {
+                                showToast("Server Error", "", "danger");
+                            }
+                            else {
+                                response.errors.forEach(err => {
+                                    showToast(err.title, err.message, "danger");
+                                });
+                            }
+                        } else {
+                            showToast("Pomyślnie", "usunięto produkt z magazynu", "success");
+                        }
+                    });
+                })
             }
             setupProductsDatatable();
 

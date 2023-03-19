@@ -41,17 +41,16 @@
 <script>
     document.addEventListener('DOMContentLoaded', e => {
         let antiForgeryToken = $(`[name="__RequestVerificationToken"]`).val();
-        let $modal = $("#add-warehouse-product-modal")
+        let $modal = $("#add-warehouse-product-modal");
+        let modalInstance = new bootstrap.Modal($modal[0]);
         let $saveBtn = $modal.find("button#add-warehouse-product");
         let thisPagePath = "@ViewContext.HttpContext.Request.Path";
-        console.log(thisPagePath); 
 
         $saveBtn.on('click', e => {
             let productAmount = $modal.find(`input[name="product-amount"]`).val();
             let productId = $modal.find(`select[name="product-id"]`).val();
-            console.log(productAmount); console.log(productId);
             $.ajax({
-                url: thisPagePath + "?handler=AddWarehouseProduct",
+                url: thisPagePath + "?handler=AddProductWarehouse",
                 method: "POST",
                 //contentType: "application/json", jebać tą skurwiałą linijke kodu po chuj ja ją tu wkleiłem, zamawiam wpierdol na wynos dla mojego mózgu
                 headers: {
@@ -62,8 +61,20 @@
                     productAmount: productAmount,
                     warehouseId: @Model.warehouseId
                 },
-            }).done(function(data, status, xhr) {
-                console.log("add response"); console.log(data); console.log(status); console.log(xhr);
+            }).done(function(response, status, xhr) {
+                if (Boolean(response.success) === false) {
+                    if (Boolean(response.errors) === false || response.errors.length == 0) {
+                        showToast("Server Error", "", "danger");
+                    }
+                    else {
+                        response.errors.forEach(err => {
+                            showToast(err.title, err.message, "warning");
+                        });
+                    }
+                } else {
+                    showToast("Pomyślnie", "dodano produkt do magazynu", "success");
+                    modalInstance.hide();
+                }
             })
         });
     });

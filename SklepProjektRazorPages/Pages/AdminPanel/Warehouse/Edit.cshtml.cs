@@ -97,14 +97,13 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Warehouse
             return Page();
         }
 
-        [HttpPost]
-        public IActionResult OnPostAddWarehouseProduct(string productId, int? productAmount, int? warehouseId)
+        public IActionResult OnPostAddProductWarehouse(string productId, int? productAmount, int? warehouseId)
         {
             dynamic resp = new ExpandoObject();
             resp.success = true;
             resp.errors = new List<Error>();
-
-            if(productId == null || productAmount == null || warehouseId == null)
+            #region value verification
+            if (productId == null || productAmount == null || warehouseId == null)
             {
                 resp.success = false;
                 resp.errors.Add(new Error
@@ -113,7 +112,22 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Warehouse
                     message = "one of the 3 required parameters is null"
                 });
             }
-            else
+
+            using (IDbConnection conn = DbHelper.GetDbConnection())
+            {
+                int productExists = conn.ExecuteScalar<int>("SELECT COUNT(*) FROM Produkt_magazyn WHERE ID_Produktu = @ID_Produktu", new
+                {
+                    ID_Produktu = productId
+                });
+                if (productExists > 0)
+                {
+                    resp.success = false;
+                    resp.errors.Add(new Error { title = "Ju¿ istnieje", message = "rekord o tym produkcie w magazynie" });
+                }
+            }
+
+            #endregion value verification
+            if (resp.success)
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
@@ -143,6 +157,82 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Warehouse
                         {
                             title = "Server SQL Error",
                             message = exc.Message
+                        });
+                    }
+                }
+            }
+            return new JsonResult(resp);
+        }
+
+        public IActionResult OnPostUpdateProductWarehouse(int? productWarehouseId, int? productAmount)
+        {
+            dynamic resp = new ExpandoObject();
+            resp.success = true;
+            resp.errors = new List<Error>();
+            #region value checks
+            if (productWarehouseId == null || productAmount == null)
+            {
+                resp.success = false;
+                resp.errors.Add(new Error
+                {
+                    title = "Insufficient Parameters",
+                    message = "one of the 2 required parameters is null"
+                });
+            }
+            else if(productAmount < 1)
+            {
+                resp.success = false;
+                resp.erorrs.Add(new Error
+                {
+                    title = "Incorrect Value",
+                    message = "for product amount"
+                });
+            }
+            #endregion value checks
+            else
+            {
+                using (IDbConnection conn = DbHelper.GetDbConnection())
+                {
+                    int affectedRows = conn.Execute("UPDATE Produkt_magazyn SET Ilosc_produktu = @Ilosc_produktu WHERE ID_Produkt_magazyn = @ID_Produkt_magazyn", new
+                    {
+                        Ilosc_produktu = productAmount,
+                        ID_Produkt_magazyn = productWarehouseId
+                    });
+                }
+            }
+            return new JsonResult(resp);
+        }
+
+        public IActionResult OnPostDeleteWarehouseProduct(int? warehouseProductId = null, int? productId = null)
+        {
+            dynamic resp = new ExpandoObject();
+            resp.errors = new List<Error>();
+            resp.success = true;
+            
+            if (warehouseProductId == null)
+            {
+                resp.success = false;
+                resp.errors.Add(new Error
+                {
+                    title = "Insufficient Parameters",
+                    message = "warehouseProductId not provided"
+                });
+            }
+            if (resp.success)
+            {
+                using (IDbConnection conn = DbHelper.GetDbConnection())
+                {
+                    int affectedRows = conn.Execute("DELETE FROM Produkt_magazyn WHERE ID_Produkt_magazyn = @ID_Produkt_magazyn", new
+                    {
+                        ID_Produkt_magazyn = warehouseProductId,
+                    });
+                    if(affectedRows == 0)
+                    {
+                        resp.success = false;
+                        resp.errors.Add(new Error
+                        {
+                            title = "Didn't found",
+                            message = "warehouse_product associated with this id"
                         });
                     }
                 }
