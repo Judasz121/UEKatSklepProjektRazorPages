@@ -19,6 +19,20 @@ body {
     -webkit-animation-duration: 0s !important;
     transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
 }*/
+::-webkit-scrollbar{
+    width:10px;
+    background-color:#F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(122,153,217)), color-stop(0.72, rgb(73,125,189)), color-stop(0.86, rgb(28,58,148)));
+    border:1px black;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
 @keyframes card-loading-animation{
     0%{
         transform: translateX(-10%);
@@ -138,11 +152,11 @@ body {
         width:25vw;
     }
     
-    .searching-bar:focus {
+    /*.searching-bar:focus {
         transition: none !important;
         max-width: 25vw;
         width: 25vw;
-    }
+    }*/
 }
 .bg-grey {
     opacity: 1;
@@ -222,13 +236,13 @@ footer{
     height:100%;
     margin:auto;
 }
-.searching-bar:focus {
+/*.searching-bar:focus {
 
     width: 35vw;
     transition: width 1.2s;
     outline:none !important;
     border:none;
-}
+}*/
 .login-container {
     border: 0.5rem outset;
     border-image: var(--border-image-patern);
@@ -567,7 +581,7 @@ ul {
     font-size:13px;
 }
 #warehouse-product-delivery-selection-container{
-    width:max(30rem);
+    width:max-content   ;
     margin-left:auto;
     margin-right:auto;
 }
@@ -575,7 +589,7 @@ ul {
     display:flex;
     flex-direction:column;
     justify-content:center;
-    width:min(15rem);
+    width:max-content;
 
 }
 .dropMenu-Item {

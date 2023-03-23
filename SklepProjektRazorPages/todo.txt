@@ -12,3 +12,15 @@
 - force browser to not cache on history.back
 - localise site.css ( .dropdown na przykład )
 - refresh adminPanel/warehouse/edit product list on databaase change
+
+--schemat bazy do dodawania promocji
+--Promocja
+--id_promocji
+--czas_promocji
+--mnoznik_ceny
+
+
+--Promocja_produkty
+--id_promocja_produkty
+--id_promocji
+--id_produktu

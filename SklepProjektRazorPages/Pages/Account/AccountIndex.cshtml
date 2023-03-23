@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Konto - Strona główna";
 }
-@if(!AccountHelper.loggedInVerified || Model.accountNotFound){
+@if(!AccountHelper.loggedInVerified || Model.accountNotFound || AccountHelper.loggedInAccount == null){
     <div class="text-container">
         <h3>Nie masz uprawnień do tej strony.</h3>
     </div>
@@ -80,7 +80,6 @@ else{
                                 {
                                     <td>Zapłacone</td>
                                 }
-                                @*<td>@zamowienia.Zaplacone.ToString()</td>*@
                             </tr>
                         }
                     </table>

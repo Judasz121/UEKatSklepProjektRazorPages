@@ -59,7 +59,7 @@ namespace SklepProjektRazorPages.Pages.Account
             {
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
-                    zamowienie = (List<Zamowienie>)conn.Query<Zamowienie>($"SELECT * FROM Zamowienie WHERE ID_Klienta = '{account.ID_Klienta}'");
+                    zamowienie = (List<Zamowienie>)conn.Query<Zamowienie>($"SELECT * FROM Zamowienie WHERE ID_Klienta = '{account.ID_Klienta}' AND Zlozone = 1");
                 }
             }
             catch (InvalidOperationException exc)
