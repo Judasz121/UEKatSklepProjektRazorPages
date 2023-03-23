@@ -12,18 +12,7 @@
 }
 else
 {
-        <div class="container admin-panel-settings bg-white text-ce" style="width:min(36rem)">
-            <div>
-                <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
-                <div class="admin-button-container">
-                    <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Index">
-                        Strona główna
-                        <div class="btn_horizontal"></div>
-                        <div class="btn_vertical"></div>
-                    </a>
-                </div>
-            </div>
-        </div>
+<partial name="_AdminPanelNavigationPartial" />
         <br />
     <div class="container admin-accounts-container text-center" style="width:min(80rem) !important;background-color:white;color:black;">
         <a class="btn btn-primary" style="margin:0.4rem 0" asp-page="Add">Dodaj Dostawce</a>

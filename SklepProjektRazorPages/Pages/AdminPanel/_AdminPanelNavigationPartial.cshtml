@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    string path = ViewContext.HttpContext.Request.Path;
+    var navElements = new List<(string aspPage, string text)>()
+    {
+        (
+            "/AdminPanel/Account/List",
+            "Konta"
+        ),
+        (
+            "/AdminPanel/Product/List",
+            "Produkty"
+        ),
+        (
+            "/AdminPanel/Delivery/List",
+            "Dostawy"
+        ),
+        (
+            "/AdminPanel/Supplier/List",
+            "Dostawcy"
+        ),
+        (
+            "/AdminPanel/Warehouse/List",
+            "Magazyny"
+        ),
+        (
+            "/AdminPanel/Employee/List",
+            "Pracownicy"
+        ),
+    };
+
+}
+<div class="container admin-panel-settings bg-white" style="width:min(73rem)">
+    <div>
+        <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
+        <div class="admin-button-container">
+            @foreach ((string aspPage, string text) el in navElements)
+            {                
+                <!a class="button-animation @(el.aspPage == path ? "active" : "")" style="padding:0.5rem 1.5rem" href="@el.aspPage">
+                    @el.text
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+                </!a>
+            }
+        </div>
+    </div>
+</div>
+
+@*<div class="container admin-panel-settings bg-white" style="width:min(73rem)">
+    <div>
+        <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
+        <div class="admin-button-container">
+            <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Account/List">
+                Konta
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+            </a>
+            <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Product/List">
+                Produkty
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+            </a>
+            <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Delivery/List">
+                Dostawy
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+            </a>
+            <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Supplier/List">
+                Dostawcy
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+            </a>
+            <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Warehouse/List">
+                Magazyny
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+            </a>
+            <a class="button-animation" style="padding:0.5rem 1.5rem" asp-page="/AdminPanel/Employee/List">
+                Pracownicy
+                <div class="btn_horizontal"></div>
+                <div class="btn_vertical"></div>
+            </a>
+        </div>
+    </div>
+</div>*@
