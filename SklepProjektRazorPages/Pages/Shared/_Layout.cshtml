@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
+    @RenderSection("Styles", false)
 </head>
 <body class="preload">
     <div id="navbar" class="container navbar-container bg-white">
@@ -134,7 +135,7 @@
             return;
         }
         mutObs.observe($tab_products,mutObsOptions);
-        } 
+        }
         addObserver();
         function changeText(){
             let $summaryContainer = document.getElementById("summary-container");
