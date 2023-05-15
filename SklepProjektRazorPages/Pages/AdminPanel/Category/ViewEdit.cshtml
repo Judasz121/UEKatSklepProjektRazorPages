@@ -1,0 +1,218 @@
+﻿@page
+@using System.Text.Json
+@model SklepProjektRazorPages.Pages.AdminPanel.Category.ViewEditModel
+@{
+    ViewData["Title"] = $"Admin Panel - Lista Magazynów";
+}
+@if (!AccountHelper.loggedInVerified || !AccountHelper.loggedInAccount.JestAdminem)
+{
+        <div class="text-center">
+            <h3>Nie mosz uprawnień do tej strony.</h3>
+        </div>
+}
+else
+{
+<partial name="_AdminPanelNavigationPartial" />
+        <br />
+    <div class="container admin-accounts-container text-center" style="width:min(80rem) !important;background-color:white;color:black;">
+        <button id="save-tree" class="btn btn-success" >Zapisz</button>
+        <div class="text-start">
+            <div id="categories-jstree">
+            </div>
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+    @section jsSyntaxHighlighting{
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            let thisPagePath = "@ViewContext.HttpContext.Request.Path";
+            function setupCategoriesJsTree($el) {
+                const self = this;
+                this.$el = $el instanceof jQuery ? $el : $($el);
+                this.jstreeInstance = null;
+                this.dbData = @Html.Raw(@JsonSerializer.Serialize(Model.categories, new JsonSerializerOptions{PropertyNamingPolicy = null}));
+                this.newNodeIdIndex = 0;
+
+                this.convertDbCategoryToJsTreeNode = function(dbCategory, customOptions = {}) {
+                    return {
+                        id: dbCategory.ID_Kategorii,
+                        text: dbCategory.Nazwa,
+                        parent: dbCategory.ID_Rodzica == null ? "#" : dbCategory.ID_Rodzica,
+                        state: {
+                            opened: false,
+                            selected: false,
+                            ...customOptions.state
+                        }
+                    }
+                }
+                
+                this.convertDbDataToJsTreeData = function(dbData = self.dbData) {
+                    //function getChildNodes(parentId, level = 0) {
+                    //    let children = [];
+                    //    dbData.filter(cat => cat.ID_Rodzica == parentId).forEach(childCat => {
+                    //        let child = self.convertDbCategoryToJsTreeNode(childCat);
+                    //        child.children = getChildNodes(childCat.ID_Kategorii, level+1);
+                    //        children.push(child);
+                    //    }); 
+                    //    return children;
+                    //}
+
+                    let result = [];
+                    let roots = dbData.filter(cat => {
+                        return cat.ID_Rodzica == null;
+                    });
+                    let nonRoots = dbData.filter(cat => !roots.includes(cat));
+                    console.log(nonRoots);
+                    roots.forEach(rootCat => {
+                        let treeNode = self.convertDbCategoryToJsTreeNode(rootCat, {
+                            state: {
+                                opened: true
+                            }
+                        });
+                        //treeNode.children = getChildNodes(rootCat.ID_Kategorii, 0)                        
+                        result.push(treeNode)
+                    });
+                    nonRoots.forEach(childCat => {
+                        result.push(self.convertDbCategoryToJsTreeNode(childCat))
+                    })
+                    return result;
+
+                }
+
+                this.ajaxUpdateNodesNewParent = function(newParentNodes) {
+                    sendAjax(null, "UpdateCategoriesParent", { newParentNodes: newParentNodes })
+                    .done(function(data, status, xhr) {
+                        console.log(data); console.log(status); console.log(xhr);
+                        if(Boolean(data.success) === false){
+                            if (Boolean(data.errors) && errors.length > 0) {
+                                data.errors.forEach(err => {
+                                    showToast(err.title, err.message, "danger");
+                                })
+                            }
+                            else{
+                                showToast("Server Error", "", "danger");
+                            }
+                        }
+                    });
+                }
+
+                this.setupDragAndDropEvents = function(){
+                    $(document).on('dnd_stop.vakata', (e, dragInfo) => {
+                        //console.log(e); console.log(dragInfo);
+                        console.log(dragInfo);
+                        let newParentNodes = [];
+                        //self.jstreeInstance.refresh(false, false);
+                        //self.$el.one('refresh.jstree', e => {
+                            dragInfo.data.nodes.forEach(nodeId => {
+                               
+                                let nodeJson = self.jstreeInstance.get_json(nodeId); console.log(nodeJson);
+                                let node = self.jstreeInstance.get_node(nodeId);
+                                console.log(node);
+                                newParentNodes.push({
+                                    id: node.id,
+                                    newParentId: node.parent
+                                });
+                            });
+                            self.ajaxUpdateNodesNewParent(newParentNodes);
+                        //});
+                    });
+                }
+
+                this.ajaxUpdateTree = function() {
+                    let json = self.jstreeInstance.get_json(null, {flat: true})
+                    // strip non db props
+                    json = json.map(node => {
+                        return {
+                            id: node.id,
+                            parent: node.parent,
+                            text: node.text
+                        }
+                    });
+                    let xhrData = { nodes: json }
+                    console.log(json);
+                    sendAjax(null, "UpdateTree", xhrData)
+                    .done(function(data, status, xhr) {
+                        console.log(data); console.log(status); console.log(xhr);
+                        if(Boolean(data.success) === false){
+                            if (Boolean(data.errors) && errors.length > 0) {
+                                data.errors.forEach(err => {
+                                    showToast(err.title, err.message, "danger");
+                                })
+                            }
+                            else{
+                                showToast("Server Error", "", "danger");
+                            }
+                        }
+                        else{
+                            showToast("Zapisano", "pomyślnie", "success");
+                        }
+                    });
+                }
+
+                this.initJsTree = function() {
+                    //self.$el.on('load_node.jstree', (node, status) => {
+                    //    console.log(status); console.log(node);
+                    //})
+                    let jsTreeData = self.convertDbDataToJsTreeData(self.dbData);
+                    self.jstreeInstance = self.$el.jstree({
+                        core: {
+                            data: jsTreeData,
+                            "check_callback": true,
+                            themes: {
+                                theme: "apple",
+                                icons: false,
+                                dots: false,
+                            },
+
+                        },
+                        plugins: ["dnd", "contextmenu"],
+                        //contextmenu: {
+                        //    items: {
+                        //        Add: {
+                        //            label: 'Dodaj',
+                        //            action: function(e) {
+                        //                let node = self.jstreeInstance.get_node(e.reference[0]);
+                        //                let newNode = {
+                        //                    text: "Nowa Kategoria",
+                        //                    id: "new_" + self.newNodeIdIndex++
+                        //                }
+                        //                self.jstreeInstance.create_node(node, newNode)
+                        //            }
+                        //        },
+                        //        Rename: {
+                        //            label: 'Zmień nazwę',
+                        //            action: function(e) {
+                        //                console.log(e);
+                        //            }
+                        //        },
+                        //        Delete: {
+                        //            label: 'Remove',
+                        //            action: function(e) {
+                        //                console.log(e);
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                    });
+                    self.jstreeInstance = self.$el.jstree(true);
+                    self.setupDragAndDropEvents();
+
+                }
+
+                this.initJsTree();
+                return this;
+            }
+            let wrapper = setupCategoriesJsTree($("#categories-jstree"));
+            $("#save-tree").on('click', e => {
+                wrapper.ajaxUpdateTree();
+            })
+        });
+    </script>
+    }
+    @section Styles{
+        <link rel="stylesheet" href="~/lib/jsTree/dist/themes/default/style.min.css" />
+    }
+    @section Scripts{
+        <script src="~/lib/jsTree/dist/jstree.min.js" ></script>
+    }
+}
