@@ -24,7 +24,7 @@
             <div style="position: absolute;padding-top: 7px;transform: scale(1.5) translateX(-40px); text-decoration:none;color:black" class="fa-solid fa-bars"></div>
             <form method="get" style="margin-top:5px">
                 <button type="submit" class="fa-solid fa-magnifying-glass search-glass" asp-area="" asp-page="/Product/List" style="border:none !important;background-color:white"></button>
-                <input id="searching-bar" type="text" autocomplete="off" name="search" class="searching-bar d-inline-block" list="datalistOptions" placeholder="Wyszukaj produkt...">
+                <input id="searching-bar" type="text" autocomplete="off"  name="searching_bar" class="searching-bar d-inline-block" list="datalistOptions" placeholder="Wyszukaj produkt...">
                 <button class="fa-solid fa-x clear-button" type="button" onclick="document.getElementById('searching-bar').value = ''"></button>
             </form>
             
@@ -117,6 +117,7 @@
     <script src="~/lib/iziToast/js/iziToast.min.js"></script>
     <script src="~/js/toastNotification.js"></script>
     <script src="~/js/datatablesWrapper.js" asp-append-version="true"></script>
+    <script src="~/js/ajaxWrapper.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
         let $paragraph = document.getElementById('summary-button');

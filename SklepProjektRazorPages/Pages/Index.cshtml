@@ -29,7 +29,7 @@
                     </div>
                     </a>
                     <div style="display:flex;justify-content:flex-end">
-                        <button style="display:none" islogged="@AccountHelper.loggedInAccount" product-id="@p.ID_Produktu" class="product-cart fa-solid fa-cart-shopping"></button>
+                        <button style="display:none" islogged="@AccountHelper.loggedInAccount" product-id="@p.ID_Produktu" class="product-cart product-button fa-solid fa-cart-shopping"></button>
                     </div>
                     
                 </div>
@@ -56,7 +56,7 @@
             </div>
         </a>
         <div style="display:flex;justify-content:flex-end">
-            <button style="display:none" islogged="@AccountHelper.loggedInAccount" product-id="" class="product-cart fa-solid fa-cart-shopping"></button>
+            <button style="display:none" islogged="@AccountHelper.loggedInAccount" product-id="" class="product-cart product-button fa-solid fa-cart-shopping"></button>
         </div>
     </div>
 </div>
@@ -85,7 +85,7 @@
             }).done(function(data, status, xhr) {
                 updateCart();
                 if (data.message == "Error") {
-                    alert('Nie można dodać więcej niż 9 produtków danego rodzaju!');
+                    showToast('Błąd', 'Nie można dodać więcej niż 9 produtków danego rodzaju!', 'danger');
                 }
                 else{
                     AddCartAnimation();

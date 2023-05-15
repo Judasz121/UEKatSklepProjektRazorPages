@@ -17,11 +17,11 @@ namespace SklepProjektRazorPages.Pages.Product
         {
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
-                var dbProducts  = conn.Query<Produkt>($"SELECT * FROM Produkt where usuniety = 0");
+                var dbProducts  = conn.Query<Produkt>($"SELECT TOP 10 * FROM Produkt where usuniety = 0 and Nazwa like '%{searching_bar}%'");
                 foreach(Produkt product in dbProducts)
                 {
                     products.Add(new ProductViewModel(product, true));
-                }
+                }     
             }
         }
     }
