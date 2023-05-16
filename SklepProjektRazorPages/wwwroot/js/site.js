@@ -4,7 +4,7 @@ let $cart_counter = document.getElementById('cart-counter');
 $counter = 0;
 let $cart_layout = document.getElementById("item-counter");
 let $DivNoProducts = document.getElementById('display-no-products');
-
+let $OrderAddressInput = document.getElementById('select-address');
 function displayNoProducts(counter) {
     if (counter > 0) {
         if ($DivNoProducts)
@@ -17,6 +17,7 @@ function updateCart() {
         $DivNoProducts.style.visibility = "revert";
         let $OrderSubmit = document.getElementById("order-submit");
         $OrderSubmit.classList.add("prevent-submit");
+        $OrderAddressInput.classList.add("prevent-submit");
         $cart_counter.innerHTML = "Koszyk (0)";
         $cart_layout.style.display = "none";
     }
@@ -41,6 +42,8 @@ function updateCart() {
             $cart_layout.textContent = `${$counter}`;
             if ($OrderSubmit)
                 $OrderSubmit.classList.remove("prevent-submit");
+            if ($OrderAddressInput)
+                $OrderAddressInput.classList.remove("prevent-submit");
         }
         
         return $container[0];

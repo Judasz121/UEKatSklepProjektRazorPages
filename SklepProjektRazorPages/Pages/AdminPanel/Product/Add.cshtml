@@ -16,15 +16,15 @@ else{
 
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.product.Nazwa)</label>
-                <input type="text" asp-for="product.Nazwa" />
+                <input required type="text" asp-for="product.Nazwa" />
             </div>
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.product.Cena_jednostkowa)</label>
-                <input type="text" asp-for="product.Cena_jednostkowa" />
+                <input required type="text" asp-for="product.Cena_jednostkowa" />
             </div>
             <div class="mb-3">
                 <label class="form-label">Kategoria</label>
-                <select type="text" asp-for="product.ID_Kategorii" asp-items="Model.categories">
+                <select id="select-product-category" type="text" asp-for="product.ID_Kategorii" asp-items="Model.categories">
                 </select>
             </div>
             <div class="mb-3">
@@ -33,8 +33,8 @@ else{
                 @*Nie zapisuje zdjecia przy dodaniu produktu*@
                 <img style="max-width:50%" />
                 <br><br>
-                <input class="form-control" type="file" asp-for="productCoverPhoto" />
-                <div class="form-text">Wgraj nowe</div>
+                <div class="form-text">Wgraj nowe zdjęcie</div>
+                <input required class="form-control" type="file" asp-for="productCoverPhoto" />
             </div>
             @if (!string.IsNullOrWhiteSpace(Model.accountAlertValue))
             {
@@ -48,3 +48,6 @@ else{
         </form>
     </div>
 }
+<script>
+    document.getElementById("select-product-category").selectedIndex = -1;
+</script>

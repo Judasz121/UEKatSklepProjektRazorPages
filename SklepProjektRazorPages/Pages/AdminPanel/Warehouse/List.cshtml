@@ -14,7 +14,7 @@ else
 {
 <partial name="_AdminPanelNavigationPartial" />
         <br />
-    <div class="container admin-accounts-container text-center" style="width:min(80rem) !important;background-color:white;color:black;">
+    <div class="container admin-accounts-container text-center" style=";background-color:white;color:black;">
         <a class="btn btn-primary" style="margin:0.4rem 0" asp-page="Add">Dodaj Magazyn</a>
         <table id="accounts-table">
             <thead>
@@ -109,7 +109,7 @@ else
                                 <a class="btn btn-warning" asp-page="/AdminPanel/Warehouse/Edit" asp-route-id="@war.ID_Magazynu">
                                     <i class="far fa-edit"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-page="/AdminPanel/Warehouse/Delete" asp-route-id="@war.ID_Magazynu">
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Warehouse/Delete" asp-route-id="@war.ID_Magazynu" asp-route-redirect="List">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>

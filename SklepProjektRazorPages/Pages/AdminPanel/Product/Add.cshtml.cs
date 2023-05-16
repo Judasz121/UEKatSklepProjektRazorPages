@@ -17,11 +17,24 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Product
         [BindProperty]
         public Produkt product { get; set; }
 
+        public List<Kategoria> dbCategories { get; set; }
         public List<SelectListItem> categories { get; set; }  = new List<SelectListItem>();
         [BindProperty,DataType(DataType.Upload)]
         public IFormFile productCoverPhoto { get;set; }
         public string accountAlertClass { get; set; }
         public string accountAlertValue { get; set; }
+
+        public void OnGet()
+        {
+            using (IDbConnection conn = DbHelper.GetDbConnection())
+            {
+                dbCategories = (List<Kategoria>)conn.Query<Kategoria>("SELECT * FROM Kategoria order by Nazwa");
+                foreach (Kategoria dbcategory in dbCategories)
+                {
+                    categories.Add(new SelectListItem { Value = Convert.ToString(dbcategory.ID_Kategorii), Text = dbcategory.Nazwa });
+                }
+            }
+        }
 
         public string MoveToDbImageStorageFolder(IFormFile file)
         {
@@ -61,7 +74,7 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Product
                 {
                     product.sciezkaZdjecia = this.MoveToDbImageStorageFolder(productCoverPhoto).Split("wwwroot")[1];
                     product.sciezkaZdjecia = DbHelper.ReplacePolishChars(product.sciezkaZdjecia);
-                    conn.Execute($"INSERT INTO Produkt VALUES(@Nazwa,@Cena_jednostkowa,Null,@sciezkaZdjecia,0)", product);
+                    conn.Execute($"INSERT INTO Produkt VALUES(@Nazwa,@Cena_jednostkowa,@ID_Kategorii,@sciezkaZdjecia,0)", product);
                     accountAlertClass = "alert-success";
                     accountAlertValue = "Pomyœlnie dodano";
                 }

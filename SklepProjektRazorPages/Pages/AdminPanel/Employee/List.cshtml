@@ -14,7 +14,7 @@ else
 {
 <partial name="_AdminPanelNavigationPartial" />
     <br />
-    <div class="container admin-accounts-container text-center" style="width:min(80rem) !important;background-color:white;color:black;">
+    <div class="container admin-accounts-container text-center" style=";background-color:white;color:black;">
         <a class="btn btn-primary" style="margin:0.4rem 0" asp-page="Add">Dodaj Pracownika</a>
         <table id="accounts-table">
             <thead>
@@ -91,7 +91,7 @@ else
                             }    
                             else{
                                 <td>
-                                @emp.Data_Zwolnienia.ToString("dd/MM/yyyy");
+                                @emp.Data_Zwolnienia.ToString("dd/MM/yyyy")
                                 </td>
                                 
                             }
@@ -103,7 +103,7 @@ else
                                 <a class="btn btn-warning" asp-page="/AdminPanel/Employee/Edit" asp-route-id="@emp.ID_Pracownika">
                                     <i class="far fa-edit"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-page="/AdminPanel/Employee/Delete" asp-route-id="@emp.ID_Pracownika">
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Employee/Delete" asp-route-id="@emp.ID_Pracownika" asp-route-redirect="List">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>

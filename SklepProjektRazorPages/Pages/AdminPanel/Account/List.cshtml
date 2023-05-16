@@ -35,6 +35,12 @@ else
                     </th>
                     <th>
                         @{
+                            displayName = @Html.DisplayNameFor(model => model.accounts.FirstOrDefault().Aktywny);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
                             displayName = @Html.DisplayNameFor(model => model.accounts.FirstOrDefault().JestAdminem);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
@@ -55,6 +61,9 @@ else
                             @Html.DisplayFor(model => acc.Email)
                         </td>
                         <td>
+                            @Html.DisplayFor(model => acc.Aktywny)
+                        </td>
+                        <td>
                             @Html.DisplayFor(model => acc.JestAdminem)
                         </td>
                         <td>
@@ -65,7 +74,7 @@ else
                                 <a class="btn btn-warning" asp-page="/AdminPanel/Account/Edit" asp-route-id="@acc.ID_Konta">
                                     <i class="far fa-edit"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-page="/AdminPanel/Account/Delete" asp-route-id="@acc.ID_Konta">
+                                <a class="btn btn-danger" asp-page="/AdminPanel/Account/Delete" asp-route-id="@acc.ID_Konta" asp-route-redirect="List">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>

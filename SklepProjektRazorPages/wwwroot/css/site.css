@@ -63,9 +63,9 @@ body {
         display: none !important;
         pointer-events: none;
     }
-    .admin-accounts-container{
+    /*.admin-accounts-container{
         width:min(35rem) !important;
-    }
+    }*/
 
 }   
 @media (min-width: 600px){
@@ -92,7 +92,7 @@ body {
     .login-container, .reg-container {
         max-width: 25rem;
     }
-    .accounts-container, .accounts-settings-container, .admin-accounts-container {
+    .accounts-container, .accounts-settings-container/*, .admin-accounts-container*/ {
         width: min(50rem) !important;
     }
     .edit-account-container{
@@ -129,6 +129,9 @@ body {
 .sticky + .content{
     padding-top:60px
 }
+.MN-border-top-color {
+    border-top: 1px solid rgba(2, 80, 181, 1);
+}
 .container {
     align-content: center;
     align-items: center;
@@ -145,6 +148,7 @@ body {
     display:flex;
     margin: auto auto 2rem auto;
     position:sticky;
+    z-index:1;
 }
 @media (max-width:1500px){
     .searching-bar{
@@ -389,14 +393,22 @@ footer{
 .products-container{
     width: min(45rem) !important;
 }
-.admin-accounts-container, .edit-account-container {
-    width: min(24rem);
-}
+/*.admin-accounts-container, .edit-account-container {
+    width: max-content;
+}*/
 .account-name-container, .accounts-settings-container, .admin-panel-settings, .border-container, .admin-accounts-container, .edit-account-container, .accounts-container, .products-container {
     border: 0.5rem outset;
     border-image: var(--border-image-patern);
     border-radius: var(--border-radius-patern);
     box-shadow: var(--box-shadow-pattern-1px-black);
+}
+.accounts-container form div:nth-last-child(3) {
+    border-bottom: 1px solid rgba(2, 80, 181, 1);
+    padding-bottom: 10px;
+}
+.accounts-container form > div:first-of-type {
+    border-top: 1px solid rgba(2, 80, 181, 1);
+    padding-top: 10px;
 }
 .nav-tabs {
     justify-content: space-between;
@@ -653,12 +665,21 @@ ul {
     gap:1rem;
     flex-direction:row;
 }
-#options{
-    width:min(10rem) !important;
+#add-warehouse {
+    padding-top: 10px;
+}
+#add-warehouse h4 {
+    width:max-content;
+    margin:10px auto 10px auto;
+    
+}
+#add-warehouse-product-section{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
 }
 .shop-cart {
     transform: scale(1.0);
-    
 }
 .shop-cart.addedClass {
     transition: color 1.5s;

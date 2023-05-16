@@ -35,6 +35,12 @@ else
                     </th>
                     <th>
                         @{
+                            displayName = @Html.DisplayNameFor(model => model.CategoryNames.FirstOrDefault().Nazwa);
+                        }
+                        <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                    </th>
+                    <th>
+                        @{
                             displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().usuniety);
                         }
                         <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
@@ -53,6 +59,15 @@ else
                         </td>
                         <td>
                             @Html.DisplayFor(model => product.Cena_jednostkowa)
+                        </td>
+                        <td>
+                            @foreach(Kategoria CategoryName in Model.CategoryNames)
+                            {
+                                if(product.ID_Kategorii == CategoryName.ID_Kategorii)
+                                {
+                                    @Html.DisplayFor(model => CategoryName.Nazwa)
+                                }
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(model => product.usuniety)

@@ -11,11 +11,14 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Product
     {
         public IEnumerable<Produkt> products { get; set; }
 
+        public List<Kategoria> CategoryNames { get; set; }  = new List<Kategoria>();
+
         public void OnGet()
         {
             using (IDbConnection conn = DbHelper.GetDbConnection())
             {
                 products = conn.Query<Produkt>("SELECT * FROM Produkt");
+                CategoryNames = (List<Kategoria>)conn.Query <Kategoria>("SELECT * FROM Kategoria");
             }
         }
         public IActionResult OnPost()

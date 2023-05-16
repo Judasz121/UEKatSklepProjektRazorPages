@@ -26,7 +26,11 @@ else{
                 </div>
                 <div class="account-information-content">
                     <span style="width:11rem">Adres E-mail:</span>
-                    <input id="input-settings" class="input-settings" disabled value="@Model.account.Email">
+                    @{
+                        string email = Model.account.Email;
+                        string hiddenemail = email[0] + new string('*', email.Length - 2) + email[email.Length - 1];
+                    }
+                    <input id="input-settings" class="input-settings" disabled value="@email">
                 </div>
                 <div class="button-container" style="display:flex;justify-content:center;margin:auto;gap:.5rem;flex-direction:row">
                     <a class="button-animation" id="button-account-settings" asp-page="/Account/AccountEdit" asp-route-id="@AccountHelper.loggedInAccount.ID_Konta">Zmień dane

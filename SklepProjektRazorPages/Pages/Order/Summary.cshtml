@@ -53,7 +53,7 @@
             </div>
             <div class="address-select-container">
                 <h5 style="margin:0 !important">Adres:</h5>
-                <select asp-for="orderDb.ID_Adresu" asp-items="Model.addresses"></select>
+                <select id="select-address" required asp-for="orderDb.ID_Adresu" asp-items="Model.addresses"></select>
             </div>
 
             @if (!string.IsNullOrWhiteSpace(Model.alertMessage))
@@ -70,6 +70,9 @@
     </div>
 </form>
 <script >
+    // Select Address default no-value
+    document.getElementById("select-address").selectedIndex = -1;  
+
     // Summary change option handler
     let $price = document.querySelectorAll(".price");
     let $select_value = document.querySelectorAll(".select-values");

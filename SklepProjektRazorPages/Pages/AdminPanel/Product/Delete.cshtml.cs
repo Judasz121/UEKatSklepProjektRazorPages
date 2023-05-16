@@ -30,7 +30,7 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Product
             catch (InvalidOperationException exc)
             { 
                 alertClass = "alert-danger"; // check incorrect id handling
-                alertMessage = "Nie znaleziono produktu z tym id lub wyst¹pi³ se ¿ydowski b³¹d serwera.";
+                alertMessage = "Nie znaleziono produktu z tym id lub wyst¹pi³ b³¹d serwera.";
             }
 
             //if (!string.IsNullOrWhiteSpace(redirect) && deletedProduct != null && deletedProduct.ID_Produktu != null)

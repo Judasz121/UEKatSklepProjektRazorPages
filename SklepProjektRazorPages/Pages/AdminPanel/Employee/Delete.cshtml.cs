@@ -26,12 +26,13 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Employee
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     conn.Execute($"UPDATE Pracownik SET Data_Zwolnienia = GETDATE() WHERE ID_Pracownika = @id", new { id = this.id });
+                    return RedirectToPage(redirect);
                 }
             }
             catch (InvalidOperationException exc)
             {
                 alertClass = "alert-danger"; // check incorrect id handling
-                alertMessage = "Nie znaleziono produktu z tym id lub wyst¹pi³ se ¿ydowski b³¹d serwera.";
+                alertMessage = "Nie znaleziono produktu z tym id lub wyst¹pi³ b³¹d serwera.";
             }
 
             //if (!string.IsNullOrWhiteSpace(redirect) && deletedProduct != null && deletedProduct.ID_Produktu != null)

@@ -23,20 +23,26 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Account
                 return Page();
             try
             {
+                //using (IDbConnection conn = DbHelper.GetDbConnection())
+                //{
+                //    deletedAccount = conn.QueryFirst<Konto>($"SELECT * FROM Konto WHERE ID_Konta = '{id}'");
+                //    if (deletedAccount.ID_Klienta != null)
+                //        conn.Execute($"DELETE FROM Klient WHERE ID_Klienta = '{deletedAccount.ID_Klienta}'");
+                //    if (deletedAccount.ID_Dostawcy != null)
+                //        conn.Execute($"DELETE FROM Dostawca WHERE ID_Dostawcy = '{deletedAccount.ID_Dostawcy}' ");
+                //    deletedAccount = conn.QueryFirst<Konto>($"DELETE FROM Konto OUTPUT DELETED.* WHERE ID_Konta = {id}");
+                //}
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
-                    deletedAccount = conn.QueryFirst<Konto>($"SELECT * FROM Konto WHERE ID_Konta = '{id}'");
-                    if (deletedAccount.ID_Klienta != null)
-                        conn.Execute($"DELETE FROM Klient WHERE ID_Klienta = '{deletedAccount.ID_Klienta}'");
-                    if (deletedAccount.ID_Dostawcy != null)
-                        conn.Execute($"DELETE FROM Dostawca WHERE ID_Dostawcy = '{deletedAccount.ID_Dostawcy}' ");
-                    deletedAccount = conn.QueryFirst<Konto>($"DELETE FROM Konto OUTPUT DELETED.* WHERE ID_Konta = {id}");
+                    //deletedAccount = conn.QueryFirst<Konto>($"SELECT * FROM Konto WHERE ID_Konta = '{id}'");
+                    conn.Execute($"UPDATE Konto SET Aktywny = 0 WHERE ID_Konta = {id}");
+                    return RedirectToPage(redirect);
                 }
             }
             catch(InvalidOperationException exc)
             {                
                 alertClass = "alert-danger";
-                alertMessage = "Nie znaleziono konta z tym id lub wyst¹pi³ se ¿ydowski b³¹d serwera.";
+                alertMessage = "Nie znaleziono konta z tym id lub wyst¹pi³ b³¹d serwera.";
             }
 
             if (!string.IsNullOrWhiteSpace(redirect) && deletedAccount != null && deletedAccount.ID_Konta != null)

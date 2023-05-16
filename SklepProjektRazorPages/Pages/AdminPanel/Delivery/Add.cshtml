@@ -18,22 +18,25 @@ else
         <form method="post">
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.ID_Dostawcy)</label>
-                <select type="text" asp-items="Model.Suppliers" asp-for="Delivery.ID_Dostawcy"></select>
+                <select required id="select-deliveryman" type="text" asp-items="Model.Suppliers" asp-for="Delivery.ID_Dostawcy"></select>
             </div>
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.Data_zamowienia)</label>
-                <input asp-for="Delivery.Data_zamowienia" />
+                <input required asp-for="Delivery.Data_zamowienia" />
             </div>
             <div class="mb-3">
                 <label class="form-label">@Html.DisplayNameFor(model => model.Delivery.Data_zrealizowania)</label>
-                <input asp-for="Delivery.Data_zrealizowania" />
+                <input required asp-for="Delivery.Data_zrealizowania" />
             </div>
             <div class="mb-3 mt-2" id="warehouse-product-delivery-selection-container">
-                <div class="" id="add-warehouse">
-                    <button class="btn btn-primary">
-                        <i class="fa-solid fa-plus"></i> Dodaj magazyn
-                    </button>
-                    <select asp-items="Model.Warehouses"></select>
+                <div id="add-warehouse">
+                    <h4 class="MN-border-top-color">Wybierz magazyn do dostawy:</h4>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                        <select asp-items="Model.Warehouses"></select>
+                        <button class="btn btn-primary">
+                            <i class="fa-solid fa-plus"></i> Dodaj magazyn
+                        </button>
+                    </div>
                 </div>
                 <div class="warehouses">
                 </div>
@@ -49,6 +52,9 @@ else
     </div>
     @section jsSyntaxHighlighting{
     <script type="text/javascript">
+        // Index -1 at Deliveryman select
+        document.getElementById('select-deliveryman').selectedIndex = -1;
+
         document.addEventListener("DOMContentLoaded", e => {
             function setupWarehousesProductsSelectionList() {
                 let self = this;
@@ -73,7 +79,7 @@ else
                 function genWarehouseSection(warehouseId, warehouseName) {
                     let $container = $(document.createElement("div"));
                     $container.attr("warehouse-id", String(warehouseId));
-                    $container.attr("class", "border-top border-primary mb-3 warehouse-section");
+                    $container.attr("class", "MN-border-top-color mb-3 warehouse-section");
 
                     let $header = $(document.createElement("header"));
                     $header.attr("class", "fs-4");
@@ -155,13 +161,7 @@ else
                             self.freeProducts_warehouses_deliveryIndex++;
                             return $container;
                         }
-
-                        let $addProductSection = $(document.createElement("div"));
-                        $addProductSection.attr("class", "add-warehouse-product-section")
-                        let $addProductBtn = $(document.createElement("button"));
-                        $addProductBtn.attr("class", "btn btn-primary");
-                        $addProductBtn.html(`<i class="fa-solid fa-plus"></i> Dodaj`);
-                        $addProductSection.append($addProductBtn);
+                        
 
                         let $product = $(document.createElement('select'));
                         $product.attr("class", "product-id");
@@ -171,14 +171,34 @@ else
                             $option.html(product.text);
                             $product.append($option);
                         });
-                        $addProductSection.append($product);
 
-                        $addProductSection.append(" w ilości: ")
+                        let $Amountcontainer = $(document.createElement('div'));
+                        $Amountcontainer.append(document.createElement('p').innerHTML = "w ilości:");
                         let $amount = $(document.createElement('input'));
-                        $amount.attr("class", "border-0 product-amount");
+                        $amount.attr("class", "product-amount");
                         $amount.attr("type", "number");
                         $amount.attr("value", "1");
-                        $addProductSection.append($amount);
+                        $amount.css("border", "1px solid black");
+                        $Amountcontainer.append($amount);
+                        let $addProductSection = $(document.createElement("div"));
+                        $addProductSection.append(document.createElement("p").innerHTML="Wybierz produkt:");
+                        $addProductSection.append($product);
+                        $addProductSection.append($Amountcontainer);
+                        
+                        
+                        $Amountcontainer.css("margin", "10px auto 10px auto");
+                        $addProductSection.attr("class", "add-warehouse-product-section");
+                        $addProductSection.css("display",'flex');
+                        $addProductSection.css("flex-direction",'column');
+                        $addProductSection.css("align-items",'center');
+
+                        let $addProductBtn = $(document.createElement("button"));
+                        $addProductBtn.attr("class", "btn btn-primary");
+                        $addProductBtn.html(`<i class="fa-solid fa-plus"></i> Dodaj`);
+                        $addProductSection.append($addProductBtn);
+
+                        
+
 
                         $addProductBtn.on('click', e => {
                             e.preventDefault();

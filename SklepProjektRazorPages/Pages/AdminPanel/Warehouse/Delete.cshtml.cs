@@ -26,6 +26,7 @@ namespace SklepProjektRazorPages.Pages.AdminPanel.Warehouse
                 using (IDbConnection conn = DbHelper.GetDbConnection())
                 {
                     conn.Execute($"UPDATE Magazyn SET Usunieta = 1 WHERE ID_Magazynu = @id", new { id = this.id });
+                    return RedirectToPage(redirect);
                 }
             }
             catch (InvalidOperationException exc)

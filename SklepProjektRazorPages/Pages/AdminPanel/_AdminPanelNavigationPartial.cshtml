@@ -37,8 +37,8 @@
     };
 
 }
-<div class="container admin-panel-settings bg-white" style="width:min(73rem)">
-    <div>
+<div class="container admin-panel-settings bg-white">
+    @*<div>*@
         <h3 style="border-bottom:1px solid black;text-align:center;">Admin Panel: @AccountHelper.loggedInAccount.LoginUzytkownika</h3>
         <div class="admin-button-container">
             @foreach ((string aspPage, string text) el in navElements)
@@ -50,7 +50,7 @@
                 </!a>
             }
         </div>
-    </div>
+    @*</div>*@
 </div>
 
 @*<div class="container admin-panel-settings bg-white" style="width:min(73rem)">
