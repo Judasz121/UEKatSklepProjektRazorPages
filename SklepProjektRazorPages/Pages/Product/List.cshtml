@@ -5,40 +5,70 @@
 @model SklepProjektRazorPages.Pages.Product.ListModel
 @{
     ViewData["Title"] = "Produkty";
-    string displayName = null;
-    displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Nazwa);
-    string value = "";
-    if (Model.searching_bar != null)
-    {
-        value = Model.searching_bar;
-    }
 }
     <br />
-    <div class="container border-container" style="background-color:white;color:black;width:75%">
+    <div class="container admin-accounts-container text-center" style="background-color:white;color:black;width:min(40rem) !important">
         <h3 style="text-align:center;padding-top:0.5rem">Wyszukanie dla: " @Model.searching_bar" </h3>
-        <div id="list-products-container">
+    <table id="accounts-table">
+        <thead>
+            <tr>
+                <th>
+                    @{
+                        string displayName = null;
+                        displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Nazwa);
+                        string value = "";
+                        if (Model.searching_bar != null)
+                        {
+                            value = Model.searching_bar;
+                        }
+                    }
+                    <input class="form-control" type="text" name="@displayName" placeholder="@displayName" value="@value" id="productName" />
+                </th>
+                <th>
+                    @{
+                        //displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Kategoria.Nazwa);
+                        displayName = "Kategoria";
+                    }
+                    <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                </th>
+                <th>
+                    @{
+                        displayName = @Html.DisplayNameFor(model => model.products.FirstOrDefault().Cena_jednostkowa);
+                    }
+                    <input class="form-control" type="text" name="@displayName" placeholder="@displayName" />
+                </th>
+                <th>
+                    Opcje
+                </th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (ProductViewModel product in Model.products)
             {
-            
-                <div class="list-product-card">
-                    <a style="display:flex;text-decoration:none;color: inherit !important;" asp-page="/Product/View" asp-route-id="@product.ID_Produktu">
-                        <img style="width:max(12rem);height:max(12rem);object-fit:contain;padding:1rem" src="@product.sciezkaZdjecia" />
-                    </a>
-                    <div style="margin:10px;flex-grow:2">
-                        <a style="display:flex;width:min-content;text-decoration:none;color: inherit !important;" asp-page="/Product/View" asp-route-id="@product.ID_Produktu">
-                        <h2 class="list-product-name" style="width: max-content;">@product.Nazwa</h2>
-                        </a>
-                    </div>
-                    <div class="list-product-button">
-                        <div>@product.Cena_jednostkowa zł</div>
-                        <button id="submit-button" islogged="@AccountHelper.loggedInAccount" product-id="@product.ID_Produktu" class="product-button fa-solid fa-cart-shopping">
-                            <p>Dodaj do koszyka</p>
-                        </button>
-                    </div>
-                </div>
-            
-            }
-        </div>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => product.Nazwa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => product.Kategoria.Nazwa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => product.Cena_jednostkowa)
+                        </td>
+                        <td>
+                            <div id="options">
+                                <a class="btn btn-primary" asp-page="View" asp-route-id="@product.ID_Produktu">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                <button class="btn btn-primary" product-id="@product.ID_Produktu">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
     @*<a asp-page="/Cart/api" asp-page-handler="Testuwa">halo polaki</a>*@
 @{
@@ -48,31 +78,29 @@
     string cartApiUrl = pre + HttpContext.Request.Host + @Url.Page("/Cart/api");
 }
 
-<script>
-    document.addEventListener('DOMContentLoaded', e => {
-        $(document).on('click', '[product-id]', e => {
-            //console.log(e.currentTarget);
-            let $btn = $(e.currentTarget);
-            let productId = $btn.attr('product-id');
-            let sessionToken = $btn.attr('islogged');
-            CheckifLogged(sessionToken);
-            $.ajax({
-                url: '@cartApiUrl' + "?handler=AddProductToCart",
-                method: 'POST',
-                //contentType: 'application/json',
-                dataType: 'json',
-                data: {
-                    productId: productId
-                },
-            }).done(function (data, status, xhr) {
-                updateCart();
-                if (data.message == "Error") {
-                    showToast('Błąd', 'Nie można dodać więcej niż 9 produtków danego rodzaju!','danger');
-                }
-                else {
-                    AddCartAnimation();
-                }
-            })
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            GenerateDataTable($("#accounts-table"));
+            $("#productName").trigger("change");
+            $(document).on('click', '[product-id]', e => {
+                console.log(e.currentTarget);
+                let $btn = $(e.currentTarget);
+                let productId = $btn.attr('product-id');
+                console.log(productId);
+                $.ajax({
+                    url: '@cartApiUrl' + "?handler=AddProductToCart",
+                    method: 'POST',
+                    //contentType: 'application/json',
+                    dataType: 'json',
+                    data: {
+                        productId: productId
+                    },
+                }).done(function(data, status, xhr) {
+                        updateCart();
+                    })
+            });
+            
         });
-    });
-</script>
+    </script>
+    }

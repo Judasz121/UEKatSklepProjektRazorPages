@@ -32,10 +32,10 @@ else{
             <div style="width:max-content" class="view-container view-specification">
                 @*Statycznie ustawiona specyfikacaj*@
                 <h3 style="border-bottom: 1px solid grey">Specyfikacja</h3>
-                <p>Lorem ipsum</p>
-                <p>Lorem ipsum</p>
-                <p>Lorem ipsum</p>
-                <p>Lorem ipsum</p>
+                <p>Gniazdo procesora: Socket AM5</p>
+                <p>Taktowanie:4.5 GHz</p>
+                <p>Liczba rdzeni:16 rdzeni</p>
+                <p>Pamięć cache:80 MB</p>
             </div>
             <div class="view-container view-price">
                 <p>@Model.product.Cena_jednostkowa zł</p>
@@ -78,7 +78,7 @@ else{
                 }
             }).done(function (data, status, xhr) {
                 if (data.message == "Error") {
-                    showToast('Błąd', 'Nie można dodać więcej niż 9 produtków danego rodzaju!', 'danger');
+                    alert('Nie można dodać więcej niż 9 produtków danego rodzaju!');
                 }
                 else {
                     AddCartAnimation();

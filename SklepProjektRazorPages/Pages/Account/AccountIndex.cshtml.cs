@@ -7,7 +7,6 @@ using System.Security.Principal;
 using Dapper;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Dynamic;
 
 namespace SklepProjektRazorPages.Pages.Account
 {
@@ -19,9 +18,6 @@ namespace SklepProjektRazorPages.Pages.Account
 
         [BindProperty(SupportsGet =true)]
         public string tabId { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string OrderID { get; set; }
         public Konto account { get; set; }
         public bool accountNotFound { get; set; }
         public bool addressNotFound { get; set; }
@@ -30,8 +26,6 @@ namespace SklepProjektRazorPages.Pages.Account
         public List<Adres>? adres { get; set; }
         [BindProperty]
         public List<Zamowienie> zamowienie { get; set; }
-
-        
         public void OnGet()
         {
             try
@@ -87,18 +81,6 @@ namespace SklepProjektRazorPages.Pages.Account
                 }
             }
 
-        }
-        public IActionResult OnPostUpdateOrder()
-        {
-            dynamic resp = new ExpandoObject();
-            resp.success = false;
-            using (IDbConnection conn = DbHelper.GetDbConnection())
-            {
-                conn.Execute($"UPDATE Zamowienie SET Zaplacone = 1 WHERE ID_Zamowienia = '{OrderID}'");
-                
-            }
-            resp.success = true;
-            return new JsonResult(resp);
         }
     }
 }

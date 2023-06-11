@@ -74,21 +74,16 @@ else{
                         @foreach (Zamowienie zamowienia in Model.zamowienie)
                         {
                             <tr>
-                                <td OrderID = @zamowienia.ID_Zamowienia>@zamowienia.ID_Zamowienia</td>
+                                <td>@zamowienia.ID_Zamowienia</td>
                                 <td>@zamowienia.Data_zamowienia.ToString("dd MMMM yyyy")</td>
                                 @if (zamowienia.Zaplacone.ToString() == "False")
                                 {
-                                    <td>
-                                        <p>Nieopłacone</p>
-                                        <button type="button" id="updateOrder" onclick="updateOrder()" orderID=@zamowienia.ID_Zamowienia>Opłać zamówienie</button>
-                                    </td>
-                                  
+                                    <td>Nieopłacone</td>
                                 }
                                 else
                                 {
                                     <td>Zapłacone</td>
                                 }
-                                    
                             </tr>
                         }
                     </table>
@@ -159,3 +154,5 @@ else{
     
     
 }
+<script>
+</script>

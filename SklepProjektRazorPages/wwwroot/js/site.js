@@ -187,15 +187,3 @@ $('#delete-account').confirm({
         }
     }
 });
-
-//Function to set User's order to 'Zaplacony'
-
-function updateOrder() {
-    let OrderID = document.getElementById("updateOrder").getAttribute('orderID');
-    //let $Username = document.getElementById("updateOrder").getAttribute('username');
-    //let $AccountId = document.getElementById("updateOrder").getAttribute('accountId');
-    console.log(OrderID);
-    sendAjax("/Account/AccountIndex", "UpdateOrder", { "OrderID": OrderID },).done(function () {
-        window.location.reload();
-    });
-}

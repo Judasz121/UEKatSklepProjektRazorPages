@@ -445,42 +445,6 @@ footer{
     padding: 0.2rem;
     height: max(15rem);
 }
-#list-products-container{
-    display:flex;
-    gap: 1rem;
-    flex-direction:column;
-    padding: 0.2rem;
-}
-.list-product-card {
-    display: flex;
-    flex-direction: row;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: 0.25rem;
-    justify-content:space-between;
-}
-.list-product-button {
-    display:flex;
-    flex-direction:column;
-    gap:1rem;
-    border-left: 1px solid grey;
-    justify-content:space-evenly;
-}
-.list-product-button div:nth-child(1){
-    display:flex;
-    justify-content:center;
-    font-size:20px;
-}
-.list-product-button > *{
-    padding:.5rem;
-}
-.list-product-button button {
-    display: flex;
-    margin-left:10px;
-    margin-right:10px;
-    
-}
 #cart-products{
     margin: 0.2rem auto;
 
@@ -582,13 +546,13 @@ ul {
     scroll-padding-inline: 1rem;
 }
 .card {
-    /*display:block;*/
+    display:block;
     width:100%;
     height:100%;
     overflow: scroll;
     overflow: hidden;
     position:unset !important;
-    /*animation: card-loading-animation 1s;*/
+    animation: card-loading-animation 1s;
 }
 .card-image {
     margin-inline:auto;
@@ -608,20 +572,17 @@ ul {
     display:flex;
     justify-content:space-between;
 }
-.product-button {
-    border: 2.5px solid;
-    border-color: black;
-    border-radius: 100px;
-}
 .product-cart {
     position:absolute;
     margin-right: 10px;
+    border: 2.5px solid;
+    border-color: black;
+    border-radius: 100px;
     transition: border-color 0.2s ease-in, color 0.2s ease-in;
     padding:5px;
     transform:translateY(-100%);
-
 }
-.product-cart:hover, .list-product-button button:hover {
+.product-cart:hover {
     border-image: none !important;
     border-color:rgb(36, 124, 23);
     transition: border-color 0.2s ease-in, color 0.2s ease-in;
@@ -724,7 +685,7 @@ ul {
 .view-price button::before{
     margin:auto
 }
-.view-price button p, .product-button p{
+.view-price button p{
     font-size:11px;
     line-height:12px;
     margin: auto auto auto 10px;
@@ -764,13 +725,4 @@ ul {
     animation:none !important;
     color:grey !important;
 
-}
-#submit-button::before{
-    margin:auto;
-}
-.list-product-name:hover{
-    text-decoration:underline;
-}
-.list-product-name{
-    margin-bottom:20px;
 }
